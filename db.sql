@@ -2,50 +2,50 @@ CREATE DATABASE muchocine;
 
 USE muchocine;
 
-CREATE TABLE informacion (
+CREATE TABLE INFORMACION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL
 );
 
-CREATE TABLE audio (
+CREATE TABLE AUDIO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     link_audio VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE subtitulo (
+CREATE TABLE SUBTITULO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     link_subtitulo VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE premio (
+CREATE TABLE PREMIO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     categoria VARCHAR(100) NOT NULL
     -- PRIMARY KEY (id),
-    -- FOREIGN KEY (id) REFERENCES informacion(id)
+    -- FOREIGN KEY (id) REFERENCES INFORMACION(id)
 );
 
-CREATE TABLE direccion (
+CREATE TABLE DIRECCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     ciudad VARCHAR(100),
     pais VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE genero (
+CREATE TABLE GENERO (
     id INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES informacion(id)
+    FOREIGN KEY (id) REFERENCES INFORMACION(id)
 );
 
-CREATE TABLE restriccion (
+CREATE TABLE RESTRICCION (
     id INT NOT NULL,
     categoria ENUM('ATP', 'TP', 'MPAA', 'PG-15', 'R-Rated'),
     PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES informacion(id)
+    FOREIGN KEY (id) REFERENCES INFORMACION(id)
 );
 
-CREATE TABLE persona (
+CREATE TABLE PERSONA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     primer_nombre VARCHAR(50) NOT NULL,
     segundo_nombre VARCHAR(50),
@@ -54,206 +54,170 @@ CREATE TABLE persona (
     fecha_nacimiento DATE NOT NULL,
     id_residencia INT NOT NULL,
     sexo CHAR(1),
-    FOREIGN KEY (id_residencia) REFERENCES direccion(id)
+    FOREIGN KEY (id_residencia) REFERENCES DIRECCION(id)
 );
 
-CREATE TABLE video (
+CREATE TABLE VIDEO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     duracion DECIMAL(10, 2) NOT NULL,
     id_restriccion INT NOT NULL,
-    FOREIGN KEY (id_restriccion) REFERENCES restriccion(id)
+    FOREIGN KEY (id_restriccion) REFERENCES RESTRICCION(id)
     -- TODO: trailer, banner, etc...
 );
 
-CREATE TABLE actor (
+CREATE TABLE ACTOR (
     id INT NOT NULL,
-    nombre_artistico VARCHAR(100) NOT NULL,
     id_origen INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES persona(id),
-    FOREIGN KEY (id_origen) REFERENCES direccion(id)
+    FOREIGN KEY (id) REFERENCES PERSONA(id),
+    FOREIGN KEY (id_origen) REFERENCES DIRECCION(id)
 );
 
-CREATE TABLE serie (
+CREATE TABLE SERIE (
     id INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES video(id)
+    FOREIGN KEY (id) REFERENCES VIDEO(id)
 );
 
-CREATE TABLE temporada (
+CREATE TABLE TEMPORADA (
     id INT NOT NULL,
     id_serie INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES informacion(id),
-    FOREIGN KEY (id_serie) REFERENCES serie(id)
+    FOREIGN KEY (id) REFERENCES INFORMACION(id),
+    FOREIGN KEY (id_serie) REFERENCES SERIE(id)
 );
 
-CREATE TABLE capitulo (
+CREATE TABLE CAPITULO (
     id INT NOT NULL,
     link_video VARCHAR(255) NOT NULL,
     duracion DECIMAL(10, 2),
     id_temporada INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES informacion(id),
-    FOREIGN KEY (id_temporada) REFERENCES temporada(id)
+    FOREIGN KEY (id) REFERENCES INFORMACION(id),
+    FOREIGN KEY (id_temporada) REFERENCES TEMPORADA(id)
 );
 
-CREATE TABLE pelicula (
+CREATE TABLE PELICULA (
     id INT NOT NULL,
     link_video VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES video(id)
+    FOREIGN KEY (id) REFERENCES VIDEO(id)
 );
 
-CREATE TABLE cliente (
+CREATE TABLE CUENTA (
     id INT NOT NULL,
     correo VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES persona(id)
+    FOREIGN KEY (id) REFERENCES PERSONA(id)
 );
 
-CREATE TABLE suscripcion (
+CREATE TABLE SUSCRIPCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_cliente INT NOT NULL,
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id)
+    id_cuenta INT NOT NULL,
+    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id)
     -- TODO: AGREGAR INFORMACION
 );
 
-CREATE TABLE oferta (
+CREATE TABLE OFERTA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
     -- TODO: AGREGAR INFORMACION
 );
 
-CREATE TABLE paquete (
+CREATE TABLE PAQUETE (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
     -- TODO: AGREGAR INFORMACION
 );
 
-CREATE TABLE subcuenta (
+CREATE TABLE SUBCUENTA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_suscripcion INT NOT NULL,
-    FOREIGN KEY (id_suscripcion) REFERENCES suscripcion(id)
+    id_cuenta INT NOT NULL,
+    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id)
 );
 
-CREATE TABLE reproduccion (
+CREATE TABLE REPRODUCCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_cliente INT NOT NULL,
-    id_video INT NOT NULL,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id),
-    FOREIGN KEY (id_video) REFERENCES video(id)
-);
-
-CREATE TABLE estreno (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_cuenta INT NOT NULL,
     id_video INT NOT NULL,
-    tipo ENUM('pelicula', 'serie') NOT NULL,
-    fecha DATETIME NOT NULL,
-    FOREIGN KEY (id_video) REFERENCES video(id)
+    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id),
+    FOREIGN KEY (id_video) REFERENCES VIDEO(id)
 );
 
-CREATE TABLE empresa (
+CREATE TABLE ESTRENO (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    fecha DATETIME NOT NULL,
+    tipo ENUM('pelicula', 'serie') NOT NULL,
+    id_video INT NOT NULL,
+    FOREIGN KEY (id_video) REFERENCES VIDEO(id)
+);
+
+CREATE TABLE EMPRESA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL
 );
 
 
 
-CREATE TABLE actuacion (
+CREATE TABLE ACTUACION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_artistico VARCHAR(100) NOT NULL,
     rol ENUM('principal', 'secundario', 'reparto', 'extra', 'cameo') NOT NULL,
     id_actor INT NOT NULL,
     id_video INT NOT NULL,
-    FOREIGN KEY (id_actor) REFERENCES actor(id),
-    FOREIGN KEY (id_video) REFERENCES video(id)
+    FOREIGN KEY (id_actor) REFERENCES ACTOR(id),
+    FOREIGN KEY (id_video) REFERENCES VIDEO(id)
 );
 
-CREATE TABLE premiacion (
+CREATE TABLE PREMIACION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha YEAR NOT NULL,
+    -- tipo ENUM('pelicula', 'serie') NOT NULL,
     id_video INT NOT NULL,
     id_premio INT NOT NULL,
-    FOREIGN KEY (id_video) REFERENCES video(id),
-    FOREIGN KEY (id_premio) REFERENCES premio(id)
+    FOREIGN KEY (id_video) REFERENCES VIDEO(id),
+    FOREIGN KEY (id_premio) REFERENCES PREMIO(id)
 );
 
-CREATE TABLE video_genero (
+CREATE TABLE VIDEO_GENERO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_video INT NOT NULL,
     id_genero INT NOT NULL,
-    FOREIGN KEY (id_video) REFERENCES video(id),
-    FOREIGN KEY (id_genero) REFERENCES genero(id)
+    FOREIGN KEY (id_video) REFERENCES VIDEO(id),
+    FOREIGN KEY (id_genero) REFERENCES GENERO(id)
 );
 
-CREATE TABLE video_audio (
+CREATE TABLE VIDEO_AUDIO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_audio INT NOT NULL,
     id_video INT NOT NULL,
-    FOREIGN KEY (id_audio) REFERENCES audio(id),
-    FOREIGN KEY (id_video) REFERENCES video(id)
+    FOREIGN KEY (id_audio) REFERENCES AUDIO(id),
+    FOREIGN KEY (id_video) REFERENCES VIDEO(id)
 );
 
-CREATE TABLE video_subtitulo (
+CREATE TABLE VIDEO_SUBTITULO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_subtitulo INT NOT NULL,
     id_video INT NOT NULL,
-    FOREIGN KEY (id_subtitulo) REFERENCES subtitulo(id),
-    FOREIGN KEY (id_video) REFERENCES video(id)
+    FOREIGN KEY (id_subtitulo) REFERENCES SUBTITULO(id),
+    FOREIGN KEY (id_video) REFERENCES VIDEO(id)
 );
 
-CREATE TABLE subcuenta_genero (
+CREATE TABLE SUBCUENTA_GENERO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_subcuenta INT NOT NULL,
     id_genero INT NOT NULL,
-    FOREIGN KEY (id_subcuenta) REFERENCES subcuenta(id),
-    FOREIGN KEY (id_genero) REFERENCES genero(id)
+    FOREIGN KEY (id_subcuenta) REFERENCES SUBCUENTA(id),
+    FOREIGN KEY (id_genero) REFERENCES GENERO(id)
 );
 
-CREATE TABLE produccion (
+CREATE TABLE PRODUCCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    costo DECIMAL(10, 2) NOT NULL,
     id_video INT NOT NULL,
     id_empresa INT NOT NULL,
-    costo DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_video) REFERENCES video(id),
-    FOREIGN KEY (id_empresa) REFERENCES empresa(id)
+    FOREIGN KEY (id_video) REFERENCES VIDEO(id),
+    FOREIGN KEY (id_empresa) REFERENCES EMPRESA(id)
 );
-
-
-/*
-+---------------------+
-| Tables_in_muchocine |
-+---------------------+
-| actor               |
-| actuacion           |
-| audio               |
-| capitulo            |
-| cliente             |
-| direccion           |
-| empresa             |
-| estreno             |
-| genero              |
-| informacion         |
-| oferta              |
-| paquete             |
-| pelicula            |
-| persona             |
-| premiacion          |
-| premio              |
-| produccion          |
-| reproduccion        |
-| restriccion         |
-| serie               |
-| subcuenta           |
-| subcuenta_genero    |
-| subtitulo           |
-| suscripcion         |
-| temporada           |
-| video               |
-| video_audio         |
-| video_genero        |
-| video_subtitulo     |
-+---------------------+
-*/
