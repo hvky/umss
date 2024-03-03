@@ -9,28 +9,17 @@ CREATE TABLE INFORMACION (
 );
 
 CREATE TABLE PERIODO (
-    ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     CHECK (fecha_inicio <= fecha_fin)
 );
 
-CREATE TABLE AUDIO (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    link_audio VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE SUBTITULO (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    link_subtitulo VARCHAR(255) NOT NULL
-);
-
 CREATE TABLE PREMIO (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    categoria VARCHAR(100) NOT NULL
-    -- PRIMARY KEY (id),
-    -- FOREIGN KEY (id) REFERENCES INFORMACION(id)
+    id INT NOT NULL,
+    categoria VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES INFORMACION(id)
 );
 
 CREATE TABLE DIRECCION (
@@ -54,10 +43,9 @@ CREATE TABLE RESTRICCION (
 
 CREATE TABLE PERSONA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    primer_nombre VARCHAR(50) NOT NULL,
-    segundo_nombre VARCHAR(50),
-    apellido_paterno VARCHAR(50),
-    apellido_materno VARCHAR(50),
+    nombre VARCHAR(40) NOT NULL,
+    apellido_paterno VARCHAR(20),
+    apellido_materno VARCHAR(20),
     fecha_nacimiento DATE NOT NULL,
     id_residencia INT NOT NULL,
     sexo CHAR(1),
@@ -69,9 +57,23 @@ CREATE TABLE VIDEO (
     titulo VARCHAR(255) NOT NULL,
     duracion DECIMAL(10, 2) NOT NULL,
     estreno YEAR NOT NULL,
-    link_foto_propaganda VARCHAR(255) NOT NULL,
+    link_portada VARCHAR(255) NOT NULL,
     id_restriccion INT NOT NULL,
     FOREIGN KEY (id_restriccion) REFERENCES RESTRICCION(id)
+);
+
+CREATE TABLE AUDIO (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    link_audio VARCHAR(255) NOT NULL,
+    id_video INT NOT NULL,
+    FOREIGN KEY (id_video) REFERENCES VIDEO(id)
+);
+
+CREATE TABLE SUBTITULO (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    link_subtitulo VARCHAR(255) NOT NULL,
+    id_video INT NOT NULL,
+    FOREIGN KEY (id_video) REFERENCES VIDEO(id)
 );
 
 CREATE TABLE ACTOR (
@@ -84,6 +86,7 @@ CREATE TABLE ACTOR (
 
 CREATE TABLE SERIE (
     id INT NOT NULL,
+    cantidad_temporadas INT,
     PRIMARY KEY (id),
     FOREIGN KEY (id) REFERENCES VIDEO(id)
 );
@@ -91,6 +94,7 @@ CREATE TABLE SERIE (
 CREATE TABLE TEMPORADA (
     id INT NOT NULL,
     id_serie INT NOT NULL,
+    cantidad_capitulos INT,
     PRIMARY KEY (id),
     FOREIGN KEY (id) REFERENCES INFORMACION(id),
     FOREIGN KEY (id_serie) REFERENCES SERIE(id)
@@ -215,22 +219,6 @@ CREATE TABLE R_VIDEO_GENERO (
     id_genero INT NOT NULL,
     FOREIGN KEY (id_video) REFERENCES VIDEO(id),
     FOREIGN KEY (id_genero) REFERENCES GENERO(id)
-);
-
-CREATE TABLE R_VIDEO_AUDIO (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_audio INT NOT NULL,
-    id_video INT NOT NULL,
-    FOREIGN KEY (id_audio) REFERENCES AUDIO(id),
-    FOREIGN KEY (id_video) REFERENCES VIDEO(id)
-);
-
-CREATE TABLE R_VIDEO_SUBTITULO (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_subtitulo INT NOT NULL,
-    id_video INT NOT NULL,
-    FOREIGN KEY (id_subtitulo) REFERENCES SUBTITULO(id),
-    FOREIGN KEY (id_video) REFERENCES VIDEO(id)
 );
 
 CREATE TABLE R_SUBCUENTA_GENERO (
