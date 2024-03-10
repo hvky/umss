@@ -13,30 +13,25 @@ CREATE TABLE FORMATO (
     descripcion TEXT NOT NULL
 );
 
-CREATE TABLE PAIS (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(20) NOT NULL,
-    continente ENUM('AFRICA', 'AMERICA', 'ASIA', 'EUROPA', 'OCEANIA') NOT NULL
-);
+-- CREATE TABLE PAIS (
+--     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--     nombre VARCHAR(20) NOT NULL,
+--     continente ENUM('AFRICA', 'AMERICA', 'ASIA', 'EUROPA', 'OCEANIA') NOT NULL
+-- );
 
-CREATE TABLE PERIODO (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    CHECK (fecha_inicio <= fecha_fin)
-);
-
-CREATE TABLE UBICACION (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    ciudad VARCHAR(30) NOT NULL,
-    id_pais INT NOT NULL,
-    FOREIGN KEY (id_pais) REFERENCES PAIS(id)
-);
+-- CREATE TABLE UBICACION (
+--     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--     ciudad VARCHAR(30) NOT NULL,
+--     id_pais INT NOT NULL,
+--     FOREIGN KEY (id_pais) REFERENCES PAIS(id)
+-- );
 
 CREATE TABLE EMPRESA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(30) NOT NULL,
     descripcion TEXT NOT NULL
+    -- fecha_fundacion YEAR,
+    -- sitio_web VARCHAR(255)
 );
 
 CREATE TABLE GENERO (
@@ -50,8 +45,8 @@ CREATE TABLE OFERTA (
     descripcion TEXT NOT NULL,
     precio DECIMAL(3, 2) NOT NULL,
     descuento DECIMAL(3, 2),
-    id_periodo INT NOT NULL,
-    FOREIGN KEY (id_periodo) REFERENCES PERIODO(id)
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL
 );
 
 CREATE TABLE PREMIO (
@@ -75,17 +70,17 @@ CREATE TABLE PERSONA (
     apellido_paterno VARCHAR(20),
     apellido_materno VARCHAR(20),
     fecha_nacimiento DATE NOT NULL,
-    id_residencia INT NOT NULL,
     sexo ENUM('F', 'M', 'N'),
-    FOREIGN KEY (id_residencia) REFERENCES UBICACION(id)
+    ciudad_residencia VARCHAR(50) NOT NULL,
+    pais_residencia VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE ACTOR (
     id_persona INT NOT NULL,
-    id_origen INT NOT NULL,
+    ciudad_origen VARCHAR(50) NOT NULL,
+    pais_origen VARCHAR(30) NOT NULL,
     PRIMARY KEY (id_persona),
-    FOREIGN KEY (id_persona) REFERENCES PERSONA(id),
-    FOREIGN KEY (id_origen) REFERENCES UBICACION(id)
+    FOREIGN KEY (id_persona) REFERENCES PERSONA(id)
 );
 
 CREATE TABLE CUENTA (
@@ -110,9 +105,9 @@ CREATE TABLE SUSCRIPCION (
     forma_pago ENUM('debito', 'credito') NOT NULL,
     duracion DECIMAL(6, 2) NOT NULL,
     id_cuenta INT NOT NULL,
-    id_periodo INT NOT NULL,
-    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona),
-    FOREIGN KEY (id_periodo) REFERENCES PERIODO(id)
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona)
 );
 
 CREATE TABLE TRANSACCION (
@@ -134,10 +129,10 @@ CREATE TABLE INFORMACION (
 );
 
 CREATE TABLE AUDIO (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     link_audio VARCHAR(255) NOT NULL,
     codigo_idioma CHAR(2) NOT NULL,
     id_informacion INT NOT NULL,
-    PRIMARY KEY (codigo_idioma, id_informacion),
     FOREIGN KEY (codigo_idioma) REFERENCES IDIOMA(codigo_iso),
     FOREIGN KEY (id_informacion) REFERENCES INFORMACION(id)
 );
@@ -152,10 +147,10 @@ CREATE TABLE REPRODUCCION (
 );
 
 CREATE TABLE SUBTITULO (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     link_subtitulo VARCHAR(255) NOT NULL,
     codigo_idioma CHAR(2) NOT NULL,
     id_informacion INT NOT NULL,
-    PRIMARY KEY (codigo_idioma, id_informacion),
     FOREIGN KEY (codigo_idioma) REFERENCES IDIOMA(codigo_iso),
     FOREIGN KEY (id_informacion) REFERENCES INFORMACION(id)
 );
@@ -259,7 +254,7 @@ CREATE TABLE H_OFERTA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_oferta INT NOT NULL,
-    id_nuevo_periodo INT NOT NULL,
-    FOREIGN KEY (id_oferta) REFERENCES OFERTA(id),
-    FOREIGN KEY (id_nuevo_periodo) REFERENCES PERIODO(id)
+    nueva_fecha_inicio DATE NOT NULL,
+    nueva_fecha_fin DATE NOT NULL,
+    FOREIGN KEY (id_oferta) REFERENCES OFERTA(id)
 );
