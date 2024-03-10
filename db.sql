@@ -40,15 +40,6 @@ CREATE TABLE GENERO (
     descripcion TEXT NOT NULL
 );
 
-CREATE TABLE OFERTA (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    descripcion TEXT NOT NULL,
-    precio DECIMAL(3, 2) NOT NULL,
-    descuento DECIMAL(3, 2),
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL
-);
-
 CREATE TABLE PREMIO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(30) NOT NULL,
@@ -103,18 +94,31 @@ CREATE TABLE SUBCUENTA (
 CREATE TABLE SUSCRIPCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     forma_pago ENUM('debito', 'credito') NOT NULL,
-    duracion DECIMAL(6, 2) NOT NULL,
+    duracion ENUM('mensual', 'semestral', 'anual'),
     id_cuenta INT NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona)
 );
 
+CREATE TABLE OFERTA (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    descripcion TEXT NOT NULL,
+    precio DECIMAL(3, 2) NOT NULL,
+    descuento DECIMAL(3, 2),
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    id_suscripcion INT NOT NULL,
+    FOREIGN KEY (id_suscripcion) REFERENCES SUSCRIPCION(id)
+);
+
 CREATE TABLE TRANSACCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     monto DECIMAL(3, 2) NOT NULL,
+    id_cuenta INT NOT NULL,
     id_suscripcion INT NOT NULL,
+    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona),
     FOREIGN KEY (id_suscripcion) REFERENCES SUSCRIPCION(id)
 );
 
@@ -254,6 +258,8 @@ CREATE TABLE H_OFERTA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_oferta INT NOT NULL,
+    antigua_fecha_inicio DATE NOT NULL,
+    antigua_fecha_fin DATE NOT NULL,
     nueva_fecha_inicio DATE NOT NULL,
     nueva_fecha_fin DATE NOT NULL,
     FOREIGN KEY (id_oferta) REFERENCES OFERTA(id)
