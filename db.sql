@@ -54,6 +54,11 @@ CREATE TABLE RESTRICCION (
     tipo_restriccion ENUM('ATP', 'TP', 'MPAA', 'PG-15', 'R-Rated')
 );
 
+CREATE TABLE PAQUETE (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    tipo ENUM('personal', 'duo', 'familiar')
+);
+
 
 CREATE TABLE PERSONA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -96,9 +101,11 @@ CREATE TABLE SUSCRIPCION (
     forma_pago ENUM('debito', 'credito') NOT NULL,
     duracion ENUM('mensual', 'semestral', 'anual'),
     id_cuenta INT NOT NULL,
+    id_paquete INT NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
-    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona)
+    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona),
+    FOREIGN KEY (id_paquete) REFERENCES PAQUETE(id)
 );
 
 CREATE TABLE OFERTA (
@@ -162,7 +169,7 @@ CREATE TABLE SUBTITULO (
 CREATE TABLE TRAILER (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     link_video VARCHAR(255) NOT NULL,
-    duracion DECIMAL(5, 2) NOT NULL,
+    duracion TIME NOT NULL,
     id_informacion INT NOT NULL,
     FOREIGN KEY (id_informacion) REFERENCES INFORMACION(id)
 );
