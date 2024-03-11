@@ -13,30 +13,29 @@ CREATE TABLE FORMATO (
     descripcion TEXT NOT NULL
 );
 
--- CREATE TABLE PAIS (
---     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
---     nombre VARCHAR(20) NOT NULL,
---     continente ENUM('AFRICA', 'AMERICA', 'ASIA', 'EUROPA', 'OCEANIA') NOT NULL
--- );
+CREATE TABLE PAIS (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(20) NOT NULL,
+    -- codigo_telefono INT NOT NULL,
+    continente ENUM('AFRICA', 'AMERICA', 'ASIA', 'EUROPA', 'OCEANIA') NOT NULL
+);
 
--- CREATE TABLE UBICACION (
---     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
---     ciudad VARCHAR(30) NOT NULL,
---     id_pais INT NOT NULL,
---     FOREIGN KEY (id_pais) REFERENCES PAIS(id)
--- );
+CREATE TABLE UBICACION (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    ciudad VARCHAR(30) NOT NULL,
+    id_pais INT NOT NULL,
+    FOREIGN KEY (id_pais) REFERENCES PAIS(id)
+);
 
 CREATE TABLE EMPRESA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(30) NOT NULL,
     descripcion TEXT NOT NULL
-    -- fecha_fundacion YEAR,
-    -- sitio_web VARCHAR(255)
 );
 
 CREATE TABLE GENERO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(30) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
     descripcion TEXT NOT NULL
 );
 
@@ -67,16 +66,16 @@ CREATE TABLE PERSONA (
     apellido_materno VARCHAR(20),
     fecha_nacimiento DATE NOT NULL,
     sexo ENUM('F', 'M', 'N'),
-    ciudad_residencia VARCHAR(50) NOT NULL,
-    pais_residencia VARCHAR(30) NOT NULL
+    id_ubicacion_residencia INT NOT NULL,
+    FOREIGN KEY (id_ubicacion_residencia) REFERENCES UBICACION(id)
 );
 
 CREATE TABLE ACTOR (
     id_persona INT NOT NULL,
-    ciudad_origen VARCHAR(50) NOT NULL,
-    pais_origen VARCHAR(30) NOT NULL,
+    id_ubicacion_origen INT NOT NULL,
     PRIMARY KEY (id_persona),
-    FOREIGN KEY (id_persona) REFERENCES PERSONA(id)
+    FOREIGN KEY (id_persona) REFERENCES PERSONA(id),
+    FOREIGN KEY (id_ubicacion_origen) REFERENCES UBICACION(id)
 );
 
 CREATE TABLE CUENTA (
@@ -84,6 +83,7 @@ CREATE TABLE CUENTA (
     correo VARCHAR(255) NOT NULL UNIQUE,
     usuario VARCHAR(255) NOT NULL UNIQUE,
     clave VARCHAR(255) NOT NULL,
+    telefono VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_persona),
     FOREIGN KEY (id_persona) REFERENCES PERSONA(id)
 );
@@ -91,6 +91,7 @@ CREATE TABLE CUENTA (
 CREATE TABLE SUBCUENTA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_cuenta INT NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
     clave_acceso VARCHAR(255),
     activo BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona)
@@ -98,7 +99,7 @@ CREATE TABLE SUBCUENTA (
 
 CREATE TABLE SUSCRIPCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    forma_pago ENUM('debito', 'credito') NOT NULL,
+    forma_pago ENUM('contado', 'credito') NOT NULL,
     duracion ENUM('mensual', 'semestral', 'anual'),
     id_cuenta INT NOT NULL,
     id_paquete INT NOT NULL,
@@ -113,10 +114,10 @@ CREATE TABLE OFERTA (
     descripcion TEXT NOT NULL,
     precio DECIMAL(3, 2) NOT NULL,
     descuento DECIMAL(3, 2),
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    id_suscripcion INT NOT NULL,
-    FOREIGN KEY (id_suscripcion) REFERENCES SUSCRIPCION(id)
+    fecha_inicio DATETIME NOT NULL,
+    fecha_fin DATETIME NOT NULL,
+    id_paquete INT NOT NULL,
+    FOREIGN KEY (id_paquete) REFERENCES PAQUETE(id)
 );
 
 CREATE TABLE TRANSACCION (
@@ -125,6 +126,7 @@ CREATE TABLE TRANSACCION (
     monto DECIMAL(3, 2) NOT NULL,
     id_cuenta INT NOT NULL,
     id_suscripcion INT NOT NULL,
+    tarjeta ENUM ('debito', 'credito'),
     FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona),
     FOREIGN KEY (id_suscripcion) REFERENCES SUSCRIPCION(id)
 );
@@ -134,7 +136,8 @@ CREATE TABLE INFORMACION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     estreno YEAR NOT NULL,
-    link_portada VARCHAR(255) NOT NULL,
+    duracion DECIMAL(5, 2) NOT NULL,
+    link_foto_propaganda VARCHAR(255) NOT NULL,
     id_restriccion INT NOT NULL,
     FOREIGN KEY (id_restriccion) REFERENCES RESTRICCION(id)
 );
@@ -170,13 +173,12 @@ CREATE TABLE TRAILER (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     link_video VARCHAR(255) NOT NULL,
     duracion TIME NOT NULL,
-    id_informacion INT NOT NULL,
+    id_informacion INT,
     FOREIGN KEY (id_informacion) REFERENCES INFORMACION(id)
 );
 
 CREATE TABLE PELICULA (
     id_informacion INT NOT NULL,
-    duracion TIME NOT NULL,
     link_video VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY (id_informacion),
     FOREIGN KEY (id_informacion) REFERENCES INFORMACION(id)
@@ -184,7 +186,6 @@ CREATE TABLE PELICULA (
 
 CREATE TABLE SERIE (
     id_informacion INT NOT NULL,
-    duracion DECIMAL(5, 2) NOT NULL,
     cantidad_temporadas INT,
     PRIMARY KEY (id_informacion),
     FOREIGN KEY (id_informacion) REFERENCES INFORMACION(id)
@@ -229,7 +230,6 @@ CREATE TABLE R_ACTOR_INFORMACION (
 CREATE TABLE R_INFORMACION_PREMIO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha YEAR NOT NULL,
-    tipo ENUM('pelicula', 'serie') NOT NULL,
     id_informacion INT NOT NULL,
     id_premio INT NOT NULL,
     FOREIGN KEY (id_informacion) REFERENCES INFORMACION(id),
@@ -263,11 +263,17 @@ CREATE TABLE R_INFORMACION_FORMATO (
 
 CREATE TABLE H_OFERTA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_oferta INT NOT NULL,
-    antigua_fecha_inicio DATE NOT NULL,
-    antigua_fecha_fin DATE NOT NULL,
-    nueva_fecha_inicio DATE NOT NULL,
-    nueva_fecha_fin DATE NOT NULL,
+    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_inicio DATETIME NOT NULL,
+    fecha_fin DATETIME NOT NULL,
     FOREIGN KEY (id_oferta) REFERENCES OFERTA(id)
+);
+
+CREATE TABLE H_CUENTA (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_cuenta INT NOT NULL,
+    clave VARCHAR(255) NOT NULL,
+    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona)
 );
