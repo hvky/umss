@@ -1,5 +1,4 @@
 * #### Algoritmo de Bresenham
-  -  https://www.geeksforgeeks.org/bresenhams-line-generation-algorithm/
 
 * #### Algoritmo DDA
   
