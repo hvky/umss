@@ -1,76 +1,84 @@
-import tkinter as tk
-import time
 from canvas import Canvas
+import time; delay = .01
 
 
-def punto_medio(x_c, y_c, r, canvas, tam, color='#fff') -> None:
-    x = r
+class Circunferencia:
+  def __init__(self, punto_c: tuple, radio: int) -> None:
+    self.x_c, self.y_c = punto_c
+    self.r = radio
+
+
+  def midpoint(self, l: Canvas, color: str = '#fff') -> list:
+    out = []
+    x = self.r
     y = 0
-    canvas.draw_pixel(x+x_c, y+y_c, tam, color)
-    P = 1 - r
+    P = 1 - self.r
+
+    # time.sleep(delay)
+    # l.draw_pixel(x + self.x_c, y + self.y_c, c=color)
+    # out.append((x + self.x_c, y + self.y_c))
 
     while x > y:
-        y += 1
+      y += 1
 
-        if P <= 0:
-            P = P + (y << 1) + 1
-        else:
-            x -= 1
-            P = P + (y << 1) - (x << 1) + 1
+      if P <= 0:
+        P = P + (y << 1) + 1
+      else:
+        x -= 1
+        P = P + (y << 1) - (x << 1) + 1
 
-        if x < y: break
+      if x < y:
+        break
 
-        canvas.draw_pixel(x + x_c, y + y_c, tam, color)
-        canvas.draw_pixel(-x + x_c, y + y_c, tam, color)
-        canvas.draw_pixel(x + x_c, -y + y_c, tam, color)
-        canvas.draw_pixel(-x + x_c, -y + y_c, tam, color)
+      tmp = [
+        (self.x_c + x, self.y_c + y), (self.x_c - x, self.y_c + y),
+        (self.x_c + x, self.y_c - y), (self.x_c - x, self.y_c - y),
+      ]
 
-        if x != y:
-            canvas.draw_pixel(y + x_c, x + y_c, tam, color)
-            canvas.draw_pixel(-y + x_c, x + y_c, tam, color)
-            canvas.draw_pixel(y + x_c, -x + y_c, tam, color)
-            canvas.draw_pixel(-y + x_c, -x + y_c, tam, color)
+      if x != y:
+        tmp.extend([
+          (self.x_c + y, self.y_c + x), (self.x_c - y, self.y_c + x),
+          (self.x_c + y, self.y_c - x), (self.x_c - y, self.y_c - x),
+        ])
+
+      for x_, y_ in tmp:
+        time.sleep(delay)
+        l.draw_pixel(x_, y_, c=color)
+        out.append((x_, y_))
+
+    return out
 
 
-def bresenham(x_c, y_c, r, canvas, tam, color='#fff') -> None:
-    def draw_circle(x, y) -> None:
-        canvas.draw_pixel(x_c+x, y_c+y, tam, color)
-        canvas.draw_pixel(x_c-x, y_c+y, tam, color)
-        canvas.draw_pixel(x_c+x, y_c-y, tam, color)
-        canvas.draw_pixel(x_c-x, y_c-y, tam, color)
-        canvas.draw_pixel(x_c+y, y_c+x, tam, color)
-        canvas.draw_pixel(x_c-y, y_c+x, tam, color)
-        canvas.draw_pixel(x_c+y, y_c-x, tam, color)
-        canvas.draw_pixel(x_c-y, y_c-x, tam, color)
+  def bresenham(self, l: Canvas, color: str = '#fff') -> list:
+    out = []
+
+    def draw(x, y) -> None:
+      tmp = [
+        (self.x_c + x, self.y_c + y), (self.x_c - x, self.y_c + y),
+        (self.x_c + x, self.y_c - y), (self.x_c - x, self.y_c - y),
+        (self.x_c + y, self.y_c + x), (self.x_c - y, self.y_c + x),
+        (self.x_c + y, self.y_c - x), (self.x_c - y, self.y_c - x),
+      ]
+
+      for x_, y_ in tmp:
+        time.sleep(delay)
+        l.draw_pixel(x_, y_, c=color)
+        out.append((x_, y_))
 
     x = 0
-    y = r
-    d = 3 - (r << 1)
-    draw_circle(x, y)
+    y = self.r
+    d = 3 - (self.r << 1)
+    draw(x, y)
 
     while y >= x:
-        x += 1
+      x += 1
 
-        if d > 0:
-            y -= 1
-            d = d + ((x - y) << 2) + 10
-        else:
-            d = d + (x << 2) + 6
+      if d > 0:
+        y -= 1
+        d = d + ((x - y) << 2) + 10
+      else:
+        d = d + (x << 2) + 6
 
-        draw_circle(x, y)
+      draw(x, y)
 
-
-if __name__ == '__main__':
-    root = tk.Tk()
-    canvas = Canvas(root, 1280, 720)
-    tam_pixel = 1
-
-    t = time.time()
-    punto_medio(300, 300, 240, canvas, tam_pixel, 'red')
-    print(f'Punto-Medio tardo: {time.time() - t}')
-
-    t = time.time()
-    bresenham(900, 300, 240, canvas, tam_pixel, 'cyan')
-    print(f'Bresenham tardo: {time.time() - t}')
-
-    root.mainloop()
+    return out
