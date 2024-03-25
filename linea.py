@@ -1,5 +1,5 @@
 from canvas import Canvas
-import time; delay = .01
+import time
 
 
 class Linea:
@@ -8,7 +8,7 @@ class Linea:
     self.x2, self.y2 = p2
 
 
-  def bresenham(self, canvas: Canvas, color: str = '#fff') -> None:
+  def bresenham(self, canvas: Canvas, color: str = '#fff', delay=.01) -> None:
     dY = self.y2 - self.y1
     dX = self.x2 - self.x1
 
@@ -54,7 +54,7 @@ class Linea:
         break
 
 
-  def dda(self, canvas: Canvas, color: str = '#fff') -> None:
+  def dda(self, canvas: Canvas, color: str = '#fff', delay=.01) -> None:
     dX = self.x2 - self.x1
     dY = self.y2 - self.y1
     l = abs(dX) if abs(dX) >= abs(dY) else abs(dY)

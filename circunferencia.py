@@ -8,7 +8,7 @@ class Circunferencia:
     self.r = radio
 
 
-  def midpoint(self, l: Canvas, color: str = '#fff') -> list:
+  def midpoint(self, l: Canvas, color: str = '#fff', delay=.01) -> list:
     out = []
     x = self.r
     y = 0
@@ -49,7 +49,7 @@ class Circunferencia:
     return out
 
 
-  def bresenham(self, l: Canvas, color: str = '#fff') -> list:
+  def bresenham(self, l: Canvas, color: str = '#fff', delay=.01) -> list:
     out = []
 
     def draw(x, y) -> None:
