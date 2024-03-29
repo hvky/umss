@@ -1,47 +1,54 @@
-import java.util.ArrayList;
+public class Circunferencia extends Grafico {
+  private Punto pCentral;
+  private int radio;
 
-
-public class Circunferencia {
-  private int x, y, r;
-
-  public Circunferencia(int x, int y, int r) {
-    this.x = x;
-    this.y = y;
-    this.r = r;
+  public Circunferencia(Punto p, int r, Panel canvas) {
+    this.pCentral = p;
+    this.radio = r;
+    this.canvas = canvas;
   }
 
-  public ArrayList<int[]> bresenham() {
-    ArrayList<int[]> ans = new ArrayList<int[]>();
-
-    int x = this.r,
-        y = 0, e = 0;
-
-    while (y <= x) {
-      addPoints(x, y, ans);
-
-      e += (y << 1) + 1;
-      y++;
-
-      if ((e << 1) > ((x << 1) - 1)) {
-        x--;
-        e += 1 - (x << 1);
-      }
-    }
-
-    return ans;
-  }
-
-  public ArrayList<int[]> midpoint() {
-    ArrayList<int[]> ans = new ArrayList<int[]>();
-
-    int x = this.r,
+  // PUNTO-MEDIO
+  @Override
+  public void dibujarContorno(int grosor, Estilo estilo, XColor color, int delay) {
+    int x = this.radio,
         y = 0,
-        xChange = 1 - (this.r << 1),
+        xChange = 1 - (this.radio << 1),
         yChange = 1,
         radiusError = 0;
+    
+    int pintar = 0, noPintar = 0, cnt = 1;
+    if (estilo != null) {
+      pintar = estilo.pintar;
+      noPintar = estilo.noPintar;
+    }
 
+    boolean f = true;
     while (x >= y) {
-      addPoints(x, y, ans);
+      if (estilo != null) {
+        if (cnt == 1) {
+          pintar--;
+
+          if (pintar == 0) {
+            pintar = estilo.pintar;
+            cnt = 0;
+            f = false;
+          }
+        } else {
+          noPintar--;
+
+          if (noPintar == 0) {
+            noPintar = estilo.noPintar;
+            cnt = 1;
+            f = true;
+          }
+        }
+      } else
+        f = true;
+
+
+      if (f)
+        addPoints(x, y, grosor, delay, color.getValor());
 
       y++;
       radiusError += yChange;
@@ -52,18 +59,29 @@ public class Circunferencia {
         xChange += 2;
       }
     }
-
-    return ans;
   }
 
-  public void addPoints(int x, int y, ArrayList<int[]> list) {
-    list.add(new int[] { this.x + x, this.y + y });
-    list.add(new int[] { this.x - x, this.y + y });
-    list.add(new int[] { this.x + x, this.y - y });
-    list.add(new int[] { this.x - x, this.y - y });
-    list.add(new int[] { this.x + y, this.y + x });
-    list.add(new int[] { this.x - y, this.y + x });
-    list.add(new int[] { this.x + y, this.y - x });
-    list.add(new int[] { this.x - y, this.y - x });
+  @Override
+  public void dibujarRelleno(XColor color, int delay) { }
+
+
+  private void addPoints(int x, int y, int grosor, int delay, int color) {
+    for (int i = 0; i < grosor; i++)
+      for (int j = 0; j < grosor; j++) {
+        canvas.drawPixel(pCentral.x + x + i, pCentral.y + y + j, color);
+        canvas.drawPixel(pCentral.x - x + i, pCentral.y + y + j, color);
+        canvas.drawPixel(pCentral.x + x + i, pCentral.y - y + j, color);
+        canvas.drawPixel(pCentral.x - x + i, pCentral.y - y + j, color);
+        canvas.drawPixel(pCentral.x + y + i, pCentral.y + x + j, color);
+        canvas.drawPixel(pCentral.x - y + i, pCentral.y + x + j, color);
+        canvas.drawPixel(pCentral.x + y + i, pCentral.y - x + j, color);
+        canvas.drawPixel(pCentral.x - y + i, pCentral.y - x + j, color);
+
+        try {
+          Thread.sleep(delay);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
   }
 }

@@ -1,115 +1,105 @@
-import java.util.ArrayList;
+public class Linea extends Primitiva {
+  private Punto p1, p2;
 
-
-public class Linea {
-  private int x1, x2, y1, y2;
-
-  public Linea(int[] p1, int[] p2) {
-    x1 = p1[0];
-    x2 = p2[0];
-    y1 = p1[1];
-    y2 = p2[1];
+  public Linea(Punto p1, Punto p2, Panel canvas) {
+    this.p1 = p1;
+    this.p2 = p2;
+    this.canvas = canvas;
   }
 
-  public ArrayList<int[]> bresenham() {
-    ArrayList<int[]> ans = new ArrayList<int[]>();
+  // BRESENHAM
+  @Override
+  public void dibujarContorno(int grosor, Estilo estilo, XColor color, int delay) {
+    int dx = this.p2.x - this.p1.x,
+        dy = this.p2.y - this.p1.y;
 
-    if (sonIguales())
-      ans.add(new int[] { x1, y1 });
-    else {
-      int dx = x2 - x1,
-          dy = y2 - y1;
+    int IncYi;
+    if (dy >= 0) {
+      IncYi = 1;
+    } else {
+      dy = -dy;
+      IncYi = -1;
+    }
 
-      int IncYi;
-      if (dy >= 0) {
-        IncYi = 1;
-      } else {
-        dy = -dy;
-        IncYi = -1;
-      }
+    int IncXi;
+    if (dx >= 0) {
+      IncXi = 1;
+    } else {
+      dx = -dx;
+      IncXi = -1;
+    }
 
-      int IncXi;
-      if (dx >= 0) {
-        IncXi = 1;
-      } else {
-        dx = -dx;
-        IncXi = -1;
-      }
+    int IncXr, IncYr;
+    if (dx >= dy) {
+      IncYr = 0;
+      IncXr = IncXi;
+    } else {
+      IncXr = 0;
+      IncYr = IncYi;
 
-      int IncXr, IncYr;
-      if (dx >= dy) {
-        IncYr = 0;
-        IncXr = IncXi;
-      } else {
-        IncXr = 0;
-        IncYr = IncYi;
+      int tmp = dx;
+      dx = dy; dy = tmp;
+    }
 
-        int tmp = dx;
-        dx = dy; dy = tmp;
-      }
+    int x, y, avR, av, avI;
+    x = this.p1.x; y = this.p1.y;
+    avR = dy << 1;
+    av = avR - dx;
+    avI = av - dx;
 
-      int x, y, avR, av, avI;
-      x = x1; y = y1;
-      avR = dy << 1;
-      av = avR - dx;
-      avI = av - dx;
+    int pintar = 0, noPintar = 0, cnt = 1;
+    if (estilo != null) {
+      pintar = estilo.pintar;
+      noPintar = estilo.noPintar;
+    }
 
-      do {
-        ans.add(new int[] { x, y });
+    boolean f = true;
+    while (true) {
+      if (estilo != null) {
+        if (cnt == 1) {
+          pintar--;
 
-        if (av >= 0) {
-          x += IncXi;
-          y += IncYi;
-          av += avI;
+          if (pintar == 0) {
+            pintar = estilo.pintar;
+            cnt = 0;
+            f = false;
+          }
         } else {
-          x += IncXr;
-          y += IncYr;
-          av += avR;
+          noPintar--;
+
+          if (noPintar == 0) {
+            noPintar = estilo.noPintar;
+            cnt = 1;
+            f = true;
+          }
         }
-      } while (x != x2);
-    }
+      } else
+        f = true;
 
-    return ans;
-  }
 
-  public ArrayList<int[]> dda() {
-    ArrayList<int[]> ans = new ArrayList<int[]>();
+      if (f)
+        for (int i = 0; i < grosor; i++)
+          for (int j = 0; j < grosor; j++)
+            canvas.drawPixel(x + i, y + j, color.getValor());
 
-    if (sonIguales())
-      ans.add(new int[] { x1, y1 });
-    else {
-      int Dx = x2 - x1,
-          Dy = y2 - y1,
-          longitud = (abs(Dx) >= abs(Dy)) ? Dx : Dy;
+      if (av >= 0) {
+        x += IncXi;
+        y += IncYi;
+        av += avI;
+      } else {
+        x += IncXr;
+        y += IncYr;
+        av += avR;
+      }
 
-      float dx = (float) Dx / longitud,
-            dy = (float) Dy / longitud;
+      if (x == this.p2.x && y == this.p2.y)
+        break;
 
-      float x = x1 + 0.5f * sign(dx),
-            y = y1 + 0.5f * sign(dy);
-
-      for (int i = 1; i <= longitud; i++) {
-        ans.add(new int[] { Math.round(x), Math.round(y) });
-        x += dx;
-        y += dy;
+      try {
+        Thread.sleep(delay);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
       }
     }
-
-    return ans;
-  }
-
-
-  private boolean sonIguales() {
-    return (x1 == x2 && y1 == y2);
-  }
-
-  private int abs(int n) {
-    return (n > 0) ? n : -n;
-  }
-  
-  private int sign(float n) {
-    return (n == 0)
-    ? 0
-    : (n > 0) ? 1 : -1;
   }
 }
