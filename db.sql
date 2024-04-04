@@ -14,15 +14,24 @@ CREATE TABLE FORMATO (
     descripcion TEXT NOT NULL
 );
 
+CREATE TABLE CONTINENTE (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(10) NOT NULL,
+    descripcion TEXT NOT NULL
+);
+
 CREATE TABLE PAIS (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(20) NOT NULL,
-    continente ENUM('AFRICA', 'AMERICA', 'ASIA', 'EUROPA', 'OCEANIA') NOT NULL
+    descripcion TEXT NOT NULL,
+    id_continente INT NOT NULL,
+    FOREIGN KEY (id_continente) REFERENCES CONTINENTE(id)
 );
 
 CREATE TABLE CIUDAD (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(30) NOT NULL,
+    descripcion TEXT NOT NULL,
     id_pais INT NOT NULL,
     FOREIGN KEY (id_pais) REFERENCES PAIS(id)
 );
@@ -83,7 +92,6 @@ CREATE TABLE CUENTA (
     correo VARCHAR(255) NOT NULL UNIQUE,
     usuario VARCHAR(255) NOT NULL UNIQUE,
     clave VARCHAR(255) NOT NULL,
-    telefono VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_persona),
     FOREIGN KEY (id_persona) REFERENCES PERSONA(id)
 );
@@ -101,11 +109,9 @@ CREATE TABLE SUSCRIPCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     forma_pago ENUM('contado', 'credito') NOT NULL,
     duracion ENUM('mensual', 'semestral', 'anual'),
-    id_cuenta INT NOT NULL,
     id_paquete INT NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
-    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona),
     FOREIGN KEY (id_paquete) REFERENCES PAQUETE(id)
 );
 
@@ -219,6 +225,23 @@ CREATE TABLE ESTRENO (
     FOREIGN KEY (id_contenido) REFERENCES CONTENIDO(id)
 );
 
+CREATE TABLE TELEFONO (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    codigo_pais INT NOT NULL,
+    numero INT NOT NULL,
+    id_cuenta INT NOT NULL,
+    FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona)
+);
+
+CREATE TABLE NOMINADO (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_contenido INT NOT NULL,
+    id_premio INT NOT NULL,
+    fecha_nominacion DATE,
+    FOREIGN KEY (id_contenido) REFERENCES CONTENIDO(id),
+    FOREIGN KEY (id_premio) REFERENCES PREMIO(id)
+);
+
 
 CREATE TABLE R_CONTENIDO_ACTOR (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -228,15 +251,6 @@ CREATE TABLE R_CONTENIDO_ACTOR (
     id_contenido INT NOT NULL,
     FOREIGN KEY (id_actor) REFERENCES ACTOR(id_persona),
     FOREIGN KEY (id_contenido) REFERENCES CONTENIDO(id)
-);
-
-CREATE TABLE R_CONTENIDO_PREMIO (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    fecha YEAR NOT NULL,
-    id_contenido INT NOT NULL,
-    id_premio INT NOT NULL,
-    FOREIGN KEY (id_contenido) REFERENCES CONTENIDO(id),
-    FOREIGN KEY (id_premio) REFERENCES PREMIO(id)
 );
 
 CREATE TABLE R_CONTENIDO_EMPRESA (
