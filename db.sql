@@ -105,16 +105,6 @@ CREATE TABLE SUBCUENTA (
     FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona)
 );
 
-CREATE TABLE SUSCRIPCION (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    forma_pago ENUM('contado', 'credito') NOT NULL,
-    duracion ENUM('mensual', 'semestral', 'anual'),
-    id_paquete INT NOT NULL,
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    FOREIGN KEY (id_paquete) REFERENCES PAQUETE(id)
-);
-
 CREATE TABLE OFERTA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     descripcion TEXT NOT NULL,
@@ -126,22 +116,53 @@ CREATE TABLE OFERTA (
     FOREIGN KEY (id_paquete) REFERENCES PAQUETE(id)
 );
 
-CREATE TABLE TRANSACCION (
+CREATE TABLE FORMA_PAGO (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    monto DECIMAL(3, 2) NOT NULL
+);
+
+CREATE TABLE CREDITO (
+    id_forma_pago INT NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    multa DECIMAL(2, 2) NOT NULL,
+    frecuencia_pago ENUM('semanal', 'quincenal', 'mensual', 'semestral', 'anual') NOT NULL,
+    PRIMARY KEY (id_forma_pago),
+    FOREIGN KEY (id_forma_pago) REFERENCES FORMA_PAGO(id)
+);
+
+CREATE TABLE TRANSACCION_CREDITO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    monto DECIMAL(3, 2) NOT NULL,
+    id_credito INT NOT NULL,
+    FOREIGN KEY (id_credito) REFERENCES CREDITO(id_forma_pago)
+);
+
+CREATE TABLE CONTADO (
+    id_forma_pago INT NOT NULL,
+    descuento DECIMAL(2, 2) NOT NULL,
+    PRIMARY KEY (id_forma_pago),
+    FOREIGN KEY (id_forma_pago) REFERENCES FORMA_PAGO(id)
+);
+
+CREATE TABLE SUSCRIPCION (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    duracion ENUM('mensual', 'semestral', 'anual'),
+    fecha_adquisicion DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    id_paquete INT NOT NULL,
     id_cuenta INT NOT NULL,
-    id_suscripcion INT NOT NULL,
-    tarjeta ENUM ('debito', 'credito'),
+    id_forma_pago INT NOT NULL,
+    FOREIGN KEY (id_paquete) REFERENCES PAQUETE(id),
     FOREIGN KEY (id_cuenta) REFERENCES CUENTA(id_persona),
-    FOREIGN KEY (id_suscripcion) REFERENCES SUSCRIPCION(id)
+    FOREIGN KEY (id_forma_pago) REFERENCES FORMA_PAGO(id)
 );
 
 
 CREATE TABLE CONTENIDO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
-    estreno YEAR NOT NULL,
+    -- estreno YEAR NOT NULL,
     link_foto_propaganda VARCHAR(255) NOT NULL,
     id_restriccion INT NOT NULL,
     id_genero INT NOT NULL,
@@ -158,7 +179,7 @@ CREATE TABLE AUDIO (
     FOREIGN KEY (id_contenido) REFERENCES CONTENIDO(id)
 );
 
-CREATE TABLE REPRODUCCION (
+CREATE TABLE VISUALIZACION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_subcuenta INT NOT NULL,
@@ -206,6 +227,7 @@ CREATE TABLE TEMPORADA (
     descripcion TEXT NOT NULL,
     id_serie INT NOT NULL,
     cantidad_capitulos INT,
+    fecha_estreno DATE,
     FOREIGN KEY (id_serie) REFERENCES SERIE(id_contenido)
 );
 
@@ -214,6 +236,7 @@ CREATE TABLE CAPITULO (
     nombre VARCHAR(30) NOT NULL,
     link_video VARCHAR(255) NOT NULL,
     duracion DECIMAL(10, 2) NOT NULL,
+    fecha_estreno DATE NOT NULL,
     id_temporada INT NOT NULL,
     FOREIGN KEY (id_temporada) REFERENCES TEMPORADA(id)
 );
@@ -221,6 +244,7 @@ CREATE TABLE CAPITULO (
 CREATE TABLE ESTRENO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha DATETIME NOT NULL,
+    descripcion TEXT,
     id_contenido INT NOT NULL,
     FOREIGN KEY (id_contenido) REFERENCES CONTENIDO(id)
 );
@@ -255,6 +279,7 @@ CREATE TABLE R_CONTENIDO_ACTOR (
 
 CREATE TABLE R_CONTENIDO_EMPRESA (
     costo DECIMAL(7, 2) NOT NULL,
+    duracion DECIMAL(5, 2),
     id_contenido INT NOT NULL,
     id_empresa INT NOT NULL,
     PRIMARY KEY (id_contenido, id_empresa),
