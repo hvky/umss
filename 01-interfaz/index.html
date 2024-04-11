@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/highlights.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Graficacion App</title>
+  </head>
+
+  <body>
+    <main class="container">
+      <h3 class="mt-4 mb-4 fw-bold text-center">
+        Graficación por Computadora <span class="badge rounded-pill text-bg-light">800x600</span>
+      </h3>
+
+      <div class="container-app">
+        <form class="container-app-optiones p-4">
+          <div class="container-app-optiones--figures">
+            <input type="radio"
+              class="btn-check"
+              name="options-outlined"
+              id="circleOption"
+              onclick="handleCircle()"
+              autocomplete="off"
+              checked>
+            <label class="btn btn-outline-primary"
+              for="circleOption"
+            ><i class="bi bi-circle-half"></i> Circunferencia</label>
+
+            <input type="radio"
+              class="btn-check"
+              name="options-outlined"
+              id="triangleOption"
+              onclick="handleTriangle()"
+              autocomplete="off">
+            <label class="btn btn-outline-warning"
+              for="triangleOption"
+            ><i class="bi bi-triangle-half"></i> Triangulo</label>
+          </div>
+
+          <div class="circle">
+            <div class="input-group">
+              <span class="input-group-text">Punto Central</span>
+              <div class="form-floating">
+                <input type="number"
+                  class="form-control"
+                  id="CircleX"
+                  placeholder=""
+                  required>
+                <label for="CircleX">X:</label>
+              </div>
+              <div class="form-floating">
+                <input type="number"
+                  class="form-control"
+                  id="CircleY"
+                  placeholder=""
+                  required>
+                <label for="CircleY">Y:</label>
+              </div>
+            </div>
+            <div class="input-group">
+              <span class="input-group-text">Radio</span>
+              <div class="form-floating">
+                <input type="number"
+                  class="form-control"
+                  id="CircleRadius"
+                  placeholder=""
+                  required>
+                <label for="CircleRadius">Radio:</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="triangle d-none">
+            <div class="input-group">
+              <span class="input-group-text">Primer Punto</span>
+              <div class="form-floating">
+                <input type="number"
+                  class="form-control"
+                  id="TriangleFirstX"
+                  placeholder="">
+                <label for="TriangleFirstX">X:</label>
+              </div>
+              <div class="form-floating">
+                <input type="number"
+                  class="form-control"
+                  id="TriangleFirstY"
+                  placeholder="">
+                <label for="TriangleFirstY">Y:</label>
+              </div>
+            </div>
+            <div class="input-group">
+              <span class="input-group-text">Segundo Punto</span>
+              <div class="form-floating">
+                <input type="number"
+                  class="form-control"
+                  id="TriangleSecondX"
+                  placeholder="">
+                <label for="TriangleSecondX">X:</label>
+              </div>
+              <div class="form-floating">
+                <input type="number"
+                  class="form-control"
+                  id="TriangleSecondY"
+                  placeholder="">
+                <label for="TriangleSecondY">Y:</label>
+              </div>
+            </div>
+            <div class="input-group">
+              <span class="input-group-text">Tercer Punto</span>
+              <div class="form-floating">
+                <input type="number"
+                  class="form-control"
+                  id="TriangleThirdX"
+                  placeholder="">
+                <label for="TriangleThirdX">X:</label>
+              </div>
+              <div class="form-floating">
+                <input type="number"
+                  class="form-control"
+                  id="TriangleThirdY"
+                  placeholder="">
+                <label for="TriangleThirdY">Y:</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-check form-switch">
+            <input class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="BtnRelleno">
+            <label class="form-check-label" for="BtnRelleno">
+              Pintar Relleno</label>
+          </div>
+
+          <div class="colores input-group">
+            <span class="input-group-text">Contorno</span>
+            <input type="color"
+              class="form-control form-control-color"
+              id="colorContorno"
+              value="#ffffff">
+            <span class="input-group-text">Relleno</span>
+            <input type="color"
+              class="form-control form-control-color"
+              id="colorRelleno"
+              value="#ffffff"
+              disabled>
+          </div>
+
+          <input type="submit"
+            class="btn btn-success"
+            id="graficar"
+            value="Graficar">
+        </form>
+
+        <canvas></canvas>
+      </div>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+    <script>
+      const circleItems = document.querySelector(".circle")
+      const triangleItems = document.querySelector(".triangle")
+      const checkboxColorRelleno = document.querySelector("#BtnRelleno")
+      const colorRelleno = document.querySelector("#colorRelleno")
+
+      const cpx = document.querySelector("#CircleX")
+      const cpy = document.querySelector("#CircleY")
+      const cr = document.querySelector("#CircleRadius")
+      const tp1x = document.querySelector("#TriangleFirstX")
+      const tp1y = document.querySelector("#TriangleFirstY")
+      const tp2x = document.querySelector("#TriangleSecondX")
+      const tp2y = document.querySelector("#TriangleSecondY")
+      const tp3x = document.querySelector("#TriangleThirdX")
+      const tp3y = document.querySelector("#TriangleThirdY")
+
+      const handleCircle = () => {
+        circleItems.classList = "circle"
+        triangleItems.classList = "triangle d-none"
+        cpx.required = cpy.required = cr.required = true
+        tp1x.required = tp1y.required = tp2x.required = tp2y.required = tp3x.required = tp3y.required = false
+      }
+
+      const handleTriangle = () => {
+        triangleItems.classList = "triangle"
+        circleItems.classList = "circle d-none"
+        cpx.required = cpy.required = cr.required = false
+        tp1x.required = tp1y.required = tp2x.required = tp2y.required = tp3x.required = tp3y.required = true
+      }
+
+      checkboxColorRelleno.addEventListener("change", () => {
+        colorRelleno.disabled = !checkboxColorRelleno.checked
+      })
+    </script>
+  </body>
+</html>

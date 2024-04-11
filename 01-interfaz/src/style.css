@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  padding-bottom: 2rem;
+}
+
+canvas {
+  background-color: #000;
+}
+
+.container-app {
+  align-items: center;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.container-app-optiones {
+  background-color: rgba(0, 0, 0, .3);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 600px;
+  min-width: 300px;
+  width: 100%;
+}
+
+.container-app-optiones--figures {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+
+@media screen and (max-width: 700px) {
+  .container-app {
+    flex-direction: column;
+  }
+}
