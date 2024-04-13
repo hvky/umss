@@ -30,10 +30,10 @@ public class Triangulo extends Grafico {
   }
 
   // IMPLEMENTADO CON SCAN-LINE
-  // TODO: CORREGIR, SOLO FUNCIONA EN EL ESTADO IDEAL (GROSOR 1, SIN ESTILO Y DENTRO EL LIENZO)
+  // TODO: MEJORAR, SOLO FUNCIONA DENTRO EL LIENZO
   @Override
   public void initRelleno() {
-    ptsRelleno.clear();
+    if (ptsContorno.size() == 0) return;
 
     int x_min = Utils.min(new int[] { p1.x, p2.x, p3.x });
     int y_min = Utils.min(new int[] { p1.y, p2.y, p3.y });
@@ -47,10 +47,10 @@ public class Triangulo extends Grafico {
       x1 = x2 = cnt = -1;
 
       for (int x = x_min; x <= x_max; x++) {
-        if (matriz[x][y] == 1) {
-          if (x1 == -1) {
+        if (matriz[x][y] != 0) {
+          if (x1 == -1 || cnt == x1) {
             x1 = x;
-          } else if (cnt != x1) {
+          } else {
             x2 = x;
             x = x_max + 1;
           }
@@ -83,33 +83,20 @@ public class Triangulo extends Grafico {
   }
 
   @Override
-  public void escalar(int aumento) {
-    int cx = (p1.x + p2.x + p3.x) / 3;
-    int cy = (p1.y + p2.y + p3.y) / 3;
+  public void escalar(double aumento) {
+    double cx = (p1.x + p2.x + p3.x) / 3.0;
+    double cy = (p1.y + p2.y + p3.y) / 3.0;
 
-    p1.x -= cx;
-    p1.y -= cy;
-    p2.x -= cx;
-    p2.y -= cy;
-    p3.x -= cx;
-    p3.y -= cy;
-
-    p1.x *= aumento;
-    p1.y *= aumento;
-    p2.x *= aumento;
-    p2.y *= aumento;
-    p3.x *= aumento;
-    p3.y *= aumento;
-
-    p1.x += cx;
-    p1.y += cy;
-    p2.x += cx;
-    p2.y += cy;
-    p3.x += cx;
-    p3.y += cy;
+    p1.x = (int) (cx + (p1.x - cx) * aumento);
+    p1.y = (int) (cy + (p1.y - cy) * aumento);
+    p2.x = (int) (cx + (p2.x - cx) * aumento);
+    p2.y = (int) (cy + (p2.y - cy) * aumento);
+    p3.x = (int) (cx + (p3.x - cx) * aumento);
+    p3.y = (int) (cy + (p3.y - cy) * aumento);
 
     reset();
   }
+
 
   @Override
   public void rotar(int angulo) {

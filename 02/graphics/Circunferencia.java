@@ -154,6 +154,8 @@ public class Circunferencia extends Grafico {
   // TODO: IMPLEMENTAR ALGORITMO PARA LA BUSQUEDA DEL PUNTO INICIAL
   @Override
   public void initRelleno() {
+    if (ptsContorno.size() == 0) return;
+
     int[][] movs = { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
     Point ini = centro;
 
@@ -186,7 +188,7 @@ public class Circunferencia extends Grafico {
   }
 
   @Override
-  public void escalar(int aumento) {
+  public void escalar(double aumento) {
     radio *= aumento;
     reset();
   }

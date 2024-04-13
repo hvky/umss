@@ -44,7 +44,7 @@ abstract public class Grafico {
 
   abstract public void trasladar(int dx, int dy);
 
-  abstract public void escalar(int aumento);
+  abstract public void escalar(double aumento);
 
   abstract public void rotar(int angulo);
 }
