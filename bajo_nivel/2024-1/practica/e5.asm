@@ -235,9 +235,9 @@ ciudades          db 'Cochabamba', 0, 'Beni', 0
                   db 'Santa Cruz', 0, 'La Paz', 0
                   db 'Tarija', 0, 'Oruro', 0
                   db 'Pando', 0, 'Potosi', 0
-                  db 'Chuquisaca', 0
-numeros           db '5916', 0, '5917', 0
-correos           db 'gmail', 0, 'hotmail', 0, 'yahoo'
+                  db 'Chuquisaca', 1
+numeros           db '5916', 0, '5917', 1
+correos           db 'gmail', 0, 'hotmail', 0, 'yahoo', 1
 
 nombre            db 31 dup('$')
 ap_paterno        db 21 dup('$')

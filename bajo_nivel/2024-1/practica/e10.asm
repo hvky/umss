@@ -221,12 +221,12 @@ ret
 inputFecha endp
 
 
-msg_nit db 13, 10, 'Ingregse el NIT: $'
-msg_nro db 13, 10, 'Ingregse el Nro de Factura: $'
-msg_aut db 13, 10, 'Ingregse el Nro de Autorizacion: $'
-msg_nom db 13, 10, 'Ingregse el Nombre del Cliente: $'
-msg_mon db 13, 10, 'Ingregse el Monto: $'
-msg_fec db 13, 10, 'Ingregse la fecha en el formato DD/MM/AA: $'
+msg_nit db 13, 10, 'Ingrese el NIT: $'
+msg_nro db 13, 10, 'Ingrese el Nro de Factura: $'
+msg_aut db 13, 10, 'Ingrese el Nro de Autorizacion: $'
+msg_nom db 13, 10, 'Ingrese el Nombre del Cliente: $'
+msg_mon db 13, 10, 'Ingrese el Monto: $'
+msg_fec db 13, 10, 'Ingrese la fecha en el formato DD/MM/AA: $'
 msg_1   db 2 dup(13, 10), 'Primer Componente: $'
 msg_2   db 13, 10, 'Segundo Componente: $'
 msg_3   db 13, 10, 'Tercer Componente: $'
