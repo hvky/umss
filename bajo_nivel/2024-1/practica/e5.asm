@@ -33,7 +33,7 @@ copy macro origen, destino, n
     loop ciclo
 endm
 
-inputNum macro n
+inputNum macro n, min
   local ciclo, end
   mov si, offset aux
   mov bl, 0
@@ -56,8 +56,8 @@ inputNum macro n
     loop ciclo
 
   end:
-    cmp bl, 0
-    je ciclo
+    cmp bl, min
+    jb ciclo
 endm
 
 inputStr macro n
@@ -95,8 +95,46 @@ inputStr macro n
     je ciclo
 endm
 
-evaluar macro str, data, len
-  mov al, 1
+search macro cad, data
+  local ciclo, ciclo2, volver_a_empezar, incrementar, evaluar, fin
+  mov di, offset data
+  mov dx, 0
+
+  ciclo:
+    mov si, offset cad
+    mov ch, 0
+    mov cl, bl
+
+  ciclo2:
+    cmp [di], 0
+    je volver_a_empezar
+    cmp [di], 1
+    je fin
+    mov al, [si]
+    cmp al, [di]
+    jne volver_a_empezar
+    inc si
+    inc di
+    loop ciclo2
+  jmp evaluar
+
+  volver_a_empezar:
+    cmp [di], 1
+    jbe incrementar
+    inc di
+    jmp volver_a_empezar
+  
+  incrementar:
+    cmp [di], 1
+    je fin
+    inc di
+    jmp ciclo
+
+  evaluar:
+    cmp [di], 1
+    ja volver_a_empezar
+    mov dx, 1
+  fin:
 endm
 
 
@@ -111,31 +149,37 @@ inicio:
   inputStr 20
   copy aux, ap_materno, bl
   printStr msg_carnet
-  inputNum 15
+  inputNum 15, 5
   copy aux, carnet, bl
 
 input_telefono:
   printStr msg_numero
-  inputNum 20
-  evaluar aux, numeros, bl
-  cmp al, 1
-  je input_ciudad
+  inputNum 20, 5
+  mov bl, 4
+  search aux, numeros
+  cmp dl, 1
+  je et_ciudad
   printStr msg_error_num
   jmp input_telefono
 
-input_ciudad:
+et_ciudad:
   copy aux, numero, bl
+
+input_ciudad:
   printStr msg_ciudad
   inputStr 20
-  evaluar aux, ciudades, bl
-  cmp al, 1
-  je input_correo
+  search aux, ciudades
+  cmp dl, 1
+  je et_correo
   printStr msg_error_ciudad
   jmp input_ciudad
 
-input_correo:
+et_correo:
   copy aux, ciudad, bl
+
+input_correo:
   printStr msg_correo
+  
 
 
 input_password:
@@ -248,3 +292,4 @@ ciudad            db 21 dup('$')
 correo            db 51 dup('$')
 password          db 100h dup('$')
 aux               db 100h dup(0)
+aux_correo        db 20 dup(0)
