@@ -39,6 +39,8 @@ public class Main {
 
     g.rotar(90);
     graficar(g, panel);
+
+    panel.saveImage("image");
   }
   
   private static void graficar(Grafico g, Panel panel) {
