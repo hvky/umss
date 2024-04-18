@@ -293,3 +293,4 @@ correo            db 51 dup('$')
 password          db 100h dup('$')
 aux               db 100h dup(0)
 aux_correo        db 20 dup(0)
+

@@ -103,33 +103,33 @@ year:
 
 imprimir:
   printStr msg_registro
-  print 1 15
+  print 1, 15
   printStr salto
-  print 4 12
+  print 4, 12
 
   push bx
   shr bx, 11
   printStr msg_dia_
-  print 1 15
+  print 1, 15
   printStr salto
-  print 4 12
+  print 4, 12
   pop bx
 
   push bx
   shl bx, 5
   shr bx, 12
   printStr msg_month_
-  print 1 15
+  print 1, 15
   printStr salto
-  print 4 12
+  print 4, 12
   pop bx
 
   shl bx, 9
   shr bx, 9
   printStr msg_year_
-  print 1 15
+  print 1, 15
   printStr salto
-  print 4 12
+  print 4, 12
 
 fin: int 20h
 
