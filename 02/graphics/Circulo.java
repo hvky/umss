@@ -5,15 +5,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
-public class Circunferencia extends Grafico {
+public class Circulo extends Grafico {
   private Point centro;
   private int radio;
 
-  public Circunferencia(Point puntoCentral, int radio, int width, int height) {
+  public Circulo(Point puntoCentral, int radio, int width, int height) {
     this(puntoCentral, radio, width, height, 1, null);
   }
 
-  public Circunferencia(Point puntoCentral, int radio, int width, int height, int grosor, Estilo estilo) {
+  public Circulo(Point puntoCentral, int radio, int width, int height, int grosor, Estilo estilo) {
     super(width, height, grosor, estilo);
     this.centro = puntoCentral;
     this.radio = radio;

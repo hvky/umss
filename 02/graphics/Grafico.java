@@ -34,6 +34,16 @@ abstract public class Grafico {
     return matriz;
   }
 
+  public void setGrosor(int grosor) {
+    this.grosor = grosor;
+    reset();
+  }
+
+  public void setEstilo(Estilo estilo) {
+    this.estilo = estilo;
+    reset();
+  }
+
   protected void reset() {
     matriz = new int[width][height];
     ptsContorno.clear();

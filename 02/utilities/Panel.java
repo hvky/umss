@@ -17,6 +17,10 @@ public class Panel extends JPanel {
   private BufferedImage img;
   private int w, h, escala;
 
+  public Panel(int width, int height) {
+    this(width, height, 1);
+  }
+
   public Panel(int widht, int height, int scale) {
     w = widht;
     h = height;
@@ -51,15 +55,12 @@ public class Panel extends JPanel {
     }
   }
 
-  public void saveImage(String name) {
-    String ruta = "data/" + name + ".png";
-
+  public void saveImage(String path) {
     try {
-      File f = new File(ruta);
+      File f = new File(path + "/image.png");
       ImageIO.write(img, "png", f);
-      System.out.println("Imagen guardada exitosamente en: " + f.getAbsolutePath());
     } catch (IOException e) {
-      System.out.println("Error al guardar la imagen: " + e.getMessage());
+      e.printStackTrace();
     }
   }
 }
