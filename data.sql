@@ -521,5 +521,3 @@ INSERT INTO RESTRICCION (nombre, descripcion, tipo_restriccion) VALUES
   ('Clasificación por edades', 'La clasificación de películas establecida por la MPAA. Incluye categorías como G, PG, PG-13, R y NC-17.', 'MPAA'),
   ('Parental Guidance', 'La película o serie puede contener contenido inapropiado para niños menores de 15 años. Se recomienda la supervisión de un adulto.', 'PG-15'),
   ('Restricted', 'La película o serie contiene contenido para adultos. No se recomienda para menores de 17 años sin la compañía de un adulto.', 'R-Rated');
-
-INSERT INTO PAQUETE(tipo) VALUES ('personal'), ('duo'), ('familiar');

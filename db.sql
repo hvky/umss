@@ -64,7 +64,9 @@ CREATE TABLE RESTRICCION (
 
 CREATE TABLE PAQUETE (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    tipo ENUM('personal', 'duo', 'familiar')
+    tipo ENUM('personal', 'duo', 'familiar') NOT NULL,
+    descripcion TEXT NOT NULL,
+    duracion DECIMAL(2, 1) NOT NULL
 );
 
 
@@ -118,23 +120,21 @@ CREATE TABLE OFERTA (
 
 CREATE TABLE FORMA_PAGO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    monto DECIMAL(3, 2) NOT NULL,
-    modalidad ENUM('contado', 'credito') NOT NULL
+    monto DECIMAL(3, 2) NOT NULL
 );
 
 CREATE TABLE CREDITO (
     id_forma_pago INT NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
-    multa DECIMAL(2, 2) NOT NULL,
-    frecuencia_pago ENUM('semanal', 'quincenal', 'mensual', 'semestral', 'anual') NOT NULL,
     PRIMARY KEY (id_forma_pago),
     FOREIGN KEY (id_forma_pago) REFERENCES FORMA_PAGO(id)
 );
 
 CREATE TABLE TRANSACCION_CREDITO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    multa DECIMAL(2, 2) NOT NULL,
     id_credito INT NOT NULL,
     FOREIGN KEY (id_credito) REFERENCES CREDITO(id_forma_pago)
 );
@@ -148,7 +148,6 @@ CREATE TABLE CONTADO (
 
 CREATE TABLE SUSCRIPCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    duracion ENUM('mensual', 'semestral', 'anual'),
     fecha_adquisicion DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     id_paquete INT NOT NULL,
