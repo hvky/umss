@@ -1,0 +1,37 @@
+#JSGF V1.0;
+grammar dibujar;
+
+public <dibujar> =
+[<dato0>]
+[<dato1>]
+[<dato2>]
+[<dato3>]
+[<dato4>]
+[<dato5>]
+[<dato6>]
+[<dato7>]
+[<dato11>]
+[<dato12>]
+[<dato13>]
+[<dato14>]
+[<dato15>]
+[<dato16>]
+[<dato17>]
+[<dato18>];
+
+<dato0>= Acordeon;
+<dato1>= Corno;
+<dato2>= Electrica;
+<dato3>= Flauta;
+<dato4>= Guitarra;
+<dato5>= Mandolina;
+<dato6>= Maracas;
+<dato7>= Microfono;
+<dato11>= Platillos;
+<dato12>= Saxofon;
+<dato13>= Tambor;
+<dato14>= Teclado;
+<dato15>= Trompeta;
+<dato16>= Tuba;
+<dato17>= Violin;
+<dato18>= Xilofono;
