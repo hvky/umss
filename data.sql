@@ -157,6 +157,13 @@ INSERT INTO PELICULA (id_contenido, duracion, link_video) VALUES
   (4, "1.51", 'https://youtu.be/6Kb7a8ASs8M?si=oRm6hQ-wyx2gXUdgfdf'), 
   (5, "1.41", 'https://youtu.be/6Kb7a8ASs8M?si=oRm6hQ-wyx2gXUdgasdfasd'); 
 
+INSERT INTO SERIES (id_contenido, duracion, cantidad_temporadas) VALUES
+(6, 73.55, 2),   -- Game of Thrones
+(7, 62.30, 2),   -- Breaking Bad
+(8, 231, 2),     -- The Walking Dead
+(9, 99, 2),      -- La Ley y El orden UV
+(10, 88.30, 2);  -- The Office
+
 INSERT INTO TEMPORADA (id, nombre, descripcion, id_serie, cantidad_capitulos, fecha_estreno) VALUES
   (1, 'Game of Thrones: temp 1', 'Primera temporada de la serie', 6, 2, '2011-04-17'),
   (2, 'Game of Thrones: temp 2', 'Segunda temporada de la serie', 6, 2, '2012-04-01'),
