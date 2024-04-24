@@ -250,7 +250,10 @@ INSERT INTO R_CONTENIDO_EMPRESA (costo, duracion, id_contenido, id_empresa) VALU
   (356.1, 7.2, 2, 2),
   (55.7, 0.1, 3, 3),
   (2.5, 1.4, 4, 4),
-  (2.5, 1.5, 5, 5);
+  (2.5, 1.5, 5, 5),
+
+  (36.1, 7.2, 9, 2),
+  (5.7, 0.1, 9, 3);
 
 INSERT INTO PERSONA (id, nombre, apellido_paterno, apellido_materno, fecha_nacimiento, sexo, id_ciudad_residencia) VALUES
   (1, 'William Bradley', 'Pitt', '', '1963-12-18', 'M', 24),

@@ -32,7 +32,7 @@ GROUP BY
   p.id, p.nombre, c.nombre, pa.nombre, paq.tipo, fp.id, cr.id_forma_pago, co.id_forma_pago;
 
 
--- *****************************************************************
+-- -- *****************************************************************
 SELECT 
   ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS Puesto,
   c.titulo AS Titulo_Pelicula,
@@ -81,6 +81,7 @@ WHERE
   co.titulo = 'LA LEY Y EL ORDEN UVE';
 
 
+
 -- -- *****************************************************************
 SELECT 
   p.nombre AS Nombre_Actor,
@@ -117,18 +118,18 @@ GROUP BY
 
 
 -- -- *****************************************************************
--- SELECT 
---   p.nombre AS Nombre_Usuario,
---   s.fecha_adquisicion AS Fecha_Suscripcion_Antigua,
---   paq.tipo AS Paquete_Asociado
--- FROM 
---   PERSONA p
--- JOIN 
---   SUSCRIPCION s ON p.id = s.id_cuenta
--- JOIN 
---   PAQUETE paq ON s.id_paquete = paq.id
--- GROUP BY 
---   p.id
--- ORDER BY 
---   COUNT(*) DESC
--- LIMIT 1;
+SELECT 
+  p.nombre AS Nombre_Usuario,
+  s.fecha_adquisicion AS Fecha_Suscripcion_Antigua,
+  paq.tipo AS Paquete_Asociado
+FROM 
+  PERSONA p
+JOIN 
+  SUSCRIPCION s ON p.id = s.id_cuenta
+JOIN 
+  PAQUETE paq ON s.id_paquete = paq.id
+GROUP BY 
+  p.nombre, s.fecha_adquisicion, paq.tipo
+ORDER BY 
+  COUNT(*) DESC
+LIMIT 1;
