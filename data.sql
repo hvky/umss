@@ -170,7 +170,7 @@ INSERT INTO CONTENIDO (id, titulo, link_foto_propaganda, id_restriccion, id_gene
   (6, 'Game of Thrones', 'https://images.app.goo.gl/XGtZ9xzbUqrUfCwM6', 5, 6),
   (7, 'Breaking Bad', 'https://images.app.goo.gl/uUiNmbjRgVYJb3db6', 5, 4),
   (8, 'The Walking Dead', 'https://images.app.goo.gl/iv7y7FFmSBe97kT57', 4, 2),
-  (9, 'Friends', 'https://images.app.goo.gl/vMw4yvFYH5Deuk786', 1, 3),
+  (9, 'LA LEY Y EL ORDEN UVE', 'https://images.app.goo.gl/vMw4yvFYH5Deuk786', 1, 3),
   (10, 'The Office', 'https://images.app.goo.gl/R7JUtUrDiHTaPzbo8', 1, 3);
 
 INSERT INTO PELICULA (id_contenido, duracion, link_video) VALUES
@@ -303,7 +303,20 @@ INSERT INTO PERSONA (id, nombre, apellido_paterno, apellido_materno, fecha_nacim
   (47, 'Eddy', 'Sejas', NULL, '2004-03-07', 'M', 36),
   (48, 'Jhonny', 'Fernandez', NULL, '2001-11-13', 'M', 36),
   (49, 'Eduardo', 'Kilibarda', NULL, '2002-09-25', 'M', 36),
-  (50, 'Jhonathan', 'Quispe', NULL, '2002-11-10', 'M', 36);
+  (50, 'Jhonathan', 'Quispe', NULL, '2002-11-10', 'M', 36),
+
+
+    (51, 'Robert', 'Downey', 'Jr.', '1965-04-04', 'M', 1), -- Robert Downey Jr.
+    (52, 'Chris', 'Evans', NULL, '1981-06-13', 'M', 1), -- Chris Evans
+    (53, 'Mark', 'Ruffalo', NULL, '1967-11-22', 'M', 8), -- Mark Ruffalo
+    (54, 'Chris', 'Hemsworth', NULL, '1983-08-11', 'M', 2), -- Chris Hemsworth
+    (55, 'Scarlett', 'Johansson', NULL, '1984-11-22', 'F', 1), -- Scarlett Johansson
+    (56, 'Jeremy', 'Renner', NULL, '1971-01-07', 'M', 1), -- Jeremy Renner
+    (57, 'Don', 'Cheadle', NULL, '1964-11-29', 'M', 2), -- Don Cheadle
+    (58, 'Paul', 'Rudd', NULL, '1969-04-06', 'M', 8), -- Paul Rudd
+    (59, 'Benedict', 'Cumberbatch', NULL, '1976-07-19', 'M', 2), -- Benedict Cumberbatch
+    (60, 'Tom', 'Holland', NULL, '1996-06-01', 'M', 1); -- Tom Holland
+
 
 INSERT INTO ACTOR (id_persona, id_ciudad_origen) VALUES
   (1, 24),
@@ -350,7 +363,18 @@ INSERT INTO ACTOR (id_persona, id_ciudad_origen) VALUES
   (42, 33),
   (43, 15),
   (44, 6),
-  (45, 35);
+  (45, 35),
+  (51, 1),
+
+(52, 1),
+(53, 1),
+(54, 1),
+(55, 1),
+(56, 1),
+(57, 1),
+(58, 1),
+(59, 1),
+(60, 1);
 
 INSERT INTO R_CONTENIDO_ACTOR (nombre_artistico, rol, id_actor, id_contenido) VALUES
   ('Deadpool','Principal',11,1),
@@ -362,7 +386,19 @@ INSERT INTO R_CONTENIDO_ACTOR (nombre_artistico, rol, id_actor, id_contenido) VA
   ('Stella Nicholls','Principal',17,4),
   ('persona del fondo','Cameo',18,4),
   ('Ricky Baker','Principal',19,5),
-  ('persona del fondo','Cameo',20,5);
+  ('persona del fondo','Cameo',20,5),
+
+    ('Iron Man', 'principal', 1, 2), -- Robert Downey Jr. como Iron Man
+    ('Capitán América', 'principal', 2, 2), -- Chris Evans como Capitán América
+    ('Hulk', 'principal', 3, 2), -- Mark Ruffalo como Hulk
+    ('Thor', 'principal', 4, 2), -- Chris Hemsworth como Thor
+    ('Black Widow', 'principal', 5, 2), -- Scarlett Johansson como Black Widow
+    ('Hawkeye', 'secundario', 6, 2), -- Jeremy Renner como Hawkeye
+    ('War Machine', 'secundario', 7, 2), -- Don Cheadle como War Machine
+    ('Ant-Man', 'secundario', 8, 2), -- Paul Rudd como Ant-Man
+    ('Doctor Strange', 'secundario', 9, 2), -- Benedict Cumberbatch como Doctor Strange
+    ('Spider-Man', 'secundario', 10, 2); -- Tom Holland como Spider-Man
+
 
 INSERT INTO CUENTA (id_persona, correo, usuario, clave) VALUES
   (46, 'isaiQuis@outlook.com', 'ElQuispe',  'HolaMundo' ), 
@@ -481,3 +517,11 @@ INSERT INTO SUSCRIPCION   (id, fecha_adquisicion, fecha_fin, id_paquete, id_cuen
   ('2024-02-01 11:14:54', 13, 2),
   ('2024-02-01 11:14:54', 14, 3),
   ('2024-02-01 11:14:54', 15, 4);
+
+INSERT INTO ESTRENO (fecha, descripcion, id_contenido) VALUES
+  ('2024-04-01 10:00:00', 'Gran estreno de la película de acción', 1),
+  ('2024-04-10 15:30:00', 'Emocionante estreno de la comedia romántica', 2),
+  ('2024-04-15 18:00:00', 'Increíble estreno del documental histórico', 3),
+  ('2024-04-20 20:45:00', 'Esperado estreno de la película de ciencia ficción', 4),
+  ('2024-04-25 12:00:00', 'Impactante estreno del drama psicológico', 9);
+

@@ -82,37 +82,38 @@ WHERE
 
 
 -- -- *****************************************************************
--- SELECT 
---   p.nombre AS Nombre_Actor,
---   pais_origen.nombre AS Pais_Origen,
---   pais_residencia.nombre AS Pais_Residencia,
---   rca.rol AS Rol,
---   e.fecha AS Ano_Estreno_Pelicula,
---   COUNT(v.id) AS Numero_Visualizaciones
--- FROM 
---   CONTENIDO c
--- JOIN
---   ESTRENO e on c.id = e.id_contenido
--- JOIN 
---   R_CONTENIDO_ACTOR rca ON c.id = rca.id_contenido
--- JOIN 
---   PERSONA p ON rca.id_actor = p.id
--- JOIN
---   ACTOR a on p.id = a.id_persona
--- JOIN 
---   CIUDAD ciudad_origen ON a.id_ciudad_origen = ciudad_origen.id
--- JOIN 
---   PAIS pais_origen ON ciudad_origen.id_pais = pais_origen.id
--- JOIN 
---   CIUDAD ciudad_residencia ON p.id_ciudad_residencia = ciudad_residencia.id
--- JOIN 
---   PAIS pais_residencia ON ciudad_residencia.id_pais = pais_residencia.id
--- LEFT JOIN 
---   VISUALIZACION v ON c.id = v.id_contenido
--- WHERE 
---   c.titulo = 'AVENGERS: ENDGAME'
--- GROUP BY 
---   p.nombre, pais_origen.nombre, pais_residencia.nombre, rca.rol, e.fecha;
+SELECT 
+  p.nombre AS Nombre_Actor,
+  pais_origen.nombre AS Pais_Origen,
+  pais_residencia.nombre AS Pais_Residencia,
+  rca.rol AS Rol,
+  e.fecha AS Ano_Estreno_Pelicula,
+  COUNT(v.id) AS Numero_Visualizaciones
+FROM 
+  CONTENIDO c
+JOIN
+  ESTRENO e on c.id = e.id_contenido
+JOIN 
+  R_CONTENIDO_ACTOR rca ON c.id = rca.id_contenido
+JOIN 
+  PERSONA p ON rca.id_actor = p.id
+JOIN
+  ACTOR a on p.id = a.id_persona
+JOIN 
+  CIUDAD ciudad_origen ON a.id_ciudad_origen = ciudad_origen.id
+JOIN 
+  PAIS pais_origen ON ciudad_origen.id_pais = pais_origen.id
+JOIN 
+  CIUDAD ciudad_residencia ON p.id_ciudad_residencia = ciudad_residencia.id
+JOIN 
+  PAIS pais_residencia ON ciudad_residencia.id_pais = pais_residencia.id
+INNER JOIN 
+  VISUALIZACION v ON c.id = v.id_contenido
+WHERE 
+  c.titulo = 'Avengers: Endgame'
+GROUP BY 
+  p.nombre, pais_origen.nombre, pais_residencia.nombre, rca.rol, e.fecha;
+
 
 
 -- -- *****************************************************************
