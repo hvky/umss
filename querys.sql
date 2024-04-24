@@ -33,50 +33,52 @@ GROUP BY
 
 
 -- *****************************************************************
--- SELECT 
---   ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS Puesto,
---   c.titulo AS Titulo_Pelicula,
---   COUNT(*) AS Cantidad_Visualizaciones
--- FROM 
---   VISUALIZACION v
--- JOIN 
---   CONTENIDO c ON v.id_contenido = c.id
--- JOIN 
---   CUENTA cu ON v.id = cu.id_persona
--- JOIN 
---   PERSONA p ON cu.id_persona = p.id
--- JOIN 
---   CIUDAD ci ON p.id_ciudad_residencia = ci.id
--- JOIN 
---   PAIS pa ON ci.id_pais = pa.id
--- WHERE 
---   pa.nombre = 'Bolivia'
---   AND MONTH(v.fecha) = 2
---   AND YEAR(v.fecha) = 2024
--- GROUP BY 
---   c.titulo
--- ORDER BY 
---   Cantidad_Visualizaciones DESC
--- LIMIT 5;
+SELECT 
+  ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS Puesto,
+  c.titulo AS Titulo_Pelicula,
+  COUNT(*) AS Cantidad_Visualizaciones
+FROM 
+  VISUALIZACION v
+JOIN 
+  CONTENIDO c ON v.id_contenido = c.id
+JOIN
+  SUBCUENTA sub on v.id_subcuenta = sub.id
+JOIN 
+  CUENTA cu ON sub.id_cuenta = cu.id_persona
+JOIN 
+  PERSONA p ON cu.id_persona = p.id
+JOIN 
+  CIUDAD ci ON p.id_ciudad_residencia = ci.id
+JOIN 
+  PAIS pa ON ci.id_pais = pa.id
+WHERE 
+  pa.nombre = 'BOLIVIA'
+  AND MONTH(v.fecha) = 2
+  AND YEAR(v.fecha) = 2024
+GROUP BY 
+  c.titulo
+ORDER BY 
+  Cantidad_Visualizaciones DESC
+LIMIT 5;
 
 
 -- -- *****************************************************************
--- SELECT
---   MIN(t.fecha_estreno) AS Fecha_Primer_Capitulo,
---   COUNT(DISTINCT t.id) AS Total_Temporadas,
---   SUM(t.cantidad_capitulos) AS Total_Capitulos,
---   COUNT(DISTINCT re.id_empresa) AS Empresas_Produccion,
---   MAX(c.fecha_estreno) AS Fecha_Ultimo_Capitulo
--- FROM 
---   TEMPORADA t
--- JOIN 
---   CAPITULO c ON t.id = c.id_temporada
--- JOIN 
---   R_CONTENIDO_EMPRESA re ON t.id_serie = re.id_contenido
--- JOIN 
---   CONTENIDO co ON t.id_serie = co.id
--- WHERE 
---   co.titulo = 'LA LEY Y EL ORDEN UVE';
+SELECT
+  MIN(t.fecha_estreno) AS Fecha_Primer_Capitulo,
+  COUNT(DISTINCT t.id) AS Total_Temporadas,
+  SUM(t.cantidad_capitulos) AS Total_Capitulos,
+  COUNT(DISTINCT re.id_empresa) AS Empresas_Produccion,
+  MAX(c.fecha_estreno) AS Fecha_Ultimo_Capitulo
+FROM 
+  TEMPORADA t
+JOIN 
+  CAPITULO c ON t.id = c.id_temporada
+JOIN 
+  R_CONTENIDO_EMPRESA re ON t.id_serie = re.id_contenido
+JOIN 
+  CONTENIDO co ON t.id_serie = co.id
+WHERE 
+  co.titulo = 'LA LEY Y EL ORDEN UVE';
 
 
 -- -- *****************************************************************

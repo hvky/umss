@@ -1,5 +1,3 @@
-START TRANSACTION;
-
 INSERT INTO IDIOMA (codigo_iso, nombre) VALUES
   ('en', 'Inglés'),
   ('es', 'Español'),
@@ -451,18 +449,35 @@ INSERT INTO SUSCRIPCION   (id, fecha_adquisicion, fecha_fin, id_paquete, id_cuen
   (9, '2024-03-19', '2024-09-19', 4, 46, 9),
   (10, '2024-04-12', '2025-04-12',8, 48, 10);
 
- INSERT INTO VISUALIZACION (id_subcuenta, id_contenido) VALUES
-  (1, 2),   -- Subcuenta ID 1 viendo Avengers: Endgame (ID de contenido 2),
-  (2, 3),   -- Subcuenta ID 2 viendo Joker (ID de contenido 3),
-  (3, 4),   -- Subcuenta ID 3 viendo Scary Stories to Tell in the Dark (ID de contenido 4)
-  (4, 6),   -- Subcuenta ID 4 viendo Game of Thrones (ID de contenido 6)
-  (5, 7),   -- Subcuenta ID 5 viendo Breaking Bad (ID de contenido 7)
-  (6, 8),   -- Subcuenta ID 6 viendo The Walking Dead (ID de contenido 8)
-  (7, 9),   -- Subcuenta ID 7 viendo Friends (ID de contenido 9)
-  (8, 10);  -- Subcuenta ID 8 viendo The Office (ID de contenido 10) 
+ INSERT INTO VISUALIZACION (fecha, id_subcuenta, id_contenido) VALUES
+  ('2024-01-01 11:14:54', 1, 2),
+  ('2024-02-01 11:14:54', 2, 3),
+  ('2024-02-01 11:14:54', 3, 4),
+  ('2024-02-01 11:14:54', 4, 6),
+  ('2024-02-01 11:14:54', 5, 7),
+  ('2024-02-01 11:14:54', 6, 8),
+  ('2024-02-01 11:14:54', 7, 9),
+  ('2024-02-01 11:14:54', 8, 10),
+  ('2024-01-01 11:14:54', 9, 2),
+  ('2024-01-01 11:14:54', 10, 3),
+  ('2024-01-01 11:14:54', 11, 4),
+  ('2024-01-01 11:14:54', 12, 6),
+  ('2024-01-01 11:14:54', 13, 7),
+  ('2024-01-26 11:14:54', 14, 8),
+  ('2024-01-01 11:14:54', 15, 9),
 
-
-
-
-
-  -- ROLLBACK;
+  ('2024-01-01 11:14:54', 1, 2),
+  ('2024-01-01 11:14:54', 2, 2),
+  ('2024-02-28 11:14:54', 3, 3),
+  ('2024-02-01 11:14:54', 4, 2),
+  ('2024-02-01 11:14:54', 5, 2),
+  ('2024-02-01 11:14:54', 6, 4),
+  ('2024-02-04 11:14:54', 7, 5),
+  ('2024-02-01 11:14:54', 8, 6),
+  ('2024-02-01 11:14:54', 9, 7),
+  ('2024-02-01 11:14:54', 10, 9),
+  ('2024-02-01 11:14:54', 11, 1),
+  ('2024-02-01 11:14:54', 12, 1),
+  ('2024-02-01 11:14:54', 13, 2),
+  ('2024-02-01 11:14:54', 14, 3),
+  ('2024-02-01 11:14:54', 15, 4);
