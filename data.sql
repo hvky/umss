@@ -89,19 +89,44 @@ INSERT INTO PAIS ( nombre, descripcion, id_continente) VALUES
   ( 'FRANCIA', 'País europeo conocido por su moda, arte, gastronomía y sitios históricos icónicos.', 4),
   ( 'BOLIVIA', 'País sudamericano conocido por su diversidad geográfica, cultura indígena y hermosos paisajes.', 1);
 
-INSERT INTO CIUDAD (id, nombre, descripcion, id_pais) VALUES
-  (1, 'NEW YORK', 'La ciudad más poblada de Estados Unidos, conocida por su diversidad cultural, rascacielos emblemáticos y vida urbana vibrante.', 1),
-  (2, 'Vancouver', 'Ciudad costera en Canadá conocida por su impresionante belleza natural, calidad de vida y actividades al aire libre.', 2),
-  (3, 'Santa Mónica', 'Ciudad costera en California, famosa por sus playas, estilo de vida relajado y ambiente playero.', 1),
-  (4, 'Río de Janeiro', 'Ciudad brasileña famosa por su icónica estatua del Cristo Redentor, playas impresionantes y carnaval animado.', 3),
-  (5, 'Berlín', 'Capital de Alemania conocida por su historia, arte urbano, vida nocturna y vibrante escena cultural.', 4),
-  (6, 'Florida', 'Estado en Estados Unidos conocido por su clima cálido, playas espectaculares y parques temáticos famosos.', 1),
-  (7, 'Texas', 'Estado en Estados Unidos conocido por su tamaño, diversidad geográfica, industria petrolera y cultura texana única.', 1),
-  (8, 'Cincinnati', 'Ciudad en Ohio, Estados Unidos, conocida por su historia, arquitectura, arte y comida.', 1),
-  (9, 'Novi Sad', 'Ciudad en Serbia, conocida por su hermoso casco antiguo, festivales de música y patrimonio cultural.', 5),
-  (10, 'Apia', 'Capital de Samoa, conocida por sus playas de arena blanca, arrecifes de coral y rica cultura polinesia.', 6),
-  (11, 'Tokio', 'Capital de Japón, conocida por su tecnología avanzada, cultura única, moda vanguardista y vida nocturna.', 7),
-  (12, 'Los Ángeles', 'Ciudad en California, conocida por ser el centro de la industria del entretenimiento, el sol, las playas y la diversidad cultural.', 1);
+INSERT INTO CIUDAD (nombre, descripcion, id_pais) VALUES
+('NEW YORK', 'City in the United States', 1),
+('Vancouver', 'City in Canada', 2),
+('Santa Mónica', 'City in the United States', 1),
+('Río de Janeiro', 'City in Brazil', 3),
+('Berlín', 'Capital city of Germany', 4),
+('Florida', 'State in the United States', 1),
+('Texas', 'State in the United States', 1),
+('Cincinnati', 'City in the United States', 1),
+('Novi Sad', 'City in Serbia', 5),
+('Apia', 'Capital city of Samoa', 6),
+('Tokio', 'Capital city of Japan', 7),
+('Los Ángeles', 'City in the United States', 1),
+('Madrid', 'Capital city of Spain', 9),
+('París', 'Capital city of France', 10),
+('Londres', 'Capital city of the United Kingdom', 8),
+('Surrey', 'City in Canada', 2),
+('Austin', 'City in the United States', 1),
+('Brooklyn', 'Borough of New York City', 1),
+('Sacramento', 'City in the United States', 1),
+('Falmouth', 'City in the United States', 1),
+('Rochester', 'City in the United States', 1),
+('Detroit', 'City in the United States', 8),
+('Hammersmith', 'District in London', 8),
+('Oklahoma', 'State in the United States', 1),
+('Nueva Jersey', 'State in the United States', 1),
+('California', 'State in the United States', 1),
+('Kentucky', 'State in the United States', 1),
+('Pensilvania', 'State in the United States', 1),
+('Georgia', 'State in the United States', 1),
+('idaho', 'State in the United States', 1),
+('nuevo mexico', 'State in the United States', 1),
+('alabama', 'State in the United States', 1),
+('massachusetts', 'State in the United States', 1),
+('washington', 'State in the United States', 1),
+('iowa', 'State in the United States', 1),
+('cochabamba', 'City in Bolivia', 11);
+
   
 INSERT INTO GENERO (nombre, descripcion) VALUES
   ('Acción', 'Películas o series que se caracterizan por escenas llenas de energía, con combates, persecuciones y situaciones de alta tensión.'),
@@ -157,7 +182,7 @@ INSERT INTO PELICULA (id_contenido, duracion, link_video) VALUES
   (4, "1.51", 'https://youtu.be/6Kb7a8ASs8M?si=oRm6hQ-wyx2gXUdgfdf'), 
   (5, "1.41", 'https://youtu.be/6Kb7a8ASs8M?si=oRm6hQ-wyx2gXUdgasdfasd'); 
 
-INSERT INTO SERIES (id_contenido, duracion, cantidad_temporadas) VALUES
+INSERT INTO SERIE (id_contenido, duracion, cantidad_temporadas) VALUES
 (6, 73.55, 2),   -- Game of Thrones
 (7, 62.30, 2),   -- Breaking Bad
 (8, 231, 2),     -- The Walking Dead
@@ -214,6 +239,7 @@ INSERT INTO CAPITULO (id, nombre, link_video, duracion, fecha_estreno, id_tempor
   -- The Office Temporada 2
   (19, 'The Dundies', 'https://www.youtube.com/watch?v=522lKp3QVDo', 21, '2005-09-20', 10),
   (20, 'Sexual Harassment', 'https://www.youtube.com/watch?v=522lKp3QVDo', 23, '2005-09-27', 10);
+
 INSERT INTO EMPRESA (id, nombre, descripcion) VALUES
   (1, '20th Century Fox', 'Century Studios, anteriormente conocida como 20th Century Fox, es una de las principales productoras y distribuidoras de cine en el mundo. Fundada en 1935, ha sido responsable de la producción de una amplia gama de películas, desde clásicos de Hollywood hasta éxitos contemporáneos.'),
   (2, 'Marvel Studios', 'Marvel Entertainment es una subsidiaria de The Walt Disney Company y una de las mayores editoriales de cómics del mundo. Además de la publicación de cómics, Marvel es conocida por su vasto universo cinematográfico de superhéroes, que incluye películas de gran éxito como las de la serie Avengers.'),
@@ -238,7 +264,8 @@ INSERT INTO PERSONA (id, nombre, apellido_paterno, apellido_materno, fecha_nacim
   (7, 'Scarlett Ingrid', 'Johansson', '', '1984-11-22', 'F', 1),
   (8, 'Willard Carroll', 'Smith', 'Jr.', '1968-09-25', 'M', 28),
   (9, 'Julia Fiona', 'Roberts', '', '1967-10-28', 'F', 29),
-  (10, 'Robert John', 'Downey', 'Jr.', '1965-04-04', 'M', 1),(11, 'Ryan', 'Reynolds', '', '1976-10-23', 'M', 2), -- Deadpool 2
+  (10, 'Robert John', 'Downey', 'Jr.', '1965-04-04', 'M', 1),
+  (11, 'Ryan', 'Reynolds', '', '1976-10-23', 'M', 2), -- Deadpool 2
   (12, 'Joshua', 'Brolin', '', '1972-02-12', 'M', 3), -- Deadpool 2
   (13, 'Morena', 'Baccarin', 'Teissott Franco', '1979-03-22', 'F', 4), -- Deadpool 2
   (14, 'Zazie', 'Beetz', '', '1991-05-25', 'F', 5), -- Deadpool 2
@@ -247,7 +274,8 @@ INSERT INTO PERSONA (id, nombre, apellido_paterno, apellido_materno, fecha_nacim
   (17, 'Leslie', 'Uggams', 'Stephens', '1935-05-25', 'F', 8), -- Deadpool 2
   (18, 'Stefan', 'Kapičić', '.', '1978-08-17', 'M', 9), -- Deadpool 2
   (19, 'JJulian', 'Dennison', '', '2001-05-26', 'M', 10), -- Deadpool 2
-  (20, 'Shiori', 'Kutsuna', '', '1988-12-22', 'F', 11),-- Deadpool 2(21, 'Matthew', 'McConaughey', NULL, '1969-11-04', 'M', 9),
+  (20, 'Shiori', 'Kutsuna', '', '1988-12-22', 'F', 11),-- Deadpool 2
+  (21, 'Matthew', 'McConaughey', NULL, '1969-11-04', 'M', 9),
   (22, 'Anne', 'Hathaway', NULL, '1982-11-12', 'F', 6),
   (23, 'Jessica', 'Chastain', NULL, '1977-03-24', 'F', 6),
   (24, 'Michael', 'Caine', NULL, '1933-03-14', 'M', 8),
@@ -256,7 +284,8 @@ INSERT INTO PERSONA (id, nombre, apellido_paterno, apellido_materno, fecha_nacim
   (27, 'Topher', 'Grace', NULL, '1978-07-12', 'M', 1),
   (28, 'Ellen', 'Burstyn', NULL, '1932-12-07', 'F', 6),
   (29, 'David', 'Gyasi', NULL, '1980-01-02', 'M', 7),
-  (30, 'Mackenzie', 'Foy', NULL, '2000-11-10', 'F', 1),(31, 'Emilia', 'Clarke', NULL, '1986-10-23', 'F', 15), -- Game of Thrones
+  (30, 'Mackenzie', 'Foy', NULL, '2000-11-10', 'F', 1),
+  (31, 'Emilia', 'Clarke', NULL, '1986-10-23', 'F', 15), -- Game of Thrones
   (32, 'Kit', 'Harington', NULL, '1986-12-26', 'M', 15), -- Game of Thrones
   (33, 'Peter', 'Dinklage', NULL, '1969-06-11', 'M', 25), -- Game of Thrones
   (34, 'Bryan', 'Cranston', NULL, '1956-03-07', 'M', 26), -- Breaking Bad
@@ -265,11 +294,13 @@ INSERT INTO PERSONA (id, nombre, apellido_paterno, apellido_materno, fecha_nacim
   (37, 'Jennifer', 'Aniston', NULL, '1969-02-11', 'F', 26), -- La Ley y El orden UV
   (38, 'Courteney', 'Cox', NULL, '1964-06-15', 'F', 32), -- La Ley y El orden UV
   (39, 'Matthew', 'Perry', NULL, '1969-08-19', 'M', 33), -- La Ley y El orden UV
-  (40, 'Steve', 'Carell', NULL, '1962-08-16', 'M', 33), -- The Office (US)(41, 'Rainn', 'Wilson', NULL, '1966-01-20', 'M', 34), -- The Office (US)
+  (40, 'Steve', 'Carell', NULL, '1962-08-16', 'M', 33), -- The Office (US)
+  (41, 'Rainn', 'Wilson', NULL, '1966-01-20', 'M', 34), -- The Office (US)
   (42, 'John', 'Krasinski', NULL, '1979-10-20', 'M', 33), -- The Office (US)
   (43, 'Andrew', 'Lincoln', NULL, '1973-09-14', 'M', 15), -- The Walking Dead
   (44, 'Norman', 'Reedus', NULL, '1969-01-06', 'M', 6), -- The Walking Dead
   (45, 'Danai', 'Gurira', NULL, '1978-02-14', 'F', 35), -- The Walking Dead
+
   (46, 'Isai', 'Quispe', NULL, '2000-01-08', 'M', 36),
   (47, 'Eddy', 'Sejas', NULL, '2004-03-07', 'M', 36),
   (48, 'Jhonny', 'Fernandez', NULL, '2001-11-13', 'M', 36),
@@ -394,12 +425,11 @@ INSERT INTO FORMA_PAGO   (id, monto) VALUES
   (9, 160),
   (10, 300);
 
-INSERT INTO CREDITO   (id_forma_pago, fecha_inicio, fecha_fin, multa, frecuencia_pago) VALUES
-  (5, '2024-04-23', '2025-04-23', 0.05, 'anual'),
-  (5, '2024-04-23', '2024-10-23', 0.03, 'semestral'),
-  (6, '2024-04-23', '2024-10-23', 0.02, 'semestral'),
-  (10, '2024-04-23', '2025-04-23', 0.07, 'anual'),
-  (10, '2024-04-23', '2024-10-23', 0.05, 'semestral');
+INSERT INTO CREDITO   (id_forma_pago, fecha_inicio, fecha_fin) VALUES
+  (5, '2024-04-23', '2025-04-23'),
+  (6, '2024-04-23', '2024-10-23'),
+  (9, '2024-04-23', '2025-04-23'),
+  (10, '2024-04-23', '2024-10-23');
 
 INSERT INTO CONTADO   (id_forma_pago, descuento) VALUES
   (1, 0),
@@ -434,4 +464,4 @@ INSERT INTO SUSCRIPCION   (id, fecha_adquisicion, fecha_fin, id_paquete, id_cuen
 
 
 
-  ROLLBACK;
+  -- ROLLBACK;
