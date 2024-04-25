@@ -150,6 +150,7 @@ CREATE TABLE SUSCRIPCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha_adquisicion DATE NOT NULL,
     fecha_fin DATE NOT NULL,
+    tipo_tarjeta ENUM('credito', 'debito') NOT NULL,
     id_paquete INT NOT NULL,
     id_cuenta INT NOT NULL,
     id_forma_pago INT NOT NULL,

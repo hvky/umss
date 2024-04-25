@@ -74,58 +74,57 @@ INSERT INTO CONTINENTE (nombre, descripcion) VALUES
   ('Europa', 'El continente donde se encuentra la mayor parte de la península balcánica y los Alpes, conocido por su historia, su arte y su diversidad lingüística.'),
   ('Oceanía', 'El continente más pequeño del mundo, conocido por su gran cantidad de islas, su vida marina y sus paisajes paradisíacos.');
 
-INSERT INTO PAIS ( nombre, descripcion, id_continente) VALUES
-  ( 'ESTADOS UNIDOS', 'País ubicado en América del Norte, conocido por su diversidad cultural y económica.', 2),
-  ( 'CANADA', 'País norteamericano conocido por su vasto territorio, belleza natural y calidad de vida.', 2),
-  ( 'BRASIL', 'País sudamericano reconocido por su vibrante cultura, vasta selva amazónica y playas espectaculares.', 2),
-  ( 'ALEMANIA', 'País europeo líder en tecnología, economía y cultura, ubicado en el centro de Europa.', 4),
-  ( 'SERBIA', 'País balcánico con una rica historia y patrimonio cultural, ubicado en el sureste de Europa.', 4),
-  ( 'SAMOA', 'Nación insular del Pacífico conocida por sus paisajes tropicales, playas y cultura polinesia.', 1),
-  ( 'JAPON', 'País asiático conocido por su tecnología avanzada, cultura única y hermosos paisajes.', 3),
-  ( 'INGLATERRA', 'País en el Reino Unido conocido por su historia, cultura, monarquía y hermosos paisajes.', 4),
-  ( 'ESPAÑA', 'País en el suroeste de Europa famoso por su historia, cultura, arte y deliciosa gastronomía.', 4),
-  ( 'FRANCIA', 'País europeo conocido por su moda, arte, gastronomía y sitios históricos icónicos.', 4),
-  ( 'BOLIVIA', 'País sudamericano conocido por su diversidad geográfica, cultura indígena y hermosos paisajes.', 1);
+INSERT INTO PAIS (nombre, descripcion, id_continente) VALUES
+  ('ESTADOS UNIDOS', 'País ubicado en América del Norte, conocido por su diversidad cultural y económica.', 2),
+  ('CANADA', 'País norteamericano conocido por su vasto territorio, belleza natural y calidad de vida.', 2),
+  ('BRASIL', 'País sudamericano reconocido por su vibrante cultura, vasta selva amazónica y playas espectaculares.', 2),
+  ('ALEMANIA', 'País europeo líder en tecnología, economía y cultura, ubicado en el centro de Europa.', 4),
+  ('SERBIA', 'País balcánico con una rica historia y patrimonio cultural, ubicado en el sureste de Europa.', 4),
+  ('SAMOA', 'Nación insular del Pacífico conocida por sus paisajes tropicales, playas y cultura polinesia.', 1),
+  ('JAPON', 'País asiático conocido por su tecnología avanzada, cultura única y hermosos paisajes.', 3),
+  ('INGLATERRA', 'País en el Reino Unido conocido por su historia, cultura, monarquía y hermosos paisajes.', 4),
+  ('ESPAÑA', 'País en el suroeste de Europa famoso por su historia, cultura, arte y deliciosa gastronomía.', 4),
+  ('FRANCIA', 'País europeo conocido por su moda, arte, gastronomía y sitios históricos icónicos.', 4),
+  ('BOLIVIA', 'País sudamericano conocido por su diversidad geográfica, cultura indígena y hermosos paisajes.', 1);
 
 INSERT INTO CIUDAD (nombre, descripcion, id_pais) VALUES
-('NEW YORK', 'City in the United States', 1),
-('Vancouver', 'City in Canada', 2),
-('Santa Mónica', 'City in the United States', 1),
-('Río de Janeiro', 'City in Brazil', 3),
-('Berlín', 'Capital city of Germany', 4),
-('Florida', 'State in the United States', 1),
-('Texas', 'State in the United States', 1),
-('Cincinnati', 'City in the United States', 1),
-('Novi Sad', 'City in Serbia', 5),
-('Apia', 'Capital city of Samoa', 6),
-('Tokio', 'Capital city of Japan', 7),
-('Los Ángeles', 'City in the United States', 1),
-('Madrid', 'Capital city of Spain', 9),
-('París', 'Capital city of France', 10),
-('Londres', 'Capital city of the United Kingdom', 8),
-('Surrey', 'City in Canada', 2),
-('Austin', 'City in the United States', 1),
-('Brooklyn', 'Borough of New York City', 1),
-('Sacramento', 'City in the United States', 1),
-('Falmouth', 'City in the United States', 1),
-('Rochester', 'City in the United States', 1),
-('Detroit', 'City in the United States', 8),
-('Hammersmith', 'District in London', 8),
-('Oklahoma', 'State in the United States', 1),
-('Nueva Jersey', 'State in the United States', 1),
-('California', 'State in the United States', 1),
-('Kentucky', 'State in the United States', 1),
-('Pensilvania', 'State in the United States', 1),
-('Georgia', 'State in the United States', 1),
-('idaho', 'State in the United States', 1),
-('nuevo mexico', 'State in the United States', 1),
-('alabama', 'State in the United States', 1),
-('massachusetts', 'State in the United States', 1),
-('washington', 'State in the United States', 1),
-('iowa', 'State in the United States', 1),
-('cochabamba', 'City in Bolivia', 11);
+  ('NEW YORK', 'City in the United States', 1),
+  ('Vancouver', 'City in Canada', 2),
+  ('Santa Mónica', 'City in the United States', 1),
+  ('Río de Janeiro', 'City in Brazil', 3),
+  ('Berlín', 'Capital city of Germany', 4),
+  ('Florida', 'State in the United States', 1),
+  ('Texas', 'State in the United States', 1),
+  ('Cincinnati', 'City in the United States', 1),
+  ('Novi Sad', 'City in Serbia', 5),
+  ('Apia', 'Capital city of Samoa', 6),
+  ('Tokio', 'Capital city of Japan', 7),
+  ('Los Ángeles', 'City in the United States', 1),
+  ('Madrid', 'Capital city of Spain', 9),
+  ('París', 'Capital city of France', 10),
+  ('Londres', 'Capital city of the United Kingdom', 8),
+  ('Surrey', 'City in Canada', 2),
+  ('Austin', 'City in the United States', 1),
+  ('Brooklyn', 'Borough of New York City', 1),
+  ('Sacramento', 'City in the United States', 1),
+  ('Falmouth', 'City in the United States', 1),
+  ('Rochester', 'City in the United States', 1),
+  ('Detroit', 'City in the United States', 8),
+  ('Hammersmith', 'District in London', 8),
+  ('Oklahoma', 'State in the United States', 1),
+  ('Nueva Jersey', 'State in the United States', 1),
+  ('California', 'State in the United States', 1),
+  ('Kentucky', 'State in the United States', 1),
+  ('Pensilvania', 'State in the United States', 1),
+  ('Georgia', 'State in the United States', 1),
+  ('idaho', 'State in the United States', 1),
+  ('nuevo mexico', 'State in the United States', 1),
+  ('alabama', 'State in the United States', 1),
+  ('massachusetts', 'State in the United States', 1),
+  ('washington', 'State in the United States', 1),
+  ('iowa', 'State in the United States', 1),
+  ('cochabamba', 'City in Bolivia', 11);
 
-  
 INSERT INTO GENERO (nombre, descripcion) VALUES
   ('Acción', 'Películas o series que se caracterizan por escenas llenas de energía, con combates, persecuciones y situaciones de alta tensión.'),
   ('Aventura', 'Historias emocionantes que suelen implicar viajes, descubrimientos y desafíos en entornos exóticos o fantásticos.'),
@@ -161,17 +160,17 @@ INSERT INTO RESTRICCION (nombre, descripcion, tipo_restriccion) VALUES
   ('Parental Guidance', 'La película o serie puede contener contenido inapropiado para niños menores de 15 años. Se recomienda la supervisión de un adulto.', 'PG-15'),
   ('Restricted', 'La película o serie contiene contenido para adultos. No se recomienda para menores de 17 años sin la compañía de un adulto.', 'R-Rated');
 
-INSERT INTO CONTENIDO (id, titulo, link_foto_propaganda, id_restriccion, id_genero) VALUES
-  (1, 'Deadpool 2', 'https://images.app.goo.gl/FjAK19n6qCW4AtAo6', 5, 1),
-  (2, 'Avengers: Endgame', 'https://images.app.goo.gl/ptqnCQgtLc1FUjha6', 2, 1),
-  (3, 'Joker', 'https://images.app.goo.gl/yoFeAztULUCMWsNh8', 5, 4),
-  (4, 'Scary Stories to Tell in the Dark', 'https://images.app.goo.gl/UQoGdHWfZTSmX3d38', 4, 7),
-  (5, 'Hunt for the Wilderpeople', 'https://images.app.goo.gl/rHFr2hKsSmTCJxup8', 4, 2),
-  (6, 'Game of Thrones', 'https://images.app.goo.gl/XGtZ9xzbUqrUfCwM6', 5, 6),
-  (7, 'Breaking Bad', 'https://images.app.goo.gl/uUiNmbjRgVYJb3db6', 5, 4),
-  (8, 'The Walking Dead', 'https://images.app.goo.gl/iv7y7FFmSBe97kT57', 4, 2),
-  (9, 'LA LEY Y EL ORDEN UVE', 'https://images.app.goo.gl/vMw4yvFYH5Deuk786', 1, 3),
-  (10, 'The Office', 'https://images.app.goo.gl/R7JUtUrDiHTaPzbo8', 1, 3);
+INSERT INTO CONTENIDO (titulo, link_foto_propaganda, id_restriccion, id_genero) VALUES
+  ('Deadpool 2', 'https://images.app.goo.gl/FjAK19n6qCW4AtAo6', 5, 1),
+  ('Avengers: Endgame', 'https://images.app.goo.gl/ptqnCQgtLc1FUjha6', 2, 1),
+  ('Joker', 'https://images.app.goo.gl/yoFeAztULUCMWsNh8', 5, 4),
+  ('Scary Stories to Tell in the Dark', 'https://images.app.goo.gl/UQoGdHWfZTSmX3d38', 4, 7),
+  ('Hunt for the Wilderpeople', 'https://images.app.goo.gl/rHFr2hKsSmTCJxup8', 4, 2),
+  ('Game of Thrones', 'https://images.app.goo.gl/XGtZ9xzbUqrUfCwM6', 5, 6),
+  ('Breaking Bad', 'https://images.app.goo.gl/uUiNmbjRgVYJb3db6', 5, 4),
+  ('The Walking Dead', 'https://images.app.goo.gl/iv7y7FFmSBe97kT57', 4, 2),
+  ('LA LEY Y EL ORDEN UVE', 'https://images.app.goo.gl/vMw4yvFYH5Deuk786', 1, 3),
+  ('The Office', 'https://images.app.goo.gl/R7JUtUrDiHTaPzbo8', 1, 3);
 
 INSERT INTO PELICULA (id_contenido, duracion, link_video) VALUES
   (1, "1.48", 'https://youtu.be/6Kb7a8ASs8M?si=oRm6hQ-wyx2gXUdga'),
@@ -181,69 +180,52 @@ INSERT INTO PELICULA (id_contenido, duracion, link_video) VALUES
   (5, "1.41", 'https://youtu.be/6Kb7a8ASs8M?si=oRm6hQ-wyx2gXUdgasdfasd'); 
 
 INSERT INTO SERIE (id_contenido, duracion, cantidad_temporadas) VALUES
-(6, 73.55, 2),   -- Game of Thrones
-(7, 62.30, 2),   -- Breaking Bad
-(8, 231, 2),     -- The Walking Dead
-(9, 99, 2),      -- La Ley y El orden UV
-(10, 88.30, 2);  -- The Office
+  (6, 73.55, 2),
+  (7, 62.30, 2),
+  (8, 231, 2),
+  (9, 99, 2),
+  (10, 88.30, 2);
 
-INSERT INTO TEMPORADA (id, nombre, descripcion, id_serie, cantidad_capitulos, fecha_estreno) VALUES
-  (1, 'Game of Thrones: temp 1', 'Primera temporada de la serie', 6, 2, '2011-04-17'),
-  (2, 'Game of Thrones: temp 2', 'Segunda temporada de la serie', 6, 2, '2012-04-01'),
-  (3, 'Breaking Bad: temp 1', 'Primera temporada de la serie', 7, 2, '2008-01-20'),
-  (4, 'Breaking Bad: temp 2', 'Segunda temporada de la serie', 7, 2, '2009-03-08'),
-  (5, 'The Walking Dead: temp 1', 'Primera temporada de la serie', 8, 2, '2010-10-31'),
-  (6, 'The Walking Dead: temp 2', 'Segunda temporada de la serie', 8, 2, '2011-10-16'),
-  (7, 'La Ley y El orden UV: temp 1', 'Primera temporada de la serie', 9, 2, '1999-09-20'),
-  (8, 'La Ley y El orden UV: temp 2', 'Segunda temporada de la serie', 9, 2, '2000-10-20'),
-  (9, 'The Office: temp 1', 'Primera temporada de la serie', 10, 2, '2005-03-24'),
-  (10, 'The Office: temp 2', 'Segunda temporada de la serie', 10, 2, '2005-09-20');
+INSERT INTO TEMPORADA (nombre, descripcion, id_serie, cantidad_capitulos, fecha_estreno) VALUES
+  ('Game of Thrones: temp 1', 'Primera temporada de la serie', 6, 2, '2011-04-17'),
+  ('Game of Thrones: temp 2', 'Segunda temporada de la serie', 6, 2, '2012-04-01'),
+  ('Breaking Bad: temp 1', 'Primera temporada de la serie', 7, 2, '2008-01-20'),
+  ('Breaking Bad: temp 2', 'Segunda temporada de la serie', 7, 2, '2009-03-08'),
+  ('The Walking Dead: temp 1', 'Primera temporada de la serie', 8, 2, '2010-10-31'),
+  ('The Walking Dead: temp 2', 'Segunda temporada de la serie', 8, 2, '2011-10-16'),
+  ('La Ley y El orden UV: temp 1', 'Primera temporada de la serie', 9, 2, '1999-09-20'),
+  ('La Ley y El orden UV: temp 2', 'Segunda temporada de la serie', 9, 2, '2000-10-20'),
+  ('The Office: temp 1', 'Primera temporada de la serie', 10, 2, '2005-03-24'),
+  ('The Office: temp 2', 'Segunda temporada de la serie', 10, 2, '2005-09-20');
 
-INSERT INTO CAPITULO (id, nombre, link_video, duracion, fecha_estreno, id_temporada) VALUES
-  -- Game of Thrones Temporada 1
-  (1, 'Winter Is Coming', 'https://www.youtube.com/watch?v=522lKp3QVDo', 62, '2011-04-17', 1),
-  (2, 'The Kingsroad', 'https://www.youtube.com/watch?v=522lKp3QVDo', 56, '2011-04-24', 1),
+INSERT INTO CAPITULO (nombre, link_video, duracion, fecha_estreno, id_temporada) VALUES
+  ('Winter Is Coming', 'https://www.youtube.com/watch?v=522lKp3QVDo', 62, '2011-04-17', 1),
+  ('The Kingsroad', 'https://www.youtube.com/watch?v=522lKp3QVDo', 56, '2011-04-24', 1),
+  ('The North Remembers', 'https://www.youtube.com/watch?v=522lKp3QVDo', 54, '2012-04-01', 2),
+  ('The Night Lands', 'https://www.youtube.com/watch?v=522lKp3QVDo', 56, '2012-04-08', 2),
+  ('Pilot', 'https://www.youtube.com/watch?v=522lKp3QVDo', 58, '2008-01-20', 3),
+  ('Cat''s in the Bag...', 'https://www.youtube.com/watch?v=522lKp3QVDo', 48, '2008-01-27', 3),
+  ('Seven Thirty-Seven', 'https://www.youtube.com/watch?v=522lKp3QVDo', 55, '2009-03-08', 4),
+  ('Grilled', 'https://www.youtube.com/watch?v=522lKp3QVDo', 50, '2009-03-15', 4),
+  ('The One Where Monica Gets a Roommate', 'https://www.youtube.com/watch?v=522lKp3QVDo', 23, '1994-09-22', 5),
+  ('The One with the Sonogram at the End', 'https://www.youtube.com/watch?v=522lKp3QVDo', 22, '1994-09-29', 5),
+  ('The One with Ross''s New Girlfriend', 'https://www.youtube.com/watch?v=522lKp3QVDo', 25, '1995-09-21', 6),
+  ('The One with the Breast Milk', 'https://www.youtube.com/watch?v=522lKp3QVDo', 24, '1995-09-28', 6)  ,
+  ('Days Gone Bye', 'https://www.youtube.com/watch?v=522lKp3QVDo', 67, '2010-10-31', 7),
+  ('Guts', 'https://www.youtube.com/watch?v=522lKp3QVDo', 60, '2010-11-07', 7),
+  ('What Lies Ahead', 'https://www.youtube.com/watch?v=522lKp3QVDo', 62, '2011-10-16', 8),  
+  ('Bloodletting', 'https://www.youtube.com/watch?v=522lKp3QVDo', 55, '2011-10-23', 8),
+  ('Pilot', 'https://www.youtube.com/watch?v=522lKp3QVDo', 23, '2005-03-24', 9),
+  ('Diversity Day', 'https://www.youtube.com/watch?v=522lKp3QVDo', 22, '2005-03-29', 9),
+  ('The Dundies', 'https://www.youtube.com/watch?v=522lKp3QVDo', 21, '2005-09-20', 10),
+  ('Sexual Harassment', 'https://www.youtube.com/watch?v=522lKp3QVDo', 23, '2005-09-27', 10);
 
-  -- Game of Thrones Temporada 2
-  (3, 'The North Remembers', 'https://www.youtube.com/watch?v=522lKp3QVDo', 54, '2012-04-01', 2),
-  (4, 'The Night Lands', 'https://www.youtube.com/watch?v=522lKp3QVDo', 56, '2012-04-08', 2),
-
-  -- Breaking Bad Temporada 1
-  (5, 'Pilot', 'https://www.youtube.com/watch?v=522lKp3QVDo', 58, '2008-01-20', 3),
-  (6, 'Cat''s in the Bag...', 'https://www.youtube.com/watch?v=522lKp3QVDo', 48, '2008-01-27', 3),
-
-  -- Breaking Bad Temporada 2
-  (7, 'Seven Thirty-Seven', 'https://www.youtube.com/watch?v=522lKp3QVDo', 55, '2009-03-08', 4),
-  (8, 'Grilled', 'https://www.youtube.com/watch?v=522lKp3QVDo', 50, '2009-03-15', 4),-- La Ley y El orden UV Temporada 1
-  (9, 'The One Where Monica Gets a Roommate', 'https://www.youtube.com/watch?v=522lKp3QVDo', 23, '1994-09-22', 5),
-  (10, 'The One with the Sonogram at the End', 'https://www.youtube.com/watch?v=522lKp3QVDo', 22, '1994-09-29', 5),
-
-  -- La Ley y El orden UV Temporada 2
-  (11, 'The One with Ross''s New Girlfriend', 'https://www.youtube.com/watch?v=522lKp3QVDo', 25, '1995-09-21', 6),
-  (12, 'The One with the Breast Milk', 'https://www.youtube.com/watch?v=522lKp3QVDo', 24, '1995-09-28', 6)  ,
-
-  -- The Walking Dead Temporada 1
-  (13, 'Days Gone Bye', 'https://www.youtube.com/watch?v=522lKp3QVDo', 67, '2010-10-31', 7),
-  (14, 'Guts', 'https://www.youtube.com/watch?v=522lKp3QVDo', 60, '2010-11-07', 7),
-
-  -- The Walking Dead Temporada 2
-  (15, 'What Lies Ahead', 'https://www.youtube.com/watch?v=522lKp3QVDo', 62, '2011-10-16', 8),  
-  (16, 'Bloodletting', 'https://www.youtube.com/watch?v=522lKp3QVDo', 55, '2011-10-23', 8),
-
-  -- The Office Temporada 1
-  (17, 'Pilot', 'https://www.youtube.com/watch?v=522lKp3QVDo', 23, '2005-03-24', 9),
-  (18, 'Diversity Day', 'https://www.youtube.com/watch?v=522lKp3QVDo', 22, '2005-03-29', 9),
-
-  -- The Office Temporada 2
-  (19, 'The Dundies', 'https://www.youtube.com/watch?v=522lKp3QVDo', 21, '2005-09-20', 10),
-  (20, 'Sexual Harassment', 'https://www.youtube.com/watch?v=522lKp3QVDo', 23, '2005-09-27', 10);
-
-INSERT INTO EMPRESA (id, nombre, descripcion) VALUES
-  (1, '20th Century Fox', 'Century Studios, anteriormente conocida como 20th Century Fox, es una de las principales productoras y distribuidoras de cine en el mundo. Fundada en 1935, ha sido responsable de la producción de una amplia gama de películas, desde clásicos de Hollywood hasta éxitos contemporáneos.'),
-  (2, 'Marvel Studios', 'Marvel Entertainment es una subsidiaria de The Walt Disney Company y una de las mayores editoriales de cómics del mundo. Además de la publicación de cómics, Marvel es conocida por su vasto universo cinematográfico de superhéroes, que incluye películas de gran éxito como las de la serie Avengers.'),
-  (3, 'Warner Bros. Pictures', 'Warner Bros. Pictures es una de las principales productoras y distribuidoras de cine en el mundo. Forma parte de Warner Bros. Entertainment, una de las mayores compañías de entretenimiento del mundo, y ha sido responsable de numerosas películas icónicas a lo largo de los años.'),
-  (4, 'CBS Films', 'CBS Films es una división de CBS Corporation dedicada a la producción y distribución de películas. Ha producido una variedad de películas de diferentes géneros y ha sido conocida por sus colaboraciones con otros estudios y productores.'),
-  (5, 'Piki Films', 'Piki Films es una productora cinematográfica con sede en Nueva Zelanda. Se ha destacado en la producción de películas independientes y de autor, con un enfoque en contar historias auténticas y originales.');
+INSERT INTO EMPRESA (nombre, descripcion) VALUES
+  ('20th Century Fox', 'Century Studios, anteriormente conocida como 20th Century Fox, es una de las principales productoras y distribuidoras de cine en el mundo. Fundada en 1935, ha sido responsable de la producción de una amplia gama de películas, desde clásicos de Hollywood hasta éxitos contemporáneos.'),
+  ('Marvel Studios', 'Marvel Entertainment es una subsidiaria de The Walt Disney Company y una de las mayores editoriales de cómics del mundo. Además de la publicación de cómics, Marvel es conocida por su vasto universo cinematográfico de superhéroes, que incluye películas de gran éxito como las de la serie Avengers.'),
+  ('Warner Bros. Pictures', 'Warner Bros. Pictures es una de las principales productoras y distribuidoras de cine en el mundo. Forma parte de Warner Bros. Entertainment, una de las mayores compañías de entretenimiento del mundo, y ha sido responsable de numerosas películas icónicas a lo largo de los años.'),
+  ('CBS Films', 'CBS Films es una división de CBS Corporation dedicada a la producción y distribución de películas. Ha producido una variedad de películas de diferentes géneros y ha sido conocida por sus colaboraciones con otros estudios y productores.'),
+  ('Piki Films', 'Piki Films es una productora cinematográfica con sede en Nueva Zelanda. Se ha destacado en la producción de películas independientes y de autor, con un enfoque en contar historias auténticas y originales.');
 
 INSERT INTO R_CONTENIDO_EMPRESA (costo, duracion, id_contenido, id_empresa) VALUES
   (58.1, 1.18, 1, 1),
@@ -251,75 +233,72 @@ INSERT INTO R_CONTENIDO_EMPRESA (costo, duracion, id_contenido, id_empresa) VALU
   (55.7, 0.1, 3, 3),
   (2.5, 1.4, 4, 4),
   (2.5, 1.5, 5, 5),
-
   (36.1, 7.2, 9, 2),
   (5.7, 0.1, 9, 3);
 
-INSERT INTO PERSONA (id, nombre, apellido_paterno, apellido_materno, fecha_nacimiento, sexo, id_ciudad_residencia) VALUES
-  (1, 'William Bradley', 'Pitt', '', '1963-12-18', 'M', 24),
-  (2, 'Mary Louise', 'Streep', '', '1949-06-22', 'F', 25),
-  (3, 'Leonardo Wilhelm', 'DiCaprio', '', '1974-11-11', 'M', 26),
-  (4, 'Thomas Jeffrey', 'Hanks', '', '1956-07-09', 'M', 26),
-  (5, 'Jennifer Shrader', 'Lawrence', '', '1990-08-15', 'F', 27),
-  (6, 'Denzel Hayes', 'Washington', 'Jr.', '1954-12-28', 'M', 1),
-  (7, 'Scarlett Ingrid', 'Johansson', '', '1984-11-22', 'F', 1),
-  (8, 'Willard Carroll', 'Smith', 'Jr.', '1968-09-25', 'M', 28),
-  (9, 'Julia Fiona', 'Roberts', '', '1967-10-28', 'F', 29),
-  (10, 'Robert John', 'Downey', 'Jr.', '1965-04-04', 'M', 1),
-  (11, 'Ryan', 'Reynolds', '', '1976-10-23', 'M', 2), -- Deadpool 2
-  (12, 'Joshua', 'Brolin', '', '1972-02-12', 'M', 3), -- Deadpool 2
-  (13, 'Morena', 'Baccarin', 'Teissott Franco', '1979-03-22', 'F', 4), -- Deadpool 2
-  (14, 'Zazie', 'Beetz', '', '1991-05-25', 'F', 5), -- Deadpool 2
-  (15, 'Timothy', 'Miller', '', '1982-06-04', 'M', 6), -- Deadpool 2
-  (16, 'Brianna', 'Hildebrand', '', '1996-08-14', 'F', 7), -- Deadpool 2
-  (17, 'Leslie', 'Uggams', 'Stephens', '1935-05-25', 'F', 8), -- Deadpool 2
-  (18, 'Stefan', 'Kapičić', '.', '1978-08-17', 'M', 9), -- Deadpool 2
-  (19, 'JJulian', 'Dennison', '', '2001-05-26', 'M', 10), -- Deadpool 2
-  (20, 'Shiori', 'Kutsuna', '', '1988-12-22', 'F', 11),-- Deadpool 2
-  (21, 'Matthew', 'McConaughey', NULL, '1969-11-04', 'M', 9),
-  (22, 'Anne', 'Hathaway', NULL, '1982-11-12', 'F', 6),
-  (23, 'Jessica', 'Chastain', NULL, '1977-03-24', 'F', 6),
-  (24, 'Michael', 'Caine', NULL, '1933-03-14', 'M', 8),
-  (25, 'Casey', 'Affleck', NULL, '1975-08-12', 'M', 1),
-  (26, 'John', 'Lithgow', NULL, '1945-10-19', 'M', 1),
-  (27, 'Topher', 'Grace', NULL, '1978-07-12', 'M', 1),
-  (28, 'Ellen', 'Burstyn', NULL, '1932-12-07', 'F', 6),
-  (29, 'David', 'Gyasi', NULL, '1980-01-02', 'M', 7),
-  (30, 'Mackenzie', 'Foy', NULL, '2000-11-10', 'F', 1),
-  (31, 'Emilia', 'Clarke', NULL, '1986-10-23', 'F', 15), -- Game of Thrones
-  (32, 'Kit', 'Harington', NULL, '1986-12-26', 'M', 15), -- Game of Thrones
-  (33, 'Peter', 'Dinklage', NULL, '1969-06-11', 'M', 25), -- Game of Thrones
-  (34, 'Bryan', 'Cranston', NULL, '1956-03-07', 'M', 26), -- Breaking Bad
-  (35, 'Aaron', 'Paul', NULL, '1979-08-27', 'M', 30), -- Breaking Bad
-  (36, 'Anna', 'Gunn', NULL, '1968-08-11', 'F', 31), -- Breaking Bad
-  (37, 'Jennifer', 'Aniston', NULL, '1969-02-11', 'F', 26), -- La Ley y El orden UV
-  (38, 'Courteney', 'Cox', NULL, '1964-06-15', 'F', 32), -- La Ley y El orden UV
-  (39, 'Matthew', 'Perry', NULL, '1969-08-19', 'M', 33), -- La Ley y El orden UV
-  (40, 'Steve', 'Carell', NULL, '1962-08-16', 'M', 33), -- The Office (US)
-  (41, 'Rainn', 'Wilson', NULL, '1966-01-20', 'M', 34), -- The Office (US)
-  (42, 'John', 'Krasinski', NULL, '1979-10-20', 'M', 33), -- The Office (US)
-  (43, 'Andrew', 'Lincoln', NULL, '1973-09-14', 'M', 15), -- The Walking Dead
-  (44, 'Norman', 'Reedus', NULL, '1969-01-06', 'M', 6), -- The Walking Dead
-  (45, 'Danai', 'Gurira', NULL, '1978-02-14', 'F', 35), -- The Walking Dead
+INSERT INTO PERSONA (nombre, apellido_paterno, fecha_nacimiento, sexo, id_ciudad_residencia) VALUES
+  ('William Bradley', 'Pitt', '1963-12-18', 'M', 24),
+  ('Mary Louise', 'Streep', '1949-06-22', 'F', 25),
+  ('Leonardo Wilhelm', 'DiCaprio', '1974-11-11', 'M', 26),
+  ('Thomas Jeffrey', 'Hanks', '1956-07-09', 'M', 26),
+  ('Jennifer Shrader', 'Lawrence', '1990-08-15', 'F', 27),
+  ('Denzel Hayes', 'Washington', 'Jr.', '1954-12-28', 'M', 1),
+  ('Scarlett Ingrid', 'Johansson', '1984-11-22', 'F', 1),
+  ('Willard Carroll', 'Smith', 'Jr.', '1968-09-25', 'M', 28),
+  ('Julia Fiona', 'Roberts', '1967-10-28', 'F', 29),
+  ('Robert John', 'Downey', 'Jr.', '1965-04-04', 'M', 1),
+  ('Ryan', 'Reynolds', '1976-10-23', 'M', 2),
+  ('Joshua', 'Brolin', '1972-02-12', 'M', 3),
+  ('Morena', 'Baccarin', 'Teissott Franco', '1979-03-22', 'F', 4),
+  ('Zazie', 'Beetz', '1991-05-25', 'F', 5),
+  ('Timothy', 'Miller', '1982-06-04', 'M', 6),
+  ('Brianna', 'Hildebrand', '1996-08-14', 'F', 7),
+  ('Leslie', 'Uggams', 'Stephens', '1935-05-25', 'F', 8),
+  ('Stefan', 'Kapičić', '1978-08-17', 'M', 9),
+  ('JJulian', 'Dennison', '2001-05-26', 'M', 10),
+  ('Shiori', 'Kutsuna', '1988-12-22', 'F', 11),
+  ('Matthew', 'McConaughey', '1969-11-04', 'M', 9),
+  ('Anne', 'Hathaway', '1982-11-12', 'F', 6),
+  ('Jessica', 'Chastain', '1977-03-24', 'F', 6),
+  ('Michael', 'Caine', '1933-03-14', 'M', 8),
+  ('Casey', 'Affleck', '1975-08-12', 'M', 1),
+  ('John', 'Lithgow', '1945-10-19', 'M', 1),
+  ('Topher', 'Grace', '1978-07-12', 'M', 1),
+  ('Ellen', 'Burstyn', '1932-12-07', 'F', 6),
+  ('David', 'Gyasi', '1980-01-02', 'M', 7),
+  ('Mackenzie', 'Foy', '2000-11-10', 'F', 1),
+  ('Emilia', 'Clarke', '1986-10-23', 'F', 15),
+  ('Kit', 'Harington', '1986-12-26', 'M', 15),
+  ('Peter', 'Dinklage', '1969-06-11', 'M', 25),
+  ('Bryan', 'Cranston', '1956-03-07', 'M', 26),
+  ('Aaron', 'Paul', '1979-08-27', 'M', 30),
+  ('Anna', 'Gunn', '1968-08-11', 'F', 31),
+  ('Jennifer', 'Aniston', '1969-02-11', 'F', 26),
+  ('Courteney', 'Cox', '1964-06-15', 'F', 32),
+  ('Matthew', 'Perry', '1969-08-19', 'M', 33),
+  ('Steve', 'Carell', '1962-08-16', 'M', 33),
+  ('Rainn', 'Wilson', '1966-01-20', 'M', 34),
+  ('John', 'Krasinski', '1979-10-20', 'M', 33),
+  ('Andrew', 'Lincoln', '1973-09-14', 'M', 15),
+  ('Norman', 'Reedus', '1969-01-06', 'M', 6),
+  ('Danai', 'Gurira', '1978-02-14', 'F', 35),
 
-  (46, 'Isai', 'Quispe', NULL, '2000-01-08', 'M', 36),
-  (47, 'Eddy', 'Sejas', NULL, '2004-03-07', 'M', 36),
-  (48, 'Jhonny', 'Fernandez', NULL, '2001-11-13', 'M', 36),
-  (49, 'Eduardo', 'Kilibarda', NULL, '2002-09-25', 'M', 36),
-  (50, 'Jhonathan', 'Quispe', NULL, '2002-11-10', 'M', 36),
+  ('Isai', 'Quispe', '2000-01-08', 'M', 36),
+  ('Eddy', 'Sejas', '2004-03-07', 'M', 36),
+  ('Jhonny', 'Fernandez', '2001-11-13', 'M', 36),
+  ('Eduardo', 'Kilibarda', '2002-09-25', 'M', 36),
+  ('Jhonathan', 'Quispe', '2002-11-10', 'M', 36),
 
-
-    (51, 'Robert', 'Downey', 'Jr.', '1965-04-04', 'M', 1), -- Robert Downey Jr.
-    (52, 'Chris', 'Evans', NULL, '1981-06-13', 'M', 1), -- Chris Evans
-    (53, 'Mark', 'Ruffalo', NULL, '1967-11-22', 'M', 8), -- Mark Ruffalo
-    (54, 'Chris', 'Hemsworth', NULL, '1983-08-11', 'M', 2), -- Chris Hemsworth
-    (55, 'Scarlett', 'Johansson', NULL, '1984-11-22', 'F', 1), -- Scarlett Johansson
-    (56, 'Jeremy', 'Renner', NULL, '1971-01-07', 'M', 1), -- Jeremy Renner
-    (57, 'Don', 'Cheadle', NULL, '1964-11-29', 'M', 2), -- Don Cheadle
-    (58, 'Paul', 'Rudd', NULL, '1969-04-06', 'M', 8), -- Paul Rudd
-    (59, 'Benedict', 'Cumberbatch', NULL, '1976-07-19', 'M', 2), -- Benedict Cumberbatch
-    (60, 'Tom', 'Holland', NULL, '1996-06-01', 'M', 1); -- Tom Holland
-
+  ('Robert', 'Downey', 'Jr.', '1965-04-04', 'M', 1),
+  ('Chris', 'Evans', '1981-06-13', 'M', 1),
+  ('Mark', 'Ruffalo', '1967-11-22', 'M', 8),
+  ('Chris', 'Hemsworth', '1983-08-11', 'M', 2),
+  ('Scarlett', 'Johansson', '1984-11-22', 'F', 1),
+  ('Jeremy', 'Renner', '1971-01-07', 'M', 1),
+  ('Don', 'Cheadle', '1964-11-29', 'M', 2),
+  ('Paul', 'Rudd', '1969-04-06', 'M', 8),
+  ('Benedict', 'Cumberbatch', '1976-07-19', 'M', 2),
+  ('Tom', 'Holland', '1996-06-01', 'M', 1);
 
 INSERT INTO ACTOR (id_persona, id_ciudad_origen) VALUES
   (1, 24),
@@ -367,17 +346,17 @@ INSERT INTO ACTOR (id_persona, id_ciudad_origen) VALUES
   (43, 15),
   (44, 6),
   (45, 35),
-  (51, 1),
 
-(52, 1),
-(53, 1),
-(54, 1),
-(55, 1),
-(56, 1),
-(57, 1),
-(58, 1),
-(59, 1),
-(60, 1);
+  (51, 1),
+  (52, 1),
+  (53, 1),
+  (54, 1),
+  (55, 1),
+  (56, 1),
+  (57, 1),
+  (58, 1),
+  (59, 1),
+  (60, 1);
 
 INSERT INTO R_CONTENIDO_ACTOR (nombre_artistico, rol, id_actor, id_contenido) VALUES
   ('Deadpool','Principal',11,1),
@@ -390,85 +369,83 @@ INSERT INTO R_CONTENIDO_ACTOR (nombre_artistico, rol, id_actor, id_contenido) VA
   ('persona del fondo','Cameo',18,4),
   ('Ricky Baker','Principal',19,5),
   ('persona del fondo','Cameo',20,5),
-
-    ('Iron Man', 'principal', 1, 2), -- Robert Downey Jr. como Iron Man
-    ('Capitán América', 'principal', 2, 2), -- Chris Evans como Capitán América
-    ('Hulk', 'principal', 3, 2), -- Mark Ruffalo como Hulk
-    ('Thor', 'principal', 4, 2), -- Chris Hemsworth como Thor
-    ('Black Widow', 'principal', 5, 2), -- Scarlett Johansson como Black Widow
-    ('Hawkeye', 'secundario', 6, 2), -- Jeremy Renner como Hawkeye
-    ('War Machine', 'secundario', 7, 2), -- Don Cheadle como War Machine
-    ('Ant-Man', 'secundario', 8, 2), -- Paul Rudd como Ant-Man
-    ('Doctor Strange', 'secundario', 9, 2), -- Benedict Cumberbatch como Doctor Strange
-    ('Spider-Man', 'secundario', 10, 2); -- Tom Holland como Spider-Man
-
+  ('Iron Man', 'principal', 1, 2),
+  ('Capitán América', 'principal', 52, 2),
+  ('Hulk', 'principal', 3, 2),
+  ('Thor', 'principal', 4, 2),
+  ('Black Widow', 'principal', 5, 2),
+  ('Hawkeye', 'secundario', 6, 2),
+  ('War Machine', 'secundario', 7, 2),
+  ('Ant-Man', 'secundario', 8, 2),
+  ('Doctor Strange', 'secundario', 9, 2),
+  ('Spider-Man', 'secundario', 10, 2);
 
 INSERT INTO CUENTA (id_persona, correo, usuario, clave) VALUES
-  (46, 'isaiQuis@outlook.com', 'ElQuispe',  'HolaMundo' ), 
- (47, 'eddysejas@gmail.com', 'EddyS',  'NewMaster' ),  
- (48, 'jhonnyfer@gmail.com', 'Joule',  'Contraseña' ),  
- (49, 'eduakil@outlook.com', 'EduardoKil',  'Elementos' ),  
- (50, 'jhonathanquis@hotmaill.com', 'Jhona',  'Programacion' );
+  (46, 'isaiQuis@outlook.com', 'ElQuispe', 'HolaMundo'),
+  (47, 'eddysejas@gmail.com', 'EddyS', 'NewMaster'),
+  (48, 'jhonnyfer@gmail.com', 'Joule', 'Contraseña'),
+  (49, 'eduakil@outlook.com', 'EduardoKil', 'Elementos'),
+  (50, 'jhonathanquis@hotmaill.com', 'Jhona', 'Programacion');
 
-INSERT INTO SUBCUENTA (id, id_cuenta, nombre, clave_acceso, activo) VALUES
-  (1, 46, 'cuenta101', '1111', 1),
-  (2, 46, 'cuenta102', '1133', 0),
-  (3, 46, 'cuenta103', '1144', 0),
-  (4, 47, 'cuenta201', '2211', 0),
-  (5, 47, 'cuenta202', '2222', 1),
-  (6, 47, 'cuenta203', '2233', 0),
-  (7, 48, 'cuenta301', '3311', 0),
-  (8, 48, 'cuenta302', '3322', 0),
-  (9, 48, 'cuenta303', '3333', 1),
-  (10, 49, 'cuenta401', '4411', 0),
-  (11, 49, 'cuenta402', '4422', 1),
-  (12, 49, 'cuenta403', '4433', 0),
-  (13, 50, 'cuenta501', '5511', 1),
-  (14, 50, 'cuenta502', '5522', 0),
-  (15, 50, 'cuenta503', '5533', 0);
+INSERT INTO SUBCUENTA (id_cuenta, nombre, clave_acceso, activo) VALUES
+  (46, 'cuenta101', '1111', 1),
+  (46, 'cuenta102', '1133', 0),
+  (46, 'cuenta103', '1144', 0),
+  (47, 'cuenta201', '2211', 0),
+  (47, 'cuenta202', '2222', 1),
+  (47, 'cuenta203', '2233', 0),
+  (48, 'cuenta301', '3311', 0),
+  (48, 'cuenta302', '3322', 0),
+  (48, 'cuenta303', '3333', 1),
+  (49, 'cuenta401', '4411', 0),
+  (49, 'cuenta402', '4422', 1),
+  (49, 'cuenta403', '4433', 0),
+  (50, 'cuenta501', '5511', 1),
+  (50, 'cuenta502', '5522', 0),
+  (50, 'cuenta503', '5533', 0);
 
-INSERT INTO TELEFONO   (id, codigo_pais, numero, id_cuenta) VALUES
-  (1, 591, 71764495, 46),
-  (2, 591, 70762346, 47),
-  (3, 591, 78764557, 47),
-  (4, 591, 71776543, 48),
-  (5, 591, 77764900, 48),
-  (6, 591, 76761222, 49),
-  (7, 591, 79778788, 49),
-  (8, 591, 71761258, 50),
-  (9, 591, 71715154, 50),
-  (10, 591, 71769696, 50);
+INSERT INTO TELEFONO (codigo_pais, numero, id_cuenta) VALUES
+  (591, 71764495, 46),
+  (591, 70762346, 47),
+  (591, 78764557, 47),
+  (591, 71776543, 48),
+  (591, 77764900, 48),
+  (591, 76761222, 49),
+  (591, 79778788, 49),
+  (591, 71761258, 50),
+  (591, 71715154, 50),
+  (591, 71769696, 50);
 
-INSERT INTO PAQUETE   (id, tipo, descripcion, duracion) VALUES 
-  (1, 'personal', 'El paquete consta de una subcuenta y dura 4 semanas con 2 días', 4.2),
-  (2, 'duo', 'El paquete consta de dos subcuentas y dura 4 semanas y 2 días', 4.2),  
-  (3, 'familiar', 'El paquete consta de tres subcuentas y dura 4 semanas y 2 días', 4.2),
-  (4, 'personal', 'El paquete consta de una subcuenta y dura 25 semanas y 5 días', 25.5),
-  (5, 'duo', 'El paquete consta de dos subcuentas y dura 25 semanas y 5 días', 25.5),  
-  (6, 'familiar', 'El paquete consta de tres subcuentas y dura 25 semanas y 5 días', 25.5),
-  (7, 'personal', 'El paquete consta de una subcuenta y dura 52 semanas y 1 día', 52.1),
-  (8, 'duo', 'El paquete consta de dos subcuentas y dura 52 semanas y 1 día', 52.1),
-  (9, 'familiar', 'El paquete consta de tres subcuentas y dura 52 semanas y 1 día', 52.1);
+INSERT INTO PAQUETE (tipo, descripcion, duracion) VALUES 
+  ('personal', 'El paquete consta de una subcuenta y dura 4 semanas con 2 días', 4.2),
+  ('duo', 'El paquete consta de dos subcuentas y dura 4 semanas y 2 días', 4.2),  
+  ('familiar', 'El paquete consta de tres subcuentas y dura 4 semanas y 2 días', 4.2),
+  ('personal', 'El paquete consta de una subcuenta y dura 25 semanas y 5 días', 25.5),
+  ('duo', 'El paquete consta de dos subcuentas y dura 25 semanas y 5 días', 25.5),  
+  ('familiar', 'El paquete consta de tres subcuentas y dura 25 semanas y 5 días', 25.5),
+  ('personal', 'El paquete consta de una subcuenta y dura 52 semanas y 1 día', 52.1),
+  ('duo', 'El paquete consta de dos subcuentas y dura 52 semanas y 1 día', 52.1),
+  ('familiar', 'El paquete consta de tres subcuentas y dura 52 semanas y 1 día', 52.1);
 
-INSERT INTO FORMA_PAGO   (id, monto) VALUES
-  (1, 30),
-  (2, 30),
-  (3, 30),
-  (4, 30),
-  (5, 300),
-  (6, 160),
-  (7, 30),
-  (8, 30),
-  (9, 160),
-  (10, 300);
+INSERT INTO FORMA_PAGO (monto) VALUES
+  (30),
+  (30),
+  (30),
+  (30),
+  (300),
+  (160),
+  (30),
+  (30),
+  (160),
+  (300);
 
-INSERT INTO CREDITO   (id_forma_pago, fecha_inicio, fecha_fin) VALUES
+INSERT INTO CREDITO (id_forma_pago, fecha_inicio, fecha_fin) VALUES
   (5, '2024-04-23', '2025-04-23'),
   (6, '2024-04-23', '2024-10-23'),
   (9, '2024-04-23', '2025-04-23'),
   (10, '2024-04-23', '2024-10-23');
 
-INSERT INTO CONTADO   (id_forma_pago, descuento) VALUES
+INSERT INTO CONTADO (id_forma_pago, descuento) VALUES
   (1, 0),
   (2, 0),
   (3, 0),
@@ -476,17 +453,17 @@ INSERT INTO CONTADO   (id_forma_pago, descuento) VALUES
   (7, 0),
   (8, 0);
 
-INSERT INTO SUSCRIPCION   (id, fecha_adquisicion, fecha_fin, id_paquete, id_cuenta, id_forma_pago) VALUES
-  (1, '2024-01-01', '2024-02-01', 1, 46, 1),
-  (2, '2024-01-15', '2024-02-15', 2, 47, 2), 
-  (3, '2024-01-20', '2024-02-20', 3, 48, 3),
-  (4, '2024-01-23', '2024-02-23', 1, 49, 4),
-  (5, '2024-02-07', '2025-02-07', 9, 50, 5),
-  (6, '2024-02-12', '2024-08-12', 5, 46, 6), 
-  (7, '2024-02-18', '2024-03-18', 2, 47, 7),
-  (8, '2024-02-20', '2024-03-20', 3, 48, 8),
-  (9, '2024-03-19', '2024-09-19', 4, 46, 9),
-  (10, '2024-04-12', '2025-04-12',8, 48, 10);
+INSERT INTO SUSCRIPCION   (id, fecha_adquisicion, fecha_fin, tipo_tarjeta, id_paquete, id_cuenta, id_forma_pago) VALUES
+  (1, '2024-01-01', '2024-02-01', 'credito' ,1, 46, 1),
+  (2, '2024-01-15', '2024-02-15', 'debito' ,2, 47, 2), 
+  (3, '2024-01-20', '2024-02-20', 'debito' ,3, 48, 3),
+  (4, '2024-01-23', '2024-02-23', 'debito' ,1, 49, 4),
+  (5, '2024-02-07', '2025-02-07', 'credito' ,9, 50, 3),
+  (6, '2024-02-12', '2024-08-12', 'debito' ,5, 46, 1), 
+  (7, '2024-02-18', '2024-03-18', 'debito' ,2, 47, 7),
+  (8, '2024-02-20', '2024-03-20', 'credito' ,3, 48, 8),
+  (9, '2024-03-19', '2024-09-19', 'credito' ,4, 46, 3),
+  (10, '1999-04-12', '2025-04-12', 'credito', 8, 48, 2);
 
  INSERT INTO VISUALIZACION (fecha, id_subcuenta, id_contenido) VALUES
   ('2024-01-01 11:14:54', 1, 2),
@@ -504,7 +481,6 @@ INSERT INTO SUSCRIPCION   (id, fecha_adquisicion, fecha_fin, id_paquete, id_cuen
   ('2024-01-01 11:14:54', 13, 7),
   ('2024-01-26 11:14:54', 14, 8),
   ('2024-01-01 11:14:54', 15, 9),
-
   ('2024-01-01 11:14:54', 1, 2),
   ('2024-01-01 11:14:54', 2, 2),
   ('2024-02-28 11:14:54', 3, 3),
@@ -527,4 +503,3 @@ INSERT INTO ESTRENO (fecha, descripcion, id_contenido) VALUES
   ('2024-04-15 18:00:00', 'Increíble estreno del documental histórico', 3),
   ('2024-04-20 20:45:00', 'Esperado estreno de la película de ciencia ficción', 4),
   ('2024-04-25 12:00:00', 'Impactante estreno del drama psicológico', 9);
-

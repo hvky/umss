@@ -32,7 +32,7 @@ GROUP BY
   p.id, p.nombre, c.nombre, pa.nombre, paq.tipo, fp.id, cr.id_forma_pago, co.id_forma_pago;
 
 
--- -- *****************************************************************
+-- *****************************************************************
 SELECT 
   ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS Puesto,
   c.titulo AS Titulo_Pelicula,
@@ -62,7 +62,7 @@ ORDER BY
 LIMIT 5;
 
 
--- -- *****************************************************************
+-- *****************************************************************
 SELECT
   MIN(t.fecha_estreno) AS Fecha_Primer_Capitulo,
   COUNT(DISTINCT t.id) AS Total_Temporadas,
@@ -82,7 +82,7 @@ WHERE
 
 
 
--- -- *****************************************************************
+-- *****************************************************************
 SELECT 
   p.nombre AS Nombre_Actor,
   pais_origen.nombre AS Pais_Origen,
@@ -117,7 +117,7 @@ GROUP BY
 
 
 
--- -- *****************************************************************
+-- *****************************************************************
 SELECT 
   p.nombre AS Nombre_Usuario,
   s.fecha_adquisicion AS Fecha_Suscripcion_Antigua,
@@ -133,3 +133,36 @@ GROUP BY
 ORDER BY 
   COUNT(*) DESC
 LIMIT 1;
+
+
+
+-- *****************************************************************
+-- CONSULTA ELABORADA EN CLASE
+SELECT 
+  pe.nombre as NOMBRE,
+  cu.usuario as USERNAME,
+  cu.correo as CORREO_ELECTRONICO,
+  s.fecha_adquisicion as FECHA_SUSCRIPCION,
+  p.tipo as PAQUETE_ELEGIDO,
+  CASE
+    WHEN fp.id IS NOT NULL THEN 'Contado'
+    WHEN cr.id_forma_pago IS NOT NULL THEN 'Crédito'
+  END AS MODALIDAD_PAGO,
+  s.tipo_tarjeta as TARJETA_USADA
+FROM
+  SUSCRIPCION s
+JOIN
+  CUENTA cu on s.id_cuenta = cu.id_persona
+JOIN
+  PERSONA pe on cu.id_persona = pe.id
+JOIN
+  PAQUETE p on s.id_paquete = p.id
+LEFT JOIN
+  FORMA_PAGO fp ON s.id_forma_pago = fp.id
+LEFT JOIN
+  CREDITO cr ON fp.id = cr.id_forma_pago
+LEFT JOIN
+  CONTADO co ON fp.id = co.id_forma_pago
+ORDER BY 
+  s.fecha_adquisicion ASC
+LIMIT 3;
