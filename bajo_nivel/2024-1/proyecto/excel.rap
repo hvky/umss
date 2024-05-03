@@ -39,6 +39,7 @@ Menu=1,1,0,0,1,1,1,1,0,0,0,0,0,0,0,0
 16=
 17=0,0,"$E\OllyDbg",5
 [Resource]
+1=,0,0,
 [StringTable]
 [Accel]
 [VerInf]
@@ -109,3 +110,7 @@ GroupExpand=0,1,0,0,1,0
 9=
 [BreakPoint]
 0=
+[Collapse]
+1=
+[Size]
+1=0,0,0,0,0
