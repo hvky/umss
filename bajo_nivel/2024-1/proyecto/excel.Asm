@@ -3,15 +3,46 @@ entry inicio
 
 include 'c:/fasm/include/Win32ax.inc'
 
-main 									= 1
+
+; ********************     CONSTANTES     ********************
+main									= 1
+casilla_seleccionada	= 1001
+btn_cancelar					= 1004
+btn_confirmar					= 1005
+btn_func							= 1006
+input_expresion				= 1007
+A1										= 1040
+A2										= 1052
+A3										= 1064
+A4										= 1076
+A5										= 1088
+A6										= 1100
+A7										= 1112
+A8										= 1124
+A9										= 1136
+A10										= 1148
+A11										= 1160
+A12										= 1172
+A13										= 1184
+A14										= 1196
+A15										= 1208
+A16										= 1220
+A17										= 1232
+A18										= 1244
+A19										= 1256
+A20										= 1268
 
 
-section '.data' data readable writeable
+; ********************     MACROS     ********************
+macro copiar orig,dest {
+	push eax
+	invoke SendDlgItemMessage,[pWnd],orig,WM_GETTEXT,0FFh,buffer
+	invoke SendDlgItemMessage,[pWnd],dest,WM_SETTEXT,0,buffer
+	pop eax
+}
 
-Ist  dd 0
-pWnd dd 0
 
-
+; ********************     CODIGO     ********************
 section '.code' code readable executable
 
 inicio:
@@ -22,6 +53,7 @@ fin:
 	invoke ExitProcess,0
 
 
+; ********************     PROCEDIMIENTOS     ********************
 proc DlgProc,hWnd,uMsg,wParam,lParam
 	push edi esi ebx
 
@@ -44,8 +76,44 @@ jINITDIALOG:
 
 jCOMMAND:
 	mov eax,[wParam]
+	mov ebx,eax
+	shr ebx,16
+	cmp ebx,EN_SETFOCUS
+	je jSETFOCUS
 
-	xor eax,eax
+	cmp eax,btn_cancelar
+	je cancelar
+	cmp eax,btn_confirmar
+	je confirmar
+	cmp eax,btn_func
+	je funciones
+
+	xor eax, eax
+	jmp finish
+
+cancelar:
+	jmp finish
+
+confirmar:
+	mov eax,[cnt_id]
+	test eax,eax
+	jnz confirmar_pass
+	mov [cnt_id],A1
+
+confirmar_pass:
+	copiar input_expresion,[cnt_id]
+	jmp finish
+
+funciones:
+	jmp finish
+
+jSETFOCUS:
+	and eax,0FFFFh
+	cmp eax,input_expresion
+	je jSETFOCUS_pass
+	mov [cnt_id],eax
+jSETFOCUS_pass:
+	mov eax,1
 	jmp finish
 
 jCLOSE:	
@@ -58,12 +126,30 @@ finish:
 endp
 
 
+; ********************     MEMORIA     ********************
+section '.data' data readable writeable
+
+Ist  				dd 0
+pWnd 				dd 0
+cnt_id			dd 0
+buffer			rd 0FFh
+text				db 20 dup(0)
+no_control	db "SIN INPUT SELECCIONADO",0
+
+
+; ********************     RECURSOS     ********************
 section '.idata' import data readable writeable
-  library kernel32,'KERNEL32.DLL', \
-					user32,'USER32.DLL', \
-					gdi32,'GDI32.DLL'
-  include 'c:/fasm/include/api/kernel32.inc'
-  include 'c:/fasm/include/api/user32.inc'
-  include 'c:/fasm/include/api/gdi32.inc'
+	library kernel32,'KERNEL32.DLL',\
+					user32,'USER32.DLL',\
+					gdi32,'GDI32.DLL',\
+					msvcrt,'MSVCRT.DLL'
+
+	include 'c:/fasm/include/api/kernel32.inc'
+	include 'c:/fasm/include/api/user32.inc'
+	include 'c:/fasm/include/api/gdi32.inc'
+
+	import msvcrt,\
+			sprintf,'sprintf',\
+			sscanf,'sscanf'
 
 section '.rsrc' resource from 'excel.res' data readable
