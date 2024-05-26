@@ -125,6 +125,10 @@ jSETFOCUS:
 	je jSETFOCUS_pass
 
 	mov [selected_id],eax
+	invoke SendDlgItemMessage,[pWnd],eax,WM_GETTEXT,0FFh,buffer
+	invoke lstrcmp,buffer,""
+	cmp eax,0
+	je jSETFOCUS_pass
 	copiar [selected_id],input_expresion
 
 jSETFOCUS_pass:
