@@ -35,10 +35,8 @@ A20										= 1268
 
 ; ********************     MACROS     ********************
 macro copiar orig,dest {
-	push eax
 	invoke SendDlgItemMessage,[pWnd],orig,WM_GETTEXT,0FFh,buffer
 	invoke SendDlgItemMessage,[pWnd],dest,WM_SETTEXT,0,buffer
-	pop eax
 }
 
 
@@ -80,6 +78,8 @@ jCOMMAND:
 	shr ebx,16
 	cmp ebx,EN_SETFOCUS
 	je jSETFOCUS
+	cmp	ebx,EN_CHANGE
+	je  cambio_texto
 
 	cmp eax,btn_cancelar
 	je cancelar
@@ -95,23 +95,38 @@ cancelar:
 	jmp finish
 
 confirmar:
-	mov eax,[cnt_id]
+	mov eax,[selected_id]
 	test eax,eax
 	jnz confirmar_pass
-	mov [cnt_id],A1
+	mov [selected_id],A1
 
 confirmar_pass:
-	copiar input_expresion,[cnt_id]
+	copiar input_expresion,[selected_id]
 	jmp finish
 
 funciones:
 	jmp finish
 
-jSETFOCUS:
+cambio_texto:
 	and eax,0FFFFh
 	cmp eax,input_expresion
-	je jSETFOCUS_pass
+	je cambio_texto_pass
+	mov ebx,eax
+	copiar ebx,input_expresion
+
+cambio_texto_pass:
+	mov eax,1
+	jmp finish
+
+jSETFOCUS:
+	and eax,0FFFFh
 	mov [cnt_id],eax
+	cmp eax,input_expresion
+	je jSETFOCUS_pass
+
+	mov [selected_id],eax
+	copiar [selected_id],input_expresion
+
 jSETFOCUS_pass:
 	mov eax,1
 	jmp finish
@@ -132,6 +147,7 @@ section '.data' data readable writeable
 Ist  				dd 0
 pWnd 				dd 0
 cnt_id			dd 0
+selected_id	dd 0
 buffer			rd 0FFh
 text				db 20 dup(0)
 no_control	db "SIN INPUT SELECCIONADO",0
