@@ -20,7 +20,7 @@ macro copiar orig,dest {
 	invoke SendDlgItemMessage,[pWnd],dest,WM_SETTEXT,0,buffer
 }
 
-macro esPrefijo cadX,cadY,dest {		; eax
+macro esPrefijo cadX,cadY,dest {
 	local while,is,not_is
 	mov esi,cadX
 	mov edi,cadY
@@ -42,19 +42,18 @@ macro esPrefijo cadX,cadY,dest {		; eax
 	not_is:
 }
 
-macro limpiarRegistro reg,n {		; ecx
-	local while,end
-	mov esi,reg
-	mov ecx,n
-
-	while:
-		mov byte[esi],0
-		inc esi
-		loop while
+macro limpiarRegistro reg,size {
+	push ecx edi eax
+	mov ecx, size
+	mov edi, reg
+	xor eax, eax
+	rep stosb
+	pop eax edi ecx
 }
 
-macro searchN x,data,n {		; eax ecx
+macro searchN x,data,n {
 	local while,while_2,next,no_esta,esta,end
+	push esi ecx edi
 	mov esi,data
 	dec esi
 
@@ -63,17 +62,17 @@ macro searchN x,data,n {		; eax ecx
 		mov ecx,n
 		mov edi,x
 
-		while_2:
-			cmp byte[esi],0
-			je no_esta
-			cmp byte[esi],1
-			je while
-			mov al,byte[edi]
-			cmp byte[esi],al
-			jne next
-			inc edi
-			inc esi
-			loop while_2
+	while_2:
+		cmp byte[esi],0
+		je no_esta
+		cmp byte[esi],1
+		je while
+		mov al,byte[edi]
+		cmp byte[esi],al
+		jne next
+		inc edi
+		inc esi
+		loop while_2
 
 		cmp byte[esi],1
 		je esta
@@ -94,10 +93,11 @@ macro searchN x,data,n {		; eax ecx
 	no_esta:
 		mov eax,0
 	end:
+		pop edi ecx esi
 }
 
-macro obtenerId cad {		; eax ebx ecx
-	local while
+macro obtenerId cad {
+	push esi ebx ecx
 	mov esi,cad
 	xor ebx,ebx
 	mov bl,byte[esi]
@@ -110,6 +110,7 @@ macro obtenerId cad {		; eax ebx ecx
 	mul ecx
 	add eax,ebx
 	add eax,1028
+	pop ecx ebx esi
 }
 
 
@@ -207,32 +208,60 @@ no_hay_operacion:
 op_suma:
 	mov esi,buffer
 	add esi,6
-	mov edi,aux
 	mov ebx,0
 
-ciclo_suma:
+suma_inciar_contador:
+	limpiarRegistro aux,0FFh
+	mov edi,aux
+	xor edx,edx
+
+suma_ciclo_indices:
 	cmp byte[esi],0
-	je fin_ciclo_suma
-	cmp byte[esi],59
-	je fin_ciclo_suma
+	je formula_erronea
+	cmp byte[esi],';'
+	je suma_agregar_id
+	cmp byte[esi],')'
+	je suma_agregar_id
 
 	mov al,byte[esi]
 	mov byte[edi],al
-	inc esi
+	inc edx
 	inc edi
-	inc ebx
-	jmp ciclo_suma
+	inc esi
+	jmp suma_ciclo_indices
 
-fin_ciclo_suma:
-	searchN aux,database,ebx
+suma_agregar_id:
+	searchN aux,database,edx
 	cmp eax,0
 	je formula_erronea
 
+	mov edi,valores
+	mov eax,4
+	mul ebx
+	add edi,eax
 	obtenerId aux
-	invoke wsprintf,aux,'%d',eax
-	invoke MessageBox,0,aux,0,MB_OK
-	limpiarRegistro aux,0FFh
-	jmp confirmar_pass
+	mov dword[edi],eax
+
+	inc ebx
+	cmp byte[esi],')'
+	je suma_fin_indices
+	inc esi
+	jmp suma_inciar_contador
+
+suma_fin_indices:
+	mov esi,valores
+
+suma_while:
+	cmp ebx,0
+	je confirmar_pass
+
+	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
+	invoke MessageBox,0,buffer,'SEGUNDO',MB_OK
+
+	add esi,4
+	dec ebx
+	jmp suma_while
+
 
 op_promedio:
 	mov esi,buffer
@@ -254,6 +283,7 @@ formula_erronea:
 	jmp confirmar_pass
 
 confirmar_pass:
+	; limpiarRegistro valores,0FFh		; se controla el numero de items agregados
 	mov eax,1
 	jmp finish
 
@@ -316,7 +346,7 @@ format_Out	db '%.7f',0
 format_In		db '%lf',0
 
 aux					db 100h dup(0)
-valores			dw 100h dup(0)
+valores			dd 100h dup(0)
 
 database		db 'a1',1,'a2',1,'a3',1,'a4',1,'a5',1,'a6',1,'a7',1,'a8',1,'a9',1,'a10',1,\
 							 'a11',1,'a12',1,'a13',1,'a14',1,'a15',1,'a16',1,'a17',1,'a18',1,'a19',1,'a20',1,\
