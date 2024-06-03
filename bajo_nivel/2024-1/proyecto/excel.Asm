@@ -204,6 +204,8 @@ no_hay_operacion:
 	copiar input_expresion,[selected_id]
 	jmp confirmar_pass
 
+
+; SUMA
 op_suma:
 	mov esi,buffer
 	add esi,6
@@ -273,14 +275,84 @@ sumar_fin:
 	fstp [resultado]
 	invoke sprintf,buffer,format_Out,dword[resultado],dword[resultado+4]
 	invoke SetDlgItemText,[hWnd],[selected_id],buffer
-
 	jmp confirmar_pass
 
 
+; PROMEDIO
 op_promedio:
 	mov esi,buffer
 	add esi,10
+
+promedio_suma_inciar_contador:
+	limpiarRegistro aux,0FFh
+	mov edi,aux
+	xor edx,edx
+
+promedio_suma_ciclo_indices:
+	cmp byte[esi],0
+	je formula_erronea
+	cmp byte[esi],';'
+	je promedio_suma_agregar_id
+	cmp byte[esi],')'
+	je promedio_suma_agregar_id
+
+	mov al,byte[esi]
+	mov byte[edi],al
+	inc edx
+	inc edi
+	inc esi
+	jmp promedio_suma_ciclo_indices
+
+promedio_suma_agregar_id:
+	searchN aux,database,edx
+	cmp eax,0
+	je formula_erronea
+
+	mov edi,ids
+	mov eax,4
+	mul ebx
+	add edi,eax
+	obtenerId aux
+	mov dword[edi],eax
+
+	inc ebx
+	cmp byte[esi],')'
+	je promedio_suma_fin_indices
+	inc esi
+	jmp promedio_suma_inciar_contador
+
+promedio_suma_fin_indices:
+	cmp ebx,0
+	je formula_erronea
+	mov esi,ids
+	mov dword[n],ebx
+
+	finit
+	fldz
+
+promedio_sumar:
+	cmp ebx,0
+	je promedio_sumar_fin
+
+	; mov dword[numero],0								; LIMPIAR REGISTRO - EMPTY OR != NUM  ->  VALOR PREVIO
+	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
+	cinvoke sscanf,buffer,format_In,numero
+
+	fld [numero]
+	faddp st1,st0
+	add esi,4
+	dec ebx
+	jmp promedio_sumar
+
+promedio_sumar_fin:
+	fild [n]
+	fdivp st1,st0
+	fwait
+	fstp [resultado]
+	invoke sprintf,buffer,format_Out,dword[resultado],dword[resultado+4]
+	invoke SetDlgItemText,[hWnd],[selected_id],buffer
 	jmp confirmar_pass
+
 
 op_ordenamiento:
 	mov esi,buffer
@@ -363,6 +435,7 @@ aux					db 100h dup(0)
 ids					dd 100h dup(0)
 numero			dq 0
 resultado		dq 0
+n						dd 0
 
 database		db 'a1',1,'a2',1,'a3',1,'a4',1,'a5',1,'a6',1,'a7',1,'a8',1,'a9',1,'a10',1,\
 							 'a11',1,'a12',1,'a13',1,'a14',1,'a15',1,'a16',1,'a17',1,'a18',1,'a19',1,'a20',1,\
