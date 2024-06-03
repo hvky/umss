@@ -182,10 +182,8 @@ confirmar:
 	cmp byte[esi],'='
 	jne no_hay_operacion
 	mov ecx,eax
-	dec ecx
 
 convertir_lowercase:
-	inc esi
 	cmp byte[esi],'A'
 	jb convertir_lowercase_pass
 	cmp byte[esi],'Z'
@@ -193,6 +191,7 @@ convertir_lowercase:
 	add byte[esi],32
 
 convertir_lowercase_pass:
+	inc esi
 	loop convertir_lowercase
 
 	esPrefijo msg_suma,buffer,op_suma
@@ -235,7 +234,7 @@ suma_agregar_id:
 	cmp eax,0
 	je formula_erronea
 
-	mov edi,valores
+	mov edi,ids
 	mov eax,4
 	mul ebx
 	add edi,eax
@@ -249,18 +248,33 @@ suma_agregar_id:
 	jmp suma_inciar_contador
 
 suma_fin_indices:
-	mov esi,valores
-
-suma_while:
 	cmp ebx,0
-	je confirmar_pass
+	je formula_erronea
+	mov esi,ids
+	finit
+	fldz
 
+sumar:
+	cmp ebx,0
+	je sumar_fin
+
+	; mov dword[numero],0								; LIMPIAR REGISTRO - EMPTY OR != NUM  ->  VALOR PREVIO
 	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
-	invoke MessageBox,0,buffer,'SEGUNDO',MB_OK
+	cinvoke sscanf,buffer,format_In,numero
 
+	fld [numero]
+	faddp st1,st0
 	add esi,4
 	dec ebx
-	jmp suma_while
+	jmp sumar
+
+sumar_fin:
+	fwait
+	fstp [resultado]
+	invoke sprintf,buffer,format_Out,dword[resultado],dword[resultado+4]
+	invoke SetDlgItemText,[hWnd],[selected_id],buffer
+
+	jmp confirmar_pass
 
 
 op_promedio:
@@ -283,7 +297,7 @@ formula_erronea:
 	jmp confirmar_pass
 
 confirmar_pass:
-	; limpiarRegistro valores,0FFh		; se controla el numero de items agregados
+	; limpiarRegistro ids,0FFh		; se controla el numero de items agregados
 	mov eax,1
 	jmp finish
 
@@ -346,7 +360,9 @@ format_Out	db '%.7f',0
 format_In		db '%lf',0
 
 aux					db 100h dup(0)
-valores			dd 100h dup(0)
+ids					dd 100h dup(0)
+numero			dq 0
+resultado		dq 0
 
 database		db 'a1',1,'a2',1,'a3',1,'a4',1,'a5',1,'a6',1,'a7',1,'a8',1,'a9',1,'a10',1,\
 							 'a11',1,'a12',1,'a13',1,'a14',1,'a15',1,'a16',1,'a17',1,'a18',1,'a19',1,'a20',1,\
