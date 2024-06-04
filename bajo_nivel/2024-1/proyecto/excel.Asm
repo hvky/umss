@@ -262,12 +262,13 @@ sumar:
 	je sumar_fin
 
 	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
-	cinvoke sscanf,buffer,format_In,numero
-	cmp eax,1
-	je sumar_convertir_cero_pass
-	cinvoke sscanf,'0',format_In,numero
+	cmp eax,0
+	je valor_erroneo
 
-sumar_convertir_cero_pass:
+	cinvoke sscanf,buffer,format_In,numero
+	cmp eax,0
+	je valor_erroneo
+
 	fld [numero]
 	faddp st1,st0
 	add esi,4
@@ -339,13 +340,13 @@ promedio_sumar:
 	je promedio_sumar_fin
 
 	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
-	cinvoke sscanf,buffer,format_In,numero
-	cmp eax,1
-	je promedio_convertir_cero_pass
-	cinvoke sscanf,'0',format_In,numero
-	dec dword[cantidad_valores]
+	cmp eax,0
+	je valor_erroneo
 
-promedio_convertir_cero_pass:
+	cinvoke sscanf,buffer,format_In,numero
+	cmp eax,0
+	je valor_erroneo
+
 	fld [numero]
 	faddp st1,st0
 	add esi,4
@@ -353,7 +354,7 @@ promedio_convertir_cero_pass:
 	jmp promedio_sumar
 
 promedio_sumar_fin:
-	fild [cantidad_valores]				; VERIFICAR EL NUMERO DE ELEMENTOS
+	fild [cantidad_valores]
 	fdivp st1,st0
 	fwait
 	fstp [resultado]
@@ -474,6 +475,10 @@ op_si:
 	jmp confirmar_pass
 
 
+valor_erroneo:
+	invoke SetDlgItemText,[pWnd],[selected_id],errorValor
+	jmp confirmar_pass
+
 formula_erronea:
 	invoke SetDlgItemText,[pWnd],[selected_id],error
 	jmp confirmar_pass
@@ -534,6 +539,7 @@ selected_id				dd 0
 buffer						rd 0FFh
 
 error							db '#',0xBF,'NOMBRE?',0
+errorValor				db '#',0x21,'VALOR!',0
 msg_suma					db '=suma(',0
 msg_prom					db '=promedio(',0
 msg_ordn					db '=ordenar(',0
