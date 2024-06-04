@@ -434,38 +434,102 @@ ordenamiento_agregar__fin_ciclo:
 	cmp bl,'1'
 	ja formula_erronea
 
-	mov esi,ids
 	mov byte[ord_aux],bl
+	mov esi,ids
+	mov edi,ord_valores
 	mov ebx,dword[cantidad_valores]
 
-ordenar:
+ordenar_verificar_valores:
 	cmp ebx,0
-	je op_ordenamiento_fin
+	je ordenar
 
 	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
-	cinvoke sscanf,buffer,format_In,numero
-	cmp eax,1
-	je ordenar_convertir_cero_pass
-	cinvoke sscanf,'0',format_In,numero
+	cmp eax,0
+	je valor_erroneo
+	cinvoke sscanf,buffer,format_In,edi
+	cmp eax,0
+	je valor_erroneo
 
-ordenar_convertir_cero_pass:
+	add edi,8
+	add esi,4
+	dec ebx
+	jmp ordenar_verificar_valores
+
+ordenar:
+	mov esi,ord_valores
+	mov ebx,dword[cantidad_valores]
+	mov ecx,0
+	finit
+
+ordenar_ciclo:
+	cmp ebx,0
+	je op_ordenamiento_fin
+	mov ecx,[cantidad_valores]
+
+ordenar_ciclo_2:
+	cmp ecx,ebx
+	je ordenar_ciclo_2_pass
+
+	fld qword[edi]
+	fld qword[edi+8]
+
 	cmp byte[ord_aux],'1'
 	je ordenar_may_men
 	jmp ordenar_men_may
 
 ordenar_may_men:
-	jmp ordenar_pass
+	fcompp
+	fnstsw ax
+	sahf
+	jna ordenar_ciclo_2_pass
+	jmp ordenar_ciclo_2_sig
 
 ordenar_men_may:
-	jmp ordenar_pass
+	fcompp
+	fnstsw ax
+	sahf
+	jnb ordenar_ciclo_2_pass
+	jmp ordenar_ciclo_2_sig
 
-ordenar_pass:
-	add esi,4
+ordenar_ciclo_2_sig:
+	push ecx ebx
+	mov eax,dword[edi]
+	mov ebx,dword[edi+4]
+	mov ecx,dword[edi+8]
+	mov edx,dword[edi+12]
+
+	mov dword[edi],ecx
+	mov dword[edi+4],edx
+	mov dword[edi+8],eax
+	mov dword[edi+12],ebx
+	pop ebx ecx
+
+	sub edi,8
+	dec ecx
+	jmp ordenar_ciclo_2
+
+ordenar_ciclo_2_pass:
 	dec ebx
-	jmp ordenar
+	mov edi,esi
+	add esi,8
+	jmp ordenar_ciclo
 
 op_ordenamiento_fin:
-	jmp confirmar_pass
+	invoke MessageBox,0,'FIN DEL PROCESO',0,MB_OK
+	; jmp confirmar_pass
+	mov ebx,[cantidad_valores]
+	mov esi,ord_valores
+
+mostrar_valores:
+	cmp ebx,0
+	je confirmar_pass
+
+	invoke sprintf,buffer,format_Out,dword[esi],dword[esi+4]
+	invoke MessageBox,0,buffer,0,MB_OK
+
+	add esi,8
+	dec ebx
+	jmp mostrar_valores
 
 
 ; *************************** FUNCION SI
@@ -553,6 +617,7 @@ numero						dq 0
 resultado					dq 0
 cantidad_valores	dd 0
 ord_aux						db 0
+ord_valores				dq 100h dup(0)
 
 database		db 'a1',1,'a2',1,'a3',1,'a4',1,'a5',1,'a6',1,'a7',1,'a8',1,'a9',1,'a10',1,\
 							 'a11',1,'a12',1,'a13',1,'a14',1,'a15',1,'a16',1,'a17',1,'a18',1,'a19',1,'a20',1,\
