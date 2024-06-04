@@ -12,6 +12,7 @@ btn_confirmar					= 1005
 btn_func							= 1006
 input_expresion				= 1007
 A1										= 1040
+L20										= 1279
 
 
 ; ********************     MACROS     ********************
@@ -205,14 +206,14 @@ no_hay_operacion:
 	jmp confirmar_pass
 
 
-; SUMA
+; *************************** SUMA
 op_suma:
 	mov esi,buffer
 	add esi,6
 	mov ebx,0
 
 suma_inciar_contador:
-	limpiarRegistro aux,0FFh
+	; limpiarRegistro aux,0FFh
 	mov edi,aux
 	xor edx,edx
 
@@ -260,10 +261,13 @@ sumar:
 	cmp ebx,0
 	je sumar_fin
 
-	; mov dword[numero],0								; LIMPIAR REGISTRO - EMPTY OR != NUM  ->  VALOR PREVIO
 	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
 	cinvoke sscanf,buffer,format_In,numero
+	cmp eax,1
+	je sumar_convertir_cero_pass
+	cinvoke sscanf,'0',format_In,numero
 
+sumar_convertir_cero_pass:
 	fld [numero]
 	faddp st1,st0
 	add esi,4
@@ -278,13 +282,13 @@ sumar_fin:
 	jmp confirmar_pass
 
 
-; PROMEDIO
+; *************************** PROMEDIO
 op_promedio:
 	mov esi,buffer
 	add esi,10
 
 promedio_suma_inciar_contador:
-	limpiarRegistro aux,0FFh
+	; limpiarRegistro aux,0FFh
 	mov edi,aux
 	xor edx,edx
 
@@ -325,7 +329,7 @@ promedio_suma_fin_indices:
 	cmp ebx,0
 	je formula_erronea
 	mov esi,ids
-	mov dword[n],ebx
+	mov dword[cantidad_valores],ebx
 
 	finit
 	fldz
@@ -334,10 +338,14 @@ promedio_sumar:
 	cmp ebx,0
 	je promedio_sumar_fin
 
-	; mov dword[numero],0								; LIMPIAR REGISTRO - EMPTY OR != NUM  ->  VALOR PREVIO
 	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
 	cinvoke sscanf,buffer,format_In,numero
+	cmp eax,1
+	je promedio_convertir_cero_pass
+	cinvoke sscanf,'0',format_In,numero
+	dec dword[cantidad_valores]
 
+promedio_convertir_cero_pass:
 	fld [numero]
 	faddp st1,st0
 	add esi,4
@@ -345,7 +353,7 @@ promedio_sumar:
 	jmp promedio_sumar
 
 promedio_sumar_fin:
-	fild [n]
+	fild [cantidad_valores]				; VERIFICAR EL NUMERO DE ELEMENTOS
 	fdivp st1,st0
 	fwait
 	fstp [resultado]
@@ -354,15 +362,117 @@ promedio_sumar_fin:
 	jmp confirmar_pass
 
 
+; *************************** ORDENAR
 op_ordenamiento:
 	mov esi,buffer
-	add esi,8
+	add esi,9
+	mov ebx,0
+
+ordenamiento_inciar_contador:
+	; limpiarRegistro aux,0FFh
+	mov edi,aux
+	xor edx,edx
+
+ordenamiento_ciclo_indices:
+	cmp byte[esi],0
+	je formula_erronea
+	cmp byte[esi],';'
+	je ordenamiento_agregar_id
+	cmp byte[esi],':'
+	je ordenamiento_agregar_id
+
+	mov al,byte[esi]
+	mov byte[edi],al
+	inc edx
+	inc edi
+	inc esi
+	jmp ordenamiento_ciclo_indices
+
+ordenamiento_agregar_id:
+	searchN aux,database,edx
+	cmp eax,0
+	je formula_erronea
+
+	mov edi,ids
+	mov eax,4
+	mul ebx
+	add edi,eax
+	obtenerId aux
+	mov dword[edi],eax
+
+	inc ebx
+	cmp byte[esi],':'
+	je ordenamiento_agregar_
+	inc esi
+	jmp ordenamiento_inciar_contador
+
+ordenamiento_agregar_:
+	cmp ebx,0
+	je formula_erronea
+	mov dword[cantidad_valores],ebx
+	inc esi
+	xor ebx,ebx
+	xor ecx,ecx
+
+ordenamiento_agregar__ciclo:
+	cmp byte[esi],')'
+	je ordenamiento_agregar__fin_ciclo
+	cmp byte[esi],0
+	je formula_erronea
+
+	mov bl,byte[esi]
+	inc esi
+	inc ecx
+	jmp ordenamiento_agregar__ciclo
+
+ordenamiento_agregar__fin_ciclo:
+	cmp ecx,1
+	ja formula_erronea
+	cmp bl,'0'
+	jb formula_erronea
+	cmp bl,'1'
+	ja formula_erronea
+
+	mov esi,ids
+	mov byte[ord_aux],bl
+	mov ebx,dword[cantidad_valores]
+
+ordenar:
+	cmp ebx,0
+	je op_ordenamiento_fin
+
+	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
+	cinvoke sscanf,buffer,format_In,numero
+	cmp eax,1
+	je ordenar_convertir_cero_pass
+	cinvoke sscanf,'0',format_In,numero
+
+ordenar_convertir_cero_pass:
+	cmp byte[ord_aux],'1'
+	je ordenar_may_men
+	jmp ordenar_men_may
+
+ordenar_may_men:
+	jmp ordenar_pass
+
+ordenar_men_may:
+	jmp ordenar_pass
+
+ordenar_pass:
+	add esi,4
+	dec ebx
+	jmp ordenar
+
+op_ordenamiento_fin:
 	jmp confirmar_pass
 
+
+; *************************** FUNCION SI
 op_si:
 	mov esi,buffer
 	add esi,4
 	jmp confirmar_pass
+
 
 formula_erronea:
 	invoke SetDlgItemText,[pWnd],[selected_id],error
@@ -417,25 +527,26 @@ endp
 ; ********************     MEMORIA     ********************
 section '.data' data readable writeable
 
-Ist  				dd 0
-pWnd 				dd 0
-cnt_id			dd 0
-selected_id	dd 0
-buffer			rd 0FFh
+Ist  							dd 0
+pWnd 							dd 0
+cnt_id						dd 0
+selected_id				dd 0
+buffer						rd 0FFh
 
-error				db '#',0xBF,'NOMBRE?',0
-msg_suma		db '=suma(',0
-msg_prom		db '=promedio(',0
-msg_ordn		db '=ordenar(',0
-msg_si			db '=si(',0
-format_Out	db '%.7f',0
-format_In		db '%lf',0
+error							db '#',0xBF,'NOMBRE?',0
+msg_suma					db '=suma(',0
+msg_prom					db '=promedio(',0
+msg_ordn					db '=ordenar(',0
+msg_si						db '=si(',0
+format_Out				db '%.7f',0
+format_In					db '%lf',0
 
-aux					db 100h dup(0)
-ids					dd 100h dup(0)
-numero			dq 0
-resultado		dq 0
-n						dd 0
+aux								db 100h dup(0)
+ids								dd 100h dup(0)
+numero						dq 0
+resultado					dq 0
+cantidad_valores	dd 0
+ord_aux						db 0
 
 database		db 'a1',1,'a2',1,'a3',1,'a4',1,'a5',1,'a6',1,'a7',1,'a8',1,'a9',1,'a10',1,\
 							 'a11',1,'a12',1,'a13',1,'a14',1,'a15',1,'a16',1,'a17',1,'a18',1,'a19',1,'a20',1,\
