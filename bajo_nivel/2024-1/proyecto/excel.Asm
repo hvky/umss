@@ -98,7 +98,7 @@ macro searchN x,data,n {
 }
 
 macro obtenerId cad {
-	push esi ebx ecx
+	push edi esi ebx ecx
 	mov esi,cad
 	xor ebx,ebx
 	mov bl,byte[esi]
@@ -111,7 +111,7 @@ macro obtenerId cad {
 	mul ecx
 	add eax,ebx
 	add eax,1028
-	pop ecx ebx esi
+	pop ecx ebx esi edi
 }
 
 
@@ -206,14 +206,14 @@ no_hay_operacion:
 	jmp confirmar_pass
 
 
-; *************************** SUMA
+; *************************** FUNCION SUMA
 op_suma:
 	mov esi,buffer
 	add esi,6
 	mov ebx,0
 
 suma_inciar_contador:
-	; limpiarRegistro aux,0FFh
+	limpiarRegistro aux,0FFh
 	mov edi,aux
 	xor edx,edx
 
@@ -283,13 +283,14 @@ sumar_fin:
 	jmp confirmar_pass
 
 
-; *************************** PROMEDIO
+; *************************** FUNCION PROMEDIO
 op_promedio:
 	mov esi,buffer
 	add esi,10
+	mov ebx,0
 
 promedio_suma_inciar_contador:
-	; limpiarRegistro aux,0FFh
+	limpiarRegistro aux,0FFh
 	mov edi,aux
 	xor edx,edx
 
@@ -363,14 +364,14 @@ promedio_sumar_fin:
 	jmp confirmar_pass
 
 
-; *************************** ORDENAR
+; *************************** FUNCION ORDENAR
 op_ordenamiento:
 	mov esi,buffer
 	add esi,9
 	mov ebx,0
 
 ordenamiento_inciar_contador:
-	; limpiarRegistro aux,0FFh
+	limpiarRegistro aux,0FFh
 	mov edi,aux
 	xor edx,edx
 
@@ -515,53 +516,161 @@ ordenar_ciclo_2_pass:
 	jmp ordenar_ciclo
 
 op_ordenamiento_fin:
-	invoke MessageBox,0,'FIN DEL PROCESO',0,MB_OK
-	; jmp confirmar_pass
 	mov ebx,[cantidad_valores]
 	mov esi,ord_valores
+	mov edi,ids
 
-mostrar_valores:
+op_ordenamiento_fin_ciclo:
 	cmp ebx,0
 	je confirmar_pass
 
 	invoke sprintf,buffer,format_Out,dword[esi],dword[esi+4]
-	invoke MessageBox,0,buffer,0,MB_OK
-
+	invoke SetDlgItemText,[hWnd],dword[edi],buffer
 	add esi,8
+	add edi,4
 	dec ebx
-	jmp mostrar_valores
+	jmp op_ordenamiento_fin_ciclo
 
 
 ; *************************** FUNCION SI
 op_si:
 	mov esi,buffer
 	add esi,4
+	mov ebx,0
+
+op_si_iniciar_contador:
+	limpiarRegistro aux,0FFh
+	mov edi,aux
+	xor edx,edx
+
+op_si_ciclo_1:
+	cmp byte[esi],0
+	je formula_erronea
+	cmp byte[esi],';'
+	je op_si_agregar_id
+	cmp byte[esi],':'
+	je op_si_agregar_id
+
+	mov al,byte[esi]
+	mov byte[edi],al
+	inc edx
+	inc edi
+	inc esi
+	jmp op_si_ciclo_1
+
+op_si_agregar_id:
+	searchN aux,database,edx
+	cmp eax,0
+	je formula_erronea
+
+	mov edi,ids
+	mov eax,4
+	mul ebx
+	add edi,eax
+	obtenerId aux
+	mov dword[edi],eax
+
+	inc ebx
+	cmp byte[esi],':'
+	je op_si_evaluar_operador
+	inc esi
+	jmp op_si_ciclo_1
+
+op_si_evaluar_operador:
+	cmp ebx,2
+	jne formula_erronea
+	inc esi
+	limpiarRegistro operador,0FFh
+	mov edi,operador
+	xor ebx,ebx
+
+op_si_evaluar_operador_ciclo:
+	cmp byte[esi],0
+	je formula_erronea
+	cmp byte[esi],';'
+	je op_si_guardar_operador
+
+	mov al,byte[esi]
+	mov byte[edi],al
+	inc esi
+	inc edi
+	inc ebx
+	jmp op_si_evaluar_operador_ciclo
+
+op_si_guardar_operador:
+	searchN operador,database_op,ebx
+	cmp eax,0
+	je formula_erronea
+	inc esi
+	limpiarRegistro si_yes,0FFh
+	mov edi,si_yes
+	xor ebx,ebx
+
+op_si_evaluar_yes:
+	cmp byte[esi],0
+	je formula_erronea
+	cmp byte[esi],':'
+	je op_si_guardar_yes
+
+	mov al,byte[esi]
+	mov byte[edi],al
+	inc esi
+	inc edi
+	inc ebx
+	jmp op_si_evaluar_yes
+
+op_si_guardar_yes:
+	cmp ebx,0
+	je formula_erronea
+	inc esi
+	limpiarRegistro si_no,0FFh
+	mov edi,si_no
+	xor ebx,ebx
+
+op_si_evaluar_no:
+	cmp byte[esi],0
+	je formula_erronea
+	cmp byte[esi],')'
+	je op_si_guardar_no
+
+	mov al,byte[esi]
+	mov byte[edi],al
+	inc esi
+	inc edi
+	inc ebx
+	jmp op_si_evaluar_no
+
+op_si_guardar_no:
+	cmp ebx,0
+	je formula_erronea
+
+
+op_si_fin:
+	invoke MessageBox,0,'FUNCION SI FINALIZADO',0,MB_ICONWARNING
 	jmp confirmar_pass
 
 
+; *************************** ETIQUETAS EXTRA
 valor_erroneo:
+	invoke MessageBox,[pWnd],'Alguno/s de los valores no son valido/s!','ERROR VALOR',MB_ICONWARNING
 	invoke SetDlgItemText,[pWnd],[selected_id],errorValor
 	jmp confirmar_pass
 
 formula_erronea:
+	invoke MessageBox,[pWnd],'La formula proporcionada no es correcta!','ERROR FORMULA',MB_ICONERROR
 	invoke SetDlgItemText,[pWnd],[selected_id],error
 	jmp confirmar_pass
 
 confirmar_pass:
-	; limpiarRegistro ids,0FFh		; se controla el numero de items agregados
 	mov eax,1
 	jmp finish
 
 modificando_input:
 	and eax,0FFFFh
 	cmp eax,input_expresion
-	je modificando_input_pass							; ***** REVISAR modificando_input_2 *****
+	je modificando_input_pass
 	mov ebx,eax
 	copiar ebx,input_expresion
-	jmp modificando_input_pass
-
-modificando_input_2:
-	copiar input_expresion,[selected_id]
 	jmp modificando_input_pass
 
 modificando_input_pass:
@@ -618,6 +727,11 @@ resultado					dq 0
 cantidad_valores	dd 0
 ord_aux						db 0
 ord_valores				dq 100h dup(0)
+si_yes						db 100h dup(0)
+si_no							db 100h dup(0)
+operador					db 100h dup(0)
+
+database_op	db '<',1,'>',1,'<=',1,'>=',1,'==',1,'!=',0
 
 database		db 'a1',1,'a2',1,'a3',1,'a4',1,'a5',1,'a6',1,'a7',1,'a8',1,'a9',1,'a10',1,\
 							 'a11',1,'a12',1,'a13',1,'a14',1,'a15',1,'a16',1,'a17',1,'a18',1,'a19',1,'a20',1,\
