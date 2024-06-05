@@ -264,7 +264,6 @@ sumar:
 	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
 	cmp eax,0
 	je valor_erroneo
-
 	cinvoke sscanf,buffer,format_In,numero
 	cmp eax,0
 	je valor_erroneo
@@ -343,7 +342,6 @@ promedio_sumar:
 	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
 	cmp eax,0
 	je valor_erroneo
-
 	cinvoke sscanf,buffer,format_In,numero
 	cmp eax,0
 	je valor_erroneo
@@ -574,7 +572,7 @@ op_si_agregar_id:
 	cmp byte[esi],':'
 	je op_si_evaluar_operador
 	inc esi
-	jmp op_si_ciclo_1
+	jmp op_si_iniciar_contador
 
 op_si_evaluar_operador:
 	cmp ebx,2
@@ -644,9 +642,91 @@ op_si_guardar_no:
 	cmp ebx,0
 	je formula_erronea
 
+op_si_operar:
+	mov esi,ids
+	invoke GetDlgItemText,[hWnd],dword[esi+4],buffer,0FFh
+	cmp eax,0
+	je valor_erroneo
+	cinvoke sscanf,buffer,format_In,numero
+	cmp eax,0
+	je valor_erroneo
 
-op_si_fin:
-	invoke MessageBox,0,'FUNCION SI FINALIZADO',0,MB_ICONWARNING
+	finit
+	fld [numero]
+
+	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
+	cmp eax,0
+	je valor_erroneo
+	cinvoke sscanf,buffer,format_In,numero
+	cmp eax,0
+	je valor_erroneo
+
+	fld [numero]
+
+	cmp byte[operador],'<'
+	je op_si_evaluar_menor
+	cmp byte[operador],'>'
+	je op_si_evaluar_mayor
+	cmp byte[operador],'!'
+	je op_si_evaluar_distinto
+	cmp byte[operador],'='
+	je op_si_evaluar_igual
+
+op_si_evaluar_menor:
+	cmp byte[operador+1],'='
+	je op_si_evaluar_menor_igual
+	fcompp
+	fnstsw ax
+	sahf
+	jb op_si_yes
+	jmp op_si_no
+
+op_si_evaluar_menor_igual:
+	fcompp
+	fnstsw ax
+	sahf
+	jbe op_si_yes
+	jmp op_si_no
+
+op_si_evaluar_mayor:
+	cmp byte[operador+1],'='
+	je op_si_evaluar_mayor_igual
+	fcompp
+	fnstsw ax
+	sahf
+	ja op_si_yes
+	jmp op_si_no
+
+op_si_evaluar_mayor_igual:
+	fcompp
+	fnstsw ax
+	sahf
+	jae op_si_yes
+	jmp op_si_no
+
+op_si_evaluar_distinto:
+	fcompp
+	fnstsw ax
+	sahf
+	jne op_si_yes
+	jmp op_si_no
+
+op_si_evaluar_igual:
+	fcompp
+	fnstsw ax
+	sahf
+	je op_si_yes
+	jmp op_si_no
+
+op_si_yes:
+	invoke SetDlgItemText,[hWnd],[selected_id],si_yes
+	jmp op_si_operar_pass
+
+op_si_no:
+	invoke SetDlgItemText,[hWnd],[selected_id],si_no
+	jmp op_si_operar_pass
+
+op_si_operar_pass:
 	jmp confirmar_pass
 
 
