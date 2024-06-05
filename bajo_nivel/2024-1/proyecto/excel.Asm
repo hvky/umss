@@ -174,6 +174,7 @@ cancelar:
 	jmp finish
 
 funciones:
+	invoke MessageBox,[hWnd],menu_funciones,'FUNCIONES',MB_ICONINFORMATION
 	mov eax,1
 	jmp finish
 
@@ -765,6 +766,21 @@ jSETFOCUS:
 
 	mov [selected_id],eax
 	copiar [selected_id],input_expresion
+
+	limpiarRegistro aux,0FFh
+	mov eax,[selected_id]
+	sub eax,1028
+	mov ebx,12
+	xor edx,edx
+	div ebx
+	mov esi,aux
+	mov bl,'A'
+	add bl,dl
+	mov byte[esi],bl
+	inc esi
+	invoke wsprintf,esi,'%d',eax
+	invoke SetDlgItemText,[pWnd],casilla_seleccionada,aux
+
 	jmp jSETFOCUS_pass
 
 jSETFOCUS_pass:
@@ -811,8 +827,13 @@ si_yes						db 100h dup(0)
 si_no							db 100h dup(0)
 operador					db 100h dup(0)
 
-database_op	db '<',1,'>',1,'<=',1,'>=',1,'==',1,'!=',0
+menu_funciones		db 'Descripcion de las funciones:',13,10,\
+										13,10,'Para sumar: =suma(a1;a2;a3;...;an)',13,10,\
+										13,10,'Para promediar: =promedio(a1;a2;a3;...;l20)',13,10,\
+										13,10,'Para ordenar: =ordenar(a1;a2;a3;...;l20:x)',13,10,\
+										13,10,'Para la funcion si: =si(a1;a2:operador;yes:no)',0
 
+database_op	db '<',1,'>',1,'<=',1,'>=',1,'==',1,'!=',0
 database		db 'a1',1,'a2',1,'a3',1,'a4',1,'a5',1,'a6',1,'a7',1,'a8',1,'a9',1,'a10',1,\
 							 'a11',1,'a12',1,'a13',1,'a14',1,'a15',1,'a16',1,'a17',1,'a18',1,'a19',1,'a20',1,\
 							 'b1',1,'b2',1,'b3',1,'b4',1,'b5',1,'b6',1,'b7',1,'b8',1,'b9',1,'b10',1,\
