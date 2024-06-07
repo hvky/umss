@@ -1,4 +1,9 @@
-### Recursos / Implementaciones
+# GRAFICACION POR COMPUTADORA
+
+****
+
+## PP
+### PRIMITIVAS `LINEA - RECTA`
 
 https://stackoverflow.com/questions/7047749/painting-pixels-images-in-java
 
@@ -9,10 +14,18 @@ https://stackoverflow.com/questions/7047749/painting-pixels-images-in-java
   * http://abreojosensamblador.epizy.com/?Tarea=1&SubTarea=25&i=1
   * https://garciaoscar10110795.blogspot.com/p/algoritmo-de-bresenham-para-trazar_13.html
 
-
-### Colores
+#### Colores
   * https://en.wikipedia.org/wiki/HSL_and_HSV
-
 
 #### Rellenado
   * https://medium.com/hackernoon/computer-graphics-scan-line-polygon-fill-algorithm-3cb47283df6
+
+
+****
+
+## SP
+### FRACTALES
+
+* https://inventwithpython.com/blog/2022/03/09/make-fractals-in-python-turtle-with-the-fractalartmaker-module/
+
+### RAY TRACING
