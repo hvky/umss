@@ -1,0 +1,21 @@
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb:11-jammy
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./db:/var/lib/mysql
+
+  phpmyadmin:
+    depends_on:
+      - mariadb
+    image: phpmyadmin:apache
+    ports:
+      - "80:80"
+    environment:
+      - PMA_HOST=mariadb
