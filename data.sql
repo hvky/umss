@@ -1,3 +1,6 @@
+USE muchocine;
+
+
 INSERT INTO IDIOMA (codigo_iso, nombre) VALUES
   ('en', 'Inglés'),
   ('es', 'Español'),
@@ -242,18 +245,18 @@ INSERT INTO PERSONA (nombre, apellido_paterno, fecha_nacimiento, sexo, id_ciudad
   ('Leonardo Wilhelm', 'DiCaprio', '1974-11-11', 'M', 26),
   ('Thomas Jeffrey', 'Hanks', '1956-07-09', 'M', 26),
   ('Jennifer Shrader', 'Lawrence', '1990-08-15', 'F', 27),
-  ('Denzel Hayes', 'Washington', 'Jr.', '1954-12-28', 'M', 1),
+  ('Denzel Hayes', 'Washington', '1954-12-28', 'M', 1),
   ('Scarlett Ingrid', 'Johansson', '1984-11-22', 'F', 1),
-  ('Willard Carroll', 'Smith', 'Jr.', '1968-09-25', 'M', 28),
+  ('Willard Carroll', 'Smith', '1968-09-25', 'M', 28),
   ('Julia Fiona', 'Roberts', '1967-10-28', 'F', 29),
-  ('Robert John', 'Downey', 'Jr.', '1965-04-04', 'M', 1),
+  ('Robert John', 'Downey', '1965-04-04', 'M', 1),
   ('Ryan', 'Reynolds', '1976-10-23', 'M', 2),
   ('Joshua', 'Brolin', '1972-02-12', 'M', 3),
-  ('Morena', 'Baccarin', 'Teissott Franco', '1979-03-22', 'F', 4),
+  ('Morena', 'Baccarin', '1979-03-22', 'F', 4),
   ('Zazie', 'Beetz', '1991-05-25', 'F', 5),
   ('Timothy', 'Miller', '1982-06-04', 'M', 6),
   ('Brianna', 'Hildebrand', '1996-08-14', 'F', 7),
-  ('Leslie', 'Uggams', 'Stephens', '1935-05-25', 'F', 8),
+  ('Leslie', 'Uggams', '1935-05-25', 'F', 8),
   ('Stefan', 'Kapičić', '1978-08-17', 'M', 9),
   ('JJulian', 'Dennison', '2001-05-26', 'M', 10),
   ('Shiori', 'Kutsuna', '1988-12-22', 'F', 11),
@@ -289,7 +292,7 @@ INSERT INTO PERSONA (nombre, apellido_paterno, fecha_nacimiento, sexo, id_ciudad
   ('Eduardo', 'Kilibarda', '2002-09-25', 'M', 36),
   ('Jhonathan', 'Quispe', '2002-11-10', 'M', 36),
 
-  ('Robert', 'Downey', 'Jr.', '1965-04-04', 'M', 1),
+  ('Robert', 'Downey', '1965-04-04', 'M', 1),
   ('Chris', 'Evans', '1981-06-13', 'M', 1),
   ('Mark', 'Ruffalo', '1967-11-22', 'M', 8),
   ('Chris', 'Hemsworth', '1983-08-11', 'M', 2),

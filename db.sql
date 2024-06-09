@@ -10,7 +10,7 @@ CREATE TABLE IDIOMA (
 
 CREATE TABLE FORMATO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(30) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
     descripcion TEXT NOT NULL
 );
 
@@ -22,7 +22,7 @@ CREATE TABLE CONTINENTE (
 
 CREATE TABLE PAIS (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL,
     id_continente INT NOT NULL,
     FOREIGN KEY (id_continente) REFERENCES CONTINENTE(id)
@@ -30,7 +30,7 @@ CREATE TABLE PAIS (
 
 CREATE TABLE CIUDAD (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL,
     id_pais INT NOT NULL,
     FOREIGN KEY (id_pais) REFERENCES PAIS(id)
@@ -38,26 +38,26 @@ CREATE TABLE CIUDAD (
 
 CREATE TABLE EMPRESA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL
 );
 
 CREATE TABLE GENERO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL
 );
 
 CREATE TABLE PREMIO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL,
     categoria VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE RESTRICCION (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL,
     tipo_restriccion ENUM('ATP', 'TP', 'MPAA', 'PG-15', 'R-Rated')
 );
@@ -66,15 +66,15 @@ CREATE TABLE PAQUETE (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     tipo ENUM('personal', 'duo', 'familiar') NOT NULL,
     descripcion TEXT NOT NULL,
-    duracion DECIMAL(2, 1) NOT NULL
+    duracion DECIMAL(5, 2) NOT NULL
 );
 
 
 CREATE TABLE PERSONA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(40) NOT NULL,
-    apellido_paterno VARCHAR(20),
-    apellido_materno VARCHAR(20),
+    nombre VARCHAR(50) NOT NULL,
+    apellido_paterno VARCHAR(30),
+    apellido_materno VARCHAR(30),
     fecha_nacimiento DATE NOT NULL,
     sexo ENUM('F', 'M', 'N'),
     id_ciudad_residencia INT NOT NULL,
@@ -91,8 +91,8 @@ CREATE TABLE ACTOR (
 
 CREATE TABLE CUENTA (
     id_persona INT NOT NULL,
-    correo VARCHAR(255) NOT NULL UNIQUE,
-    usuario VARCHAR(255) NOT NULL UNIQUE,
+    correo VARCHAR(100) NOT NULL UNIQUE,
+    usuario VARCHAR(100) NOT NULL UNIQUE,
     clave VARCHAR(255) NOT NULL,
     PRIMARY KEY (id_persona),
     FOREIGN KEY (id_persona) REFERENCES PERSONA(id)
@@ -120,7 +120,7 @@ CREATE TABLE OFERTA (
 
 CREATE TABLE FORMA_PAGO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    monto DECIMAL(3, 2) NOT NULL
+    monto DECIMAL(5, 2) NOT NULL
 );
 
 CREATE TABLE CREDITO (
@@ -224,7 +224,7 @@ CREATE TABLE SERIE (
 
 CREATE TABLE TEMPORADA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(30) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL,
     id_serie INT NOT NULL,
     cantidad_capitulos INT,
@@ -234,7 +234,7 @@ CREATE TABLE TEMPORADA (
 
 CREATE TABLE CAPITULO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(30) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     link_video VARCHAR(255) NOT NULL,
     duracion DECIMAL(10, 2) NOT NULL,
     fecha_estreno DATE NOT NULL,
