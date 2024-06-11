@@ -521,7 +521,7 @@ op_ordenamiento_fin:
 
 op_ordenamiento_fin_ciclo:
 	cmp ebx,0
-	je confirmar_pass
+	je ordenar_fin
 
 	invoke sprintf,buffer,format_Out,dword[esi],dword[esi+4]
 	invoke SetDlgItemText,[hWnd],dword[edi],buffer
@@ -529,6 +529,10 @@ op_ordenamiento_fin_ciclo:
 	add edi,4
 	dec ebx
 	jmp op_ordenamiento_fin_ciclo
+
+ordenar_fin:
+	invoke SetDlgItemText,[hWnd],[selected_id],''
+	jmp confirmar_pass
 
 
 ; *************************** FUNCION SI
