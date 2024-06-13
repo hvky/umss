@@ -114,6 +114,64 @@ macro obtenerId cad {
 	pop ecx ebx esi edi
 }
 
+macro ordenarletras cad,op {
+	local ciclo,ciclo_2,ciclo_2_pass,end,pass,asc,desc
+	mov esi,cad
+	mov ebx,0
+
+	ciclo:
+		cmp byte[esi],0
+		je end
+		mov eax,ebx
+		mov cl,byte[esi]
+
+	ciclo_2:
+		cmp eax,0
+		je pass
+
+		mov dl,op
+		cmp dl,0
+		je asc
+
+		mov dl,op
+		cmp dl,1
+		je desc
+
+		jmp formula_erronea
+
+	asc:
+		cmp cl,byte[edi]
+		jae pass
+		jmp ciclo_2_pass
+
+	desc:
+		cmp cl,byte[edi]
+		jbe pass
+		jmp ciclo_2_pass
+
+	ciclo_2_pass:
+		mov dl,byte[edi]
+		inc edi
+		mov byte[edi],dl
+		dec edi
+		mov byte[edi],cl
+		dec edi
+		dec eax
+		jmp ciclo_2
+
+	pass:
+		mov edi,esi
+		inc esi
+		inc ebx
+		jmp ciclo
+
+	end:
+}
+
+macro limpiarCasilla casilla {
+	invoke SetDlgItemText,[pWnd],casilla,''
+}
+
 
 ; ********************     CODIGO     ********************
 section '.code' code readable executable
@@ -200,6 +258,7 @@ convertir_lowercase_pass:
 	esPrefijo msg_prom,buffer,op_promedio
 	esPrefijo msg_ordn,buffer,op_ordenamiento
 	esPrefijo msg_si,buffer,op_si
+	esPrefijo msg_ordenar_letras,buffer,op_ordenar_letras
 	jmp formula_erronea
 
 no_hay_operacion:
@@ -735,6 +794,167 @@ op_si_operar_pass:
 	jmp confirmar_pass
 
 
+
+
+
+; ******************************          12/06/2024          ******************************
+op_ordenar_letras:
+	mov esi,buffer
+	add esi,15
+	mov ebx,0
+
+ord_letras_inciar_contador:
+	limpiarRegistro aux,0FFh
+	mov edi,aux
+	xor edx,edx
+
+ord_letras_ciclo_indices:
+	cmp byte[esi],0
+	je formula_erronea
+	cmp byte[esi],';'
+	je ord_letras_agregar_id
+	cmp byte[esi],')'
+	je ord_letras_agregar_id
+
+	mov al,byte[esi]
+	mov byte[edi],al
+	inc edx
+	inc edi
+	inc esi
+	jmp ord_letras_ciclo_indices
+
+ord_letras_agregar_id:
+	searchN aux,database,edx
+	cmp eax,0
+	je formula_erronea
+
+	mov edi,ids
+	mov eax,4
+	mul ebx
+	add edi,eax
+	obtenerId aux
+	mov dword[edi],eax
+
+	inc ebx
+	cmp byte[esi],')'
+	je ord_letras_agregar_
+	inc esi
+	jmp ord_letras_inciar_contador
+
+ord_letras_agregar_:
+	cmp ebx,0
+	je op_ordenar_letras_fin
+
+	mov dword[cantidad_valores],ebx
+	limpiarRegistro mayusculas,0FFh
+	mov esi,ids
+	mov edi,mayusculas
+	mov ebx,dword[cantidad_valores]
+
+letras_agregar_mayusculas:
+	cmp ebx,0
+	je letras_minusculas
+
+	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
+	cmp eax,1
+	jne valor_erroneo
+
+	mov al,byte[buffer]
+	cmp al,'Z'
+	ja letras_agregar_mayusculas_pass
+	mov byte[edi],al
+	inc edi
+
+letras_agregar_mayusculas_pass:
+	add esi,4
+	dec ebx
+	jmp letras_agregar_mayusculas
+
+letras_minusculas:
+	limpiarRegistro minusculas,0FFh
+	mov esi,ids
+	mov edi,minusculas
+	mov ebx,dword[cantidad_valores]
+
+letras_agregar_minusculas:
+	cmp ebx,0
+	je ordenar_letras_
+
+	invoke GetDlgItemText,[hWnd],dword[esi],buffer,0FFh
+	cmp eax,1
+	jne valor_erroneo
+
+	mov al,byte[buffer]
+	cmp al,'a'
+	jb letras_agregar_minusculas_pass
+	mov byte[edi],al
+	inc edi
+
+letras_agregar_minusculas_pass:
+	add esi,4
+	dec ebx
+	jmp letras_agregar_minusculas
+
+ordenar_letras_:
+	mov esi,ids
+	mov ebx,dword[cantidad_valores]
+
+ordenar_letras_ciclo:
+	cmp ebx,0
+	je ordenar_letras_2
+	limpiarCasilla dword[esi]
+	add esi,4
+	dec ebx
+	jmp ordenar_letras_ciclo
+
+ordenar_letras_2:
+	ordenarletras minusculas,0
+	ordenarletras mayusculas,1
+
+	limpiarRegistro aux,0FFh
+	mov esi,ids
+	mov ebx,dword[esi]
+	mov esi,minusculas
+
+setterr_minusculas:
+	cmp byte[esi],0
+	je ahora_mayusculas
+
+	mov al,byte[esi]
+	mov byte[aux],al
+	invoke SetDlgItemText,[hWnd],ebx,aux
+
+	inc esi
+	inc ebx
+	jmp setterr_minusculas
+
+ahora_mayusculas:
+	mov esi,ids
+	mov ebx,dword[esi]
+	mov esi,mayusculas
+	add ebx,12
+
+setterr_mayusculas:
+	cmp byte[esi],0
+	je op_ordenar_letras_fin
+
+	mov al,byte[esi]
+	mov byte[aux],al
+	invoke SetDlgItemText,[hWnd],ebx,aux
+
+	inc esi
+	inc ebx
+	jmp setterr_mayusculas
+
+op_ordenar_letras_fin:
+	limpiarCasilla [selected_id]
+	jmp confirmar_pass
+; ******************************          12/06/2024          ******************************
+
+
+
+
+
 ; *************************** ETIQUETAS EXTRA
 valor_erroneo:
 	invoke MessageBox,[pWnd],'Alguno/s de los valores no son valido/s!','ERROR VALOR',MB_ICONWARNING
@@ -819,6 +1039,7 @@ msg_ordn					db '=ordenar(',0
 msg_si						db '=si(',0
 format_Out				db '%.7f',0
 format_In					db '%lf',0
+msg_ordenar_letras db '=ordenarletras(',0
 
 aux								db 100h dup(0)
 ids								dd 100h dup(0)
@@ -830,6 +1051,9 @@ ord_valores				dq 100h dup(0)
 si_yes						db 100h dup(0)
 si_no							db 100h dup(0)
 operador					db 100h dup(0)
+
+mayusculas				db 100h dup(0)
+minusculas				db 100h dup(0)
 
 menu_funciones		db 'Descripcion de las funciones:',13,10,\
 										13,10,'Para sumar: =suma(a1;a2;a3;...;an)',13,10,\
