@@ -110,8 +110,8 @@ CREATE TABLE SUBCUENTA (
 CREATE TABLE OFERTA (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     descripcion TEXT NOT NULL,
-    precio DECIMAL(3, 2) NOT NULL,
-    descuento DECIMAL(3, 2),
+    precio DECIMAL(5, 2) NOT NULL,
+    descuento DECIMAL(5, 2),
     fecha_inicio DATETIME NOT NULL,
     fecha_fin DATETIME NOT NULL,
     id_paquete INT NOT NULL,
@@ -134,14 +134,14 @@ CREATE TABLE CREDITO (
 CREATE TABLE TRANSACCION_CREDITO (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    multa DECIMAL(2, 2) NOT NULL,
+    multa DECIMAL(5, 2) NOT NULL,
     id_credito INT NOT NULL,
     FOREIGN KEY (id_credito) REFERENCES CREDITO(id_forma_pago)
 );
 
 CREATE TABLE CONTADO (
     id_forma_pago INT NOT NULL,
-    descuento DECIMAL(2, 2) NOT NULL,
+    descuento DECIMAL(5, 2) NOT NULL,
     PRIMARY KEY (id_forma_pago),
     FOREIGN KEY (id_forma_pago) REFERENCES FORMA_PAGO(id)
 );

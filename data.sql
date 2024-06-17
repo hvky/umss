@@ -392,7 +392,7 @@ INSERT INTO CUENTA (id_persona, correo, usuario, clave) VALUES
 
 INSERT INTO SUBCUENTA (id_cuenta, nombre, clave_acceso, activo) VALUES
   (46, 'cuenta101', '1111', 1),
-  (46, 'cuenta102', '1133', 0),
+  (46, 'cuenta102', '1133', 1),
   (46, 'cuenta103', '1144', 0),
   (47, 'cuenta201', '2211', 0),
   (47, 'cuenta202', '2222', 1),
