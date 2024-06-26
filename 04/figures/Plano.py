@@ -3,6 +3,7 @@ from OpenGL.GL import (
     GL_QUADS,
     glBegin,
     glEnd,
+    glTexCoord2f,
     glVertex3f,
 )
 
@@ -14,8 +15,12 @@ class Plano(Figura):
 
     def draw_shape(self):
         glBegin(GL_QUADS)
+        glTexCoord2f(0.0, 0.0)
         glVertex3f(-self.size, -self.size, 0.0)
+        glTexCoord2f(1.0, 0.0)
         glVertex3f(self.size, -self.size, 0.0)
+        glTexCoord2f(1.0, 1.0)
         glVertex3f(self.size, self.size, 0.0)
+        glTexCoord2f(0.0, 1.0)
         glVertex3f(-self.size, self.size, 0.0)
         glEnd()
